@@ -1,0 +1,8 @@
+﻿namespace OnDijon.Modules.WedAlsh.Entities.Dto
+{
+    public class WedAlshSchoolDto
+    {
+        public string Title { get; set; }
+        public string EditId { get; set; }
+    }
+}

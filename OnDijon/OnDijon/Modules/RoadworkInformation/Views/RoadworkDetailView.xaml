@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.RoadworkInformation.Views.RoadworkDetailView"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            ios:Page.UseSafeArea="true"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    <RelativeLayout>
+        <Image Style="{StaticResource imageBackground}"/>
+        <ScrollView  Style="{StaticResource scrollViewForBackground}">
+            <StackLayout>
+                <common:NavigationBarView HasBackButton="False"
+                                        BackgroundColor="Transparent"
+                                        IsRightButtonVisibile="True"
+                                        RightButtonCommand="{Binding CloseViewCommand}"
+                                        />
+                
+                <Label Text="Infos Travaux" Style="{StaticResource ciMainTitle}"/>
+                <StackLayout x:Name="ReportTypesLayout" VerticalOptions="FillAndExpand">
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Frame Style="{StaticResource ciFrameStandardRounded}">
+                            <StackLayout x:Name="ContactInfoLayout"
+                                                     VerticalOptions="FillAndExpand"
+                                                     HorizontalOptions="FillAndExpand"
+                                                     Padding="10">
+                                <Label Text="{Binding RoadworkDetail.Title}" Style="{StaticResource ciLittleTitle}" HorizontalOptions="CenterAndExpand"/>
+                                <StackLayout>
+                                    <Label Text="Entreprises" Style="{StaticResource ciLabel}"/>
+                                    <Label Text="{Binding RoadworkDetail.Executant}" Style="{StaticResource ciContent}"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="Maître d'oeuvre" Style="{StaticResource ciLabel}"/>
+                                    <Label Text="{Binding RoadworkDetail.Applicant}" Style="{StaticResource ciContent}"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="Date de début" Style="{StaticResource ciLabel}"/>
+                                    <Label Text="{Binding RoadworkDetail.DateBeginRoadwork}" Style="{StaticResource ciContent}"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="Date de fin" Style="{StaticResource ciLabel}"/>
+                                    <Label Text="{Binding RoadworkDetail.DateEndRoadwork}" Style="{StaticResource ciContent}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </RelativeLayout>
+</StackLayout>

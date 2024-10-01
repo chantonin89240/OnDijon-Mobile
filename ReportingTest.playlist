@@ -1,0 +1,25 @@
+<Playlist Version="1.0">
+  <Add Test="OnDijon.UITest.CG.ConfirmationBackPhoneTests(Android).ConfirmationBackPhoneTest" />
+  <Add Test="OnDijon.UITest.CG.ConfirmationBackTests(Android).ConfirmationBackTest" />
+  <Add Test="OnDijon.UITest.CG.ConfirmationRecapTests(Android).ConfirmationRecapTest" />
+  <Add Test="OnDijon.UITest.CG.DescriptionAddPictureTests(Android).DescriptionAddPictureTest" />
+  <Add Test="OnDijon.UITest.CG.DescriptionBackPhoneTests(Android).DescriptionBackPhoneTest" />
+  <Add Test="OnDijon.UITest.CG.DescriptionBackTests(Android).DescriptionBackTest" />
+  <Add Test="OnDijon.UITest.CG.DescriptionTests(Android).DescriptionTest" />
+  <Add Test="OnDijon.UITest.CG.LocalisationBackPhoneTests(Android).LocalisationBackPhoneTest" />
+  <Add Test="OnDijon.UITest.CG.LocalisationBackTests(Android).LocalisationBackTest" />
+  <Add Test="OnDijon.UITest.CG.LocalisationFullAdressTests(Android).LocalisationFullAdressTest" />
+  <Add Test="OnDijon.UITest.CG.LocalisationMovementMapTests(Android).LocalisationMovementMapTest" />
+  <Add Test="OnDijon.UITest.CG.LocalisationPartAdressNotFirstTests(Android).LocalisationPartAdressNotFirstTest" />
+  <Add Test="OnDijon.UITest.CG.LocalisationPartAdressTests(Android).LocalisationPartAdressTest" />
+  <Add Test="OnDijon.UITest.CG.LocalisationSelectionTests(Android).LocalisationSelectionTest" />
+  <Add Test="OnDijon.UITest.CG.LocalisationTests(Android).LocalisationTest" />
+  <Add Test="OnDijon.UITest.CG.SignalementBackPhoneTests(Android).SignalementBackPhoneTest" />
+  <Add Test="OnDijon.UITest.CG.SignalementBackTests(Android).SignalementBackTest" />
+  <Add Test="OnDijon.UITest.CG.SignalementTests(Android).SignalementTest" />
+  <Add Test="OnDijon.UITest.CG.TypeBackPhoneTests(Android).TypeBackPhoneTest" />
+  <Add Test="OnDijon.UITest.CG.TypeBackTests(Android).TypeBackTest" />
+  <Add Test="OnDijon.UITest.CG.TypeNoValidationBackTests(Android).TypeNoValidationBackTest" />
+  <Add Test="OnDijon.UITest.CG.TypeNoValidationExternalZoneTests(Android).TypeNoValidationExternalZoneTest" />
+  <Add Test="OnDijon.UITest.CG.TypeTests(Android).TypeTest" />
+</Playlist>

@@ -1,0 +1,107 @@
+# Xamarin.Android
+# Build a Xamarin.Android project.
+# Add steps that test, sign, and distribute an app, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/xamarin
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+- name: buildConfiguration
+  value: 'Release'
+- name: outputDirectory
+  value: '$(build.binariesDirectory)/$(buildConfiguration)'
+- group: android-keystore
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.302'
+
+
+
+- task: DownloadSecureFile@1
+  name: keyStore
+  displayName: "Download keystore from secure files"
+  inputs:
+    secureFile: 'OnDijonDev.keystore'
+
+- task: MSBuild@1
+  displayName: 'Build and Create AAB'
+  inputs:
+    solution: '$(Build.SourcesDirectory)/OnDijon/OnDijon.Android/OnDijon.Android.csproj'
+    configuration: '$(buildConfiguration)'
+    msbuildArguments: ' -restore -t:SignAndroidPackage -p:AndroidPackageFormat=aab -p:Configuration=$(buildConfiguration)  -p:AndroidKeyStore=True   -p:AndroidSigningKeyStore=$(keyStore.secureFilePath)  -p:AndroidSigningStorePass=$(keystore-password)  -p:AndroidSigningKeyAlias=$(key-alias) -p:AndroidSigningKeyPass=$(key-password)'
+#- task: GooglePlayReleaseBundle@3
+#  inputs:
+#    serviceConnection: 'Google Play'
+#    applicationId: 'fr.dm.ondijon'
+#    bundleFile: '$(Build.SourcesDirectory)/OnDijon/OnDijon.Android/bin/$(buildConfiguration)/*.aab'
+#    track: 'internal'
+
+#- task: AppCenterDistribute@3
+#  inputs:
+#    serverEndpoint: 'App OnDijon'
+#    appSlug: 'Dijon-Metropole/OnDijonAndroid-PROD'
+#    appFile: '$(Build.SourcesDirectory)/OnDijon/OnDijon.Android/bin/$(buildConfiguration)/fr.dm.ondijon.aab'
+#    symbolsOption: 'Android'
+#    releaseNotesOption: 'input'
+#    releaseNotesInput: 'Mise à jour de fonctionnalités et correction de bugs'
+#    isMandatory: true
+#    destinationType: 'groups'
+#    isSilent: false
+  
+    
+- task: CopyFiles@2
+  displayName: 'Copy deliverables'
+
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/OnDijon/OnDijon.Android/bin/$(buildConfiguration)'
+    Contents: '*.aab'
+    TargetFolder: 'drop'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish release'
+  inputs:
+    pathToPublish: 'drop'
+    artifactName: 'release'
+    FileCopyOptions: 
+
+- task: XamarinAndroid@1
+  inputs:
+    projectFile: 'OnDijon/OnDijon.Android/OnDijon.Android.csproj'
+    outputDirectory: '$(outputDirectory)'
+    configuration: '$(buildConfiguration)'
+    msbuildVersionOption: 'latest'
+    msbuildArchitectureOption: 'x64'
+    msbuildArguments: '/restore'
+    jdkOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: 'D:\a\1\b\$(buildConfiguration)\fr.dm.ondijon.apk'
+    apksignerKeystoreFile: 'OnDijonDev.keystore'
+    apksignerKeystorePassword: '$(keystore-password)'
+    apksignerKeystoreAlias: '$(key-alias)'
+    apksignerKeyPassword: '$(key-password)'
+    apksignerFile: 'C:\Program Files (x86)\Android\android-sdk\build-tools\29.0.2\apksigner.bat'
+    zipalignFile: 'C:\Program Files (x86)\Android\android-sdk\build-tools\29.0.2\zipalign.exe'   
+- task: AppCenterDistribute@3
+  inputs:
+    serverEndpoint: 'App OnDijon'
+    appSlug: 'Dijon-Metropole/OnDijonAndroid-PROD'
+    appFile: 'D:\a\1\b\$(buildConfiguration)\fr.dm.ondijon.apk'
+    symbolsOption: 'Android'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'Mise à jour de fonctionnalités et correction de bugs'
+    isMandatory: true
+    destinationType: 'groups'
+    isSilent: false
+
+#- task: GooglePlayRelease@3
+#  inputs:
+#    serviceConnection: 'Google Play'
+#   apkFile: 'D:\a\1\b\$(buildConfiguration)\fr.dm.ondijon.apk'
+#    track: 'internal'

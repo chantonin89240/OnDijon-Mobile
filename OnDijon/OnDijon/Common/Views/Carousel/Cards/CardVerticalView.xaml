@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:CardViewBase xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:common="clr-namespace:OnDijon.Common.Views"
+                     xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                     x:Class="OnDijon.Common.Views.CardVerticalView"
+                     xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+                     xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <common:CardViewBase.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+    </common:CardViewBase.Resources>
+    <Frame Style="{StaticResource FrameCarouselCard}" IsClippedToBounds="True">
+        <Grid RowDefinitions="auto,*,auto" ColumnDefinitions="120,auto,*">
+            <!-- Header -->
+            <Frame BackgroundColor="{Binding Color}" Padding="0"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
+                <Grid ColumnDefinitions="*" RowDefinitions="*">
+                    <Image Source="{extensions:ImageResource OnDijon.Assets.news-standard-image.png}"></Image>
+                    <forms:CachedImage x:Name="Image" Aspect="AspectFill" Source="{Binding ImageUrl}"></forms:CachedImage>
+                </Grid>
+            </Frame>
+            
+            <common:BadgeView x:Name="NotificationCountBadge"
+                                        BackgroundColor="{StaticResource NotificationBackground}"
+                                        Text="{Binding NotificationCount}"
+                                        HorizontalOptions="Start"
+                                        IsVisible="False"
+                                        TextColor="White"
+                                        Grid.Column="1" Grid.Row="0"/>
+
+            <Label Text="{Binding Title}"
+                               FontSize="15"
+                               Margin="2,5,2,0"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource kleinBlue}"
+                               Grid.Column="2" Grid.Row="0"/>
+            
+            <Label Text="{Binding Description}"
+                       Margin="2,5,2,0"
+                       FontAttributes="Bold"
+                       MaxLines="5"
+                       LineBreakMode="TailTruncation"
+                       FontSize="Small" 
+                       TextColor="{StaticResource MediumGrayTextColor}"
+                       Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2"/>
+
+                <!-- Button -->
+            <Button Text="{Binding Actions[0].Title}"
+                        Style="{StaticResource ButtonConfirm}"
+                        Clicked="Button_Clicked"
+                        HorizontalOptions="End"
+                        VerticalOptions="EndAndExpand"
+                        HeightRequest="35"
+                        FontAttributes="Bold"
+                        FontSize="12" 
+                        Padding="15,0"
+                        Margin="0,0,0,5"
+                        CommandParameter="{Binding Actions[0]}" 
+                       Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"/>
+
+
+            <!--<Frame BackgroundColor="{Binding Color}" Padding="0" IsVisible="{Binding ImagePositionRight}" >
+                <RelativeLayout WidthRequest="120">
+                    <Image Source="{extensions:ImageResource OnDijon.Assets.news-standard-image.png}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" ></Image>
+                    <forms:CachedImage x:Name="Image2"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}" 
+                                       Aspect="AspectFill" Source="{Binding ImageUrl}">
+                    </forms:CachedImage>
+                </RelativeLayout>
+            </Frame>-->
+        </Grid>
+    </Frame>
+</common:CardViewBase>

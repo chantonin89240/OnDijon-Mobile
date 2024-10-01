@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Library.Pages.LibraryMainPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:views="clr-namespace:OnDijon.Modules.Library.Views"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Library.ViewModels"
+             xmlns:local="clr-namespace:OnDijon.Modules.Library.Pages"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions" 
+             x:TypeArguments="viewModel:LibraryMainViewModel"
+             x:DataType="viewModel:LibraryMainViewModel"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+            <Style x:Key="ButtonCard"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonSelect}">
+                <Style.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding CurrentCardType, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}"
+                                 Value="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Card}">
+                        <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}"/>
+                        <Setter Property="TextColor" Value="White"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ButtonLoan"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonSelect}">
+                <Style.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding CurrentCardType, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}"
+                                 Value="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Loan}">
+                        <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}"/>
+                        <Setter Property="TextColor" Value="White"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ButtonReservation"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonSelect}">
+                <Style.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding CurrentCardType, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}"
+                                 Value="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Reservation}">
+                        <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}"/>
+                        <Setter Property="TextColor" Value="White"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="LibraryCardViewStyle"
+                   TargetType="views:LibraryCardView">
+                <Style.Triggers>
+                    <MultiTrigger TargetType="views:LibraryCardView">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding CurrentCardType, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}" 
+                                              Value="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Card}"/>
+                            <BindingCondition Binding="{Binding IsBlockByPassword, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}" 
+                                              Value="False"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsVisible" Value="true" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="LoanListViewStyle"
+                   TargetType="views:LoanListView">
+                <Style.Triggers>
+                    <MultiTrigger TargetType="views:LoanListView">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding CurrentCardType, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}" 
+                                              Value="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Loan}"/>
+                            <BindingCondition Binding="{Binding IsBlockByPassword, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}" 
+                                              Value="False"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsVisible" Value="true" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ReservationListViewStyle"
+                   TargetType="views:ReservationListView">
+                <Style.Triggers>
+                    <MultiTrigger TargetType="views:ReservationListView">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding CurrentCardType, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}" 
+                                              Value="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Reservation}"/>
+                            <BindingCondition Binding="{Binding IsBlockByPassword, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}" 
+                                              Value="False"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsVisible" Value="true" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+        <DataTemplate x:Key="libraryCardTemplate">
+                <StackLayout HorizontalOptions="CenterAndExpand" 
+                             Padding="8,0">
+                        <common:LoadingView IsLoading="{Binding IsLoading, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}"
+                            LoadingIndicatorColor="{StaticResource SwitchOnColor }"
+                            Margin="0,0,0,0">
+                    <common:RoundedFrame  HeightRequest="250"
+                                          CornerRadius="15"
+                                          Padding="0"
+                                          BackgroundColor="White"
+                                          VerticalOptions="FillAndExpand">
+                        <StackLayout Spacing="0">
+                            <common:RoundedFrame CornerRadius="15,15,0,0"
+                                                 Padding="0"
+                                                 HasShadow="False"
+                                                 BackgroundColor="{Binding Color}">
+                                <StackLayout Orientation="Horizontal"
+                                             HeightRequest="103"
+                                             Padding="20,15,20,0">
+                                    <Label Text="{Binding FullName}"
+                                           FontAttributes="Bold"
+                                           FontSize="Large"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="CenterAndExpand" />
+                                    <ff:SvgCachedImage x:Name="Image"
+                                                       Source="{Binding ImageSource}"
+                                                       HeightRequest="80"
+                                                       HorizontalOptions="EndAndExpand" />
+                                </StackLayout>
+                            </common:RoundedFrame>
+                            <StackLayout Spacing="8" 
+                                         Padding="30,8,30,8">
+                                <Button Text="Ma carte de bibliothèque" 
+                                        Style="{StaticResource ButtonCard}"
+                                        BackgroundColor="White"
+                                        TextColor="{StaticResource kleinBlue}"
+                                        IsEnabled="True"
+                                        Padding="10" 
+                                        HeightRequest="40"   
+                                        Command="{Binding CardCommand, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}"
+                                        CommandParameter="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Card}"/>
+                                <Button Text="Mes emprunts" 
+                                        Style="{StaticResource ButtonLoan}" 
+                                        Padding="10"  
+                                        HeightRequest="40"  
+                                        IsEnabled="False"
+                                        Command="{Binding CardCommand,Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}"
+                                        CommandParameter="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Loan}"/>
+                                <Button Text="Mes réservations" 
+                                        IsEnabled="True"
+                                        Style="{StaticResource ButtonReservation}" 
+                                        Padding="10" 
+                                        HeightRequest="40"  
+                                        Command="{Binding CardCommand,Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}"
+                                        CommandParameter="{x:Static viewModel:LibraryMainViewModel+DisplayCardType.Reservation}"/>
+                            </StackLayout>
+                    </StackLayout>
+                    </common:RoundedFrame>
+                        </common:LoadingView>
+                </StackLayout>
+        </DataTemplate>
+        <DataTemplate  x:Key="addCardTemplateKey"  x:Name="addCardTemplate">
+            <StackLayout HorizontalOptions="CenterAndExpand" Padding="8,0" >
+                <common:RoundedFrame  
+                        HeightRequest="250"
+                        CornerRadius="15"
+                        Padding="0"
+                        BackgroundColor="LightPink">
+                    <StackLayout>
+                        <Label Text="Ajouter une carte"
+                               FontAttributes="Bold"
+                               FontSize="Large"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand" 
+                               Margin="0,0,0,20"/>
+                    </StackLayout>
+                </common:RoundedFrame>
+            </StackLayout>
+        </DataTemplate>
+        <local:LibraryCardsDataTemplateSelector x:Key="CardSelector"
+                                                CardTemplate="{StaticResource libraryCardTemplate}"
+                                                AddCardTemplate="{StaticResource addCardTemplateKey}" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand">
+            <common:RoundedScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
+                <common:RoundedScrollView.HeaderView>
+                    <StackLayout>
+                        <common:NavigationBarView Title="Bibliothèques de Dijon"
+                                      HasBackButton="True"
+                                      BackButtonCommand ="{Binding CleanupCommand}" BackgroundColor="Transparent"/>
+                        <CarouselView x:Name="Carousel"  
+                                        Margin="0,0,0,10" 
+                                                          ItemsSource="{Binding AccountChoice}" 
+                                                          ItemTemplate="{StaticResource CardSelector}" 
+                                                          HeightRequest="250" 
+                                                          PeekAreaInsets="24" 
+                                                          Loop="False" 
+                                                          PositionChangedCommand="{Binding CarouselChangeCommand}" 
+                                                          CurrentItemChanged="OnCurrentItemChanged" 
+                                                          PositionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}">
+                        </CarouselView>
+                        <StackLayout Orientation="Horizontal"
+                                    HorizontalOptions="End"
+                                    Margin="0,5,30,5">
+                            <ff:SvgCachedImage x:Name="LeftArrow" 
+                                        Source="{extensions:ImageResource OnDijon.Assets.arrow-left.svg}"
+                                        IsVisible="false"
+                                        WidthRequest="18">
+                            </ff:SvgCachedImage>
+                            <Label x:Name="PageCounter" 
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"
+                                        FontFamily="{StaticResource Isidora}"
+                                        Text="1"
+                                        FontSize="12"
+                                        TextColor="White" />
+                            <ff:SvgCachedImage x:Name="RightArrow" 
+                                        Source="{extensions:ImageResource OnDijon.Assets.arrow-right.svg}"
+                                        WidthRequest="18">
+                            </ff:SvgCachedImage>
+                        </StackLayout>
+                    </StackLayout>
+                </common:RoundedScrollView.HeaderView>
+                <common:RoundedScrollView.ContentView>
+
+                    <StackLayout VerticalOptions="Fill" Padding="0">
+                        <views:LibraryCardView BindingContext="{Binding LibraryCardViewModel}" IsVisible="false" Style="{StaticResource LibraryCardViewStyle}"/>
+                        <views:LoanListView BindingContext="{Binding LoanListViewModel}" IsVisible="false" Style="{StaticResource LoanListViewStyle}"/>
+                        <views:ReservationListView BindingContext="{Binding ReservationListViewModel}" IsVisible="false" Style="{StaticResource ReservationListViewStyle}"/>
+                        <views:AddCardView BindingContext="{Binding AssociateReaderAccount}" IsVisible="{Binding IsNewCardDisplay, Source={RelativeSource AncestorType={x:Type viewModel:LibraryMainViewModel}}}"/>
+                        <views:RequestPasswordView IsVisible="{Binding IsBlockByPassword}" BindingContext="{Binding .}"/>
+                    </StackLayout>
+                </common:RoundedScrollView.ContentView>
+            </common:RoundedScrollView>
+            <Button Style="{StaticResource ButtonConfirm}" 
+                            Text="Rechercher un document" 
+                            Command="{Binding SearchLibraryCommand}" 
+                            AbsoluteLayout.LayoutBounds="0.5, 1"  
+                            Margin="0,0,0,24"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            IsVisible="{Binding ShowAddCardButton}"
+                            IsEnabled="{Binding IsLoading, Converter={StaticResource negateBooleanConverter}}"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</common:BasePage>

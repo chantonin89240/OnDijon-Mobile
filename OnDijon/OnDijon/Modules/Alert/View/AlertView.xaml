@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Alert.View.AlertView"
+             Orientation="Vertical"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Alert.ViewModels"       
+             xmlns:dashboardviewModel="clr-namespace:OnDijon.Common.ViewModels"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             BindableLayout.ItemsSource="{Binding AlertList}">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:ElapsedTimeDateTimeConverter x:Key="ElapsedTime"></converters:ElapsedTimeDateTimeConverter>
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    <BindableLayout.ItemTemplate>
+        <DataTemplate>
+            <common:RoundedFrame CornerRadius="10"
+                                 IsClippedToBounds="True"
+                                 Margin="10,0,10,10"
+                                 Padding="10"
+                                 HasShadow="False">
+                <common:RoundedFrame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DisplayAlertDetail, Source={RelativeSource AncestorType={x:Type viewModel:AlertListViewModel}}}"
+                                          CommandParameter="{Binding}"/>
+                </common:RoundedFrame.GestureRecognizers>
+                <StackLayout Spacing="0">
+                    <StackLayout.Triggers>
+                        <DataTrigger TargetType="StackLayout" 
+                                     Binding="{Binding IsRead}" 
+                                     Value="true">
+                            <Setter Property="Opacity" 
+                                    Value="0.3"/>
+                        </DataTrigger>
+                    </StackLayout.Triggers>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Title}"
+                               TextColor="{StaticResource kleinBlue}"
+                               FontSize="16"
+                               FontFamily="{StaticResource Isidora}"
+                               FontAttributes="Bold"
+                               HorizontalOptions="StartAndExpand"/>
+                        <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.EyeCheckOutline}, Color={StaticResource kleinBlue}, Size=28}" 
+                                       HorizontalOptions="EndAndExpand"
+                                       IsVisible="{Binding IsRead}"/>
+                    </StackLayout>
+                    <Label Text="{Binding Scope}"
+                           TextColor="{StaticResource lightBlue}"
+                           FontSize="13"/>
+                    <Label Text="{Binding SubTitle}"
+                           TextColor="Black"/>
+                    <Label Text="{Binding SendingDate, Converter={StaticResource ElapsedTime}}"
+                           FontSize="11"
+                           TextColor="{StaticResource TextColor}"/>
+                </StackLayout>
+            </common:RoundedFrame>
+        </DataTemplate>
+    </BindableLayout.ItemTemplate>
+    <BindableLayout.EmptyViewTemplate>
+        <DataTemplate>
+            <Label Text="Aucune nouvelle info en vue !"
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource LightBackgroundColor}"
+                   FontSize="16"
+                   FontFamily="{StaticResource Isidora}"
+                   FontAttributes="Bold"/>
+        </DataTemplate>
+    </BindableLayout.EmptyViewTemplate>
+</StackLayout>

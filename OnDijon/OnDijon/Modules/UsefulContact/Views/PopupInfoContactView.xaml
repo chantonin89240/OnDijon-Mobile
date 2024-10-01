@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 x:Class="OnDijon.Modules.UsefulContact.Views.PopupInfoContactView"
+                 CloseWhenBackgroundIsClicked="True"
+                 HasKeyboardOffset="False"
+                 xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+                 xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:resources="clr-namespace:OnDijon.Common.Utils.Resources"
+            xmlns:common="clr-namespace:OnDijon.Common.Views">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageFromResourcesUrlConverter x:Key="imageFromResourcesUrlConverter"></converters:ImageFromResourcesUrlConverter>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <Frame VerticalOptions="Center"
+           HorizontalOptions="FillAndExpand"
+           Margin="38,0"
+           BackgroundColor="White" 
+           CornerRadius="20" 
+           Padding="25">
+
+        <StackLayout Spacing="10">
+            <Label Text="{Binding ContactSelected.Name}"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource kleinBlue}"></Label>
+            <StackLayout x:Name="OpenStatutStackLayout" Margin="10" IsVisible="{Binding ContactSelected.HasOpenInfo}">
+                <Frame Style="{Binding ContactSelected.IsOpenStyle }">
+                    <Label Text="{Binding ContactSelected.IsOpenString}" Style="{StaticResource ciLabelBadge}"></Label>
+                </Frame>
+                <Label Text="{Binding ContactSelected.NextOpenHour}"></Label>
+            </StackLayout>
+            <Label Text="{Binding ContactSelected.Address}"></Label>
+            <Button Command="{Binding ViewContactCommand}"
+                    Text="Voir détails"
+                    Clicked="OnClose"
+                    Style="{StaticResource ButtonConfirm}"></Button>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

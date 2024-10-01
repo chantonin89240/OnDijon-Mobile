@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 ios:Page.UseSafeArea="true"
+                 NavigationPage.HasBackButton="False"
+                 NavigationPage.HasNavigationBar="False"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:viewModel="clr-namespace:OnDijon.Modules.Favorites.ViewModels"
+                 xmlns:Models="clr-namespace:OnDijon.Modules.Favorites.Entities.Models"
+                 x:DataType="viewModel:FavoritesViewModel"
+                 x:Class="OnDijon.Modules.Favorites.Pages.FavoritesPage"
+                 x:TypeArguments="viewModel:FavoritesViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IsNullConverter x:Key="isNullConverter"></converters:IsNullConverter>
+            <Style x:Key="dFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView BackgroundColor="Transparent" Title="Mes favoris"/>
+
+                <!--<StackLayout Margin="20" IsVisible="{Binding FavoriteLayoutIsVisible}">
+                    <Frame Style="{StaticResource ciFrameStandardRounded}">
+                        <Label Text="Aucun favoris en cours"  HorizontalTextAlignment="Center"></Label>
+                    </Frame>
+                </StackLayout>-->
+
+                <StackLayout>
+                    <Button Text="Retour Accueil" Grid.Row="4" Margin="10,5" Style="{StaticResource ButtonConfirm}" HorizontalOptions="FillAndExpand"
+                            Command="{Binding GoToHomeCommand}"/>
+                </StackLayout>
+                
+                <ScrollView>
+                    <StackLayout x:Name="SchooList" Spacing="20" Margin="15" BindableLayout.ItemsSource="{Binding FavAddress}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame CornerRadius="15" Padding="0" x:DataType="Models:FavoriteModel" BackgroundColor="White">
+                                    <Grid ColumnDefinitions="*">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label  Grid.Row="1" Margin="10,5" LineBreakMode="WordWrap">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Rue}" TextColor="{StaticResource kleinBlue}" FontSize="16" FontAttributes="Bold"></Span>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Grid.Row="2" Margin="11,0,0,5">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding CodePostal}" TextColor="{StaticResource kleinBlue}" FontSize="14"></Span>
+                                                    <Span Text=" "></Span>
+                                                    <Span Text="{Binding Ville}" TextColor="{StaticResource kleinBlue}" FontSize="14"></Span>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Button Text="Modifier" Grid.Row="3" Margin="10,0" Style="{StaticResource ButtonConfirm}" HorizontalOptions="FillAndExpand"  
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:FavoritesViewModel}}, Path=GoToModifyFavoritesCommand}" CommandParameter="{Binding .}"></Button>
+                                        <Button Text="Supression" Grid.Row="4" Margin="10,5,10,10" Style="{StaticResource ButtonConfirm}" HorizontalOptions="FillAndExpand"
+                                                Command="{Binding DeleteFavCommand,Source={RelativeSource AncestorType={x:Type viewModel:FavoritesViewModel}}}" CommandParameter="{Binding}"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

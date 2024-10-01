@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{757F5555-7893-47E8-B7E1-5C64CBCFD3D3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>OnDijon.UITest</RootNamespace>
+    <AssemblyName>OnDijon.UITest</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <OutputPath>bin\Staging\</OutputPath>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="Xamarin.UITest" Version="3.1.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CG\Account\Login\LoginNoPasswordTest.cs" />
+    <Compile Include="CG\Account\Login\LoginNoMailTest.cs" />
+    <Compile Include="CG\Account\Login\LoginAllTests.cs" />
+    <Compile Include="CG\Account\Login\LoginNoAccountMailTest.cs" />
+    <Compile Include="CG\Account\Login\LoginSwipeBackTest.cs" />
+    <Compile Include="CG\Account\Onboarding2SwipeBackTest.cs" />
+    <Compile Include="CG\Account\Onboarding2Test.cs" />
+    <Compile Include="CG\Account\Onboarding1Test.cs" />
+    <Compile Include="CG\Account\Password forget\PasswordForgetAllTests.cs" />
+    <Compile Include="CG\Account\Password forget\PasswordForgetWrongMailTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpBackPhoneTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpAllTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpWrongFirstnameTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpWrongNameTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpNoPasswordRulesTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpPasswordDifferentsTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpAccountExistTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpNoPasswordConfirmationTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpNoPasswordTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpNoMailTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpNoFirstNameTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpNoNameTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpBackTest.cs" />
+    <Compile Include="CG\Account\Login\LoginWrongPasswordTest.cs" />
+    <Compile Include="CG\Account\Password forget\PasswordForgetBackTest.cs" />
+    <Compile Include="CG\Account\Password forget\PasswordForgetBackPhoneTest.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpTest.cs" />
+    <Compile Include="CG\Account\Login\RightLoginTest.cs" />
+    <Compile Include="CG\Account\Login\LoginWrongMailTest.cs" />
+    <Compile Include="CG\Account\Password forget\PasswordForgetTests.cs" />
+    <Compile Include="CG\Account\NoLoginTest.cs" />
+    <Compile Include="CG\Account\Login\LoginTest.cs" />
+    <Compile Include="AppInitializer.cs" />
+    <Compile Include="CG\Account\SignUp\SignUpWrongMailTest.cs" />
+    <Compile Include="CG\Profile\ChangePassword\ChangePasswordDoneTest.cs" />
+    <Compile Include="CG\Profile\ChangePassword\ChangePasswordWrongPasswordTest.cs" />
+    <Compile Include="CG\Profile\ChangePassword\ChangePasswordPasswordsDifferentTest.cs" />
+    <Compile Include="CG\Profile\ChangePassword\ChangePasswordNoRulesTest.cs" />
+    <Compile Include="CG\Profile\EditProfile\ChangeProfileInfoAllTest.cs" />
+    <Compile Include="CG\Profile\Profile\ProfileLogOutTest.cs" />
+    <Compile Include="CG\Profile\EditProfile\ChangeProfileInfoTest.cs" />
+    <Compile Include="CG\Profile\EditProfile\ChangeProfileInfoWrongNameTest.cs" />
+    <Compile Include="CG\Profile\EditProfile\ChangeProfileInfoWrongFirstNameTest.cs" />
+    <Compile Include="CG\Profile\EditProfile\ChangeProfileInfoWrongMailTest.cs" />
+    <Compile Include="CG\Profile\EditProfile\ChangeProfileInfoBackPhoneTest.cs" />
+    <Compile Include="CG\Profile\EditProfile\ChangeProfileInfoBackTest.cs" />
+    <Compile Include="CG\Profile\EditProfile\ChangeProfileInfoWrongPhoneTest.cs" />
+    <Compile Include="CG\Profile\Profile\ProfileBackTest.cs" />
+    <Compile Include="CG\Profile\Profile\ProfileBackPhoneTest.cs" />
+    <Compile Include="CG\Profile\Profile\ProfileTest.cs" />
+    <Compile Include="CG\Signalement\Confirmation\ConfirmationBackPhoneTest.cs" />
+    <Compile Include="CG\Signalement\Confirmation\ConfirmationBackTest.cs" />
+    <Compile Include="CG\Signalement\Confirmation\ConfirmationRecapTest.cs" />
+    <Compile Include="CG\Signalement\Description\DescriptionAddPictureTest.cs" />
+    <Compile Include="CG\Signalement\Follow\FollowTest.cs" />
+    <Compile Include="CG\Signalement\Signalement\SignalementBackPhoneTest.cs" />
+    <Compile Include="CG\Signalement\Signalement\SignalementBackTest.cs" />
+    <Compile Include="CG\Signalement\Signalement\SignalementTest.cs" />
+    <Compile Include="CG\Signalement\Type\TypeBackPhoneTest.cs" />
+    <Compile Include="CG\Signalement\Type\TypeBackTest.cs" />
+    <Compile Include="CG\Signalement\Type\TypeNoValidationBackTest.cs" />
+    <Compile Include="CG\Signalement\Type\TypeNoValidationExternalZoneTest.cs" />
+    <Compile Include="CG\Signalement\Description\DescriptionBackTest.cs" />
+    <Compile Include="CG\Signalement\Description\DescriptionBackPhoneTest.cs" />
+    <Compile Include="CG\Signalement\Localisation\LocalisationBackTest.cs" />
+    <Compile Include="CG\Signalement\Localisation\LocalisationBackPhoneTest.cs" />
+    <Compile Include="CG\Signalement\Description\DescriptionTest.cs" />
+    <Compile Include="CG\Signalement\Localisation\LocalisationPartAdressNotFirstTest.cs" />
+    <Compile Include="CG\Signalement\Localisation\LocalisationPartAdressTest.cs" />
+    <Compile Include="CG\Signalement\Localisation\LocalisationFullAdressTest.cs" />
+    <Compile Include="CG\Signalement\Localisation\LocalisationSelectionTest.cs" />
+    <Compile Include="CG\Signalement\Localisation\LocalisationTest.cs" />
+    <Compile Include="CG\Signalement\Type\TypeTest.cs" />
+    <Compile Include="CG\Signalement\Localisation\LocalisationMovementMapTest.cs" />
+    <Compile Include="Utils\FastAccess.cs" />
+    <Compile Include="Utils\TestClass.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DM\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

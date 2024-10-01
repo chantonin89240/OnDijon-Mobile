@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:tools="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:detail="clr-namespace:OnDijon.Modules.Report.Pages.Detail;assembly=OnDijon"
+                 xmlns:viewModels="clr-namespace:OnDijon.Modules.Report.ViewModels;assembly=OnDijon"
+                 xmlns:valueConverters="clr-namespace:OnDijon.Common.ValueConverters;assembly=OnDijon"
+                 ios:Page.UseSafeArea="true"
+                 x:Class="OnDijon.Modules.Report.Pages.Detail.ReportDetailView"
+                 mc:Ignorable="d"
+                 NavigationPage.HasBackButton="False"
+                 NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <tools:ImageOrNotHeightConverter x:Key="imageOrNotHeightConverter"></tools:ImageOrNotHeightConverter>
+            <valueConverters:ReportHistoryDtoStatusToColorValueConverter x:Key="ReportHistoryDtoStatusToColorValueConverter" />
+            <Style x:Key="LabelBase"
+                   TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+            </Style>
+
+            <Style x:Key="ReportPropertyName"
+                   TargetType="Label"
+                   BasedOn="{StaticResource LabelBase}">
+                <Setter Property="TextColor"
+                        Value="#9FA3A6" />
+            </Style>
+
+            <Style x:Key="ReportPropertyValue"
+                   TargetType="Label"
+                   BasedOn="{StaticResource ReportPropertyName}">
+                <Setter Property="TextColor"
+                        Value="#3F3F3F" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+            </Style>
+
+            <Style x:Key="DescriptionLabel"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource PlaceholderColor}" />
+                <Setter Property="Margin"
+                        Value="0,8,0,0" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <RelativeLayout>
+                <Image Style="{StaticResource imageBackground}" />
+                <ScrollView Style="{StaticResource stackLayoutForBackground}">
+                    <StackLayout>
+                        <AbsoluteLayout HeightRequest="{Binding Report.PhotoUrl, Converter={StaticResource imageOrNotHeightConverter}}">
+                            <ffimageloading:CachedImage Source="{Binding Report.PhotoUrl}"
+                                                        AbsoluteLayout.LayoutFlags="All"
+                                                        AbsoluteLayout.LayoutBounds="0, 0, 1, 1.2"
+                                                        Aspect="AspectFill" />
+                            <common:NavigationBarView HasBackButton="False"
+                                                      AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                      AbsoluteLayout.LayoutBounds="1,0"
+                                                      BackgroundColor="Transparent"
+                                                      IsRightButtonVisibile="True"
+                                                      RightButtonCommand="{Binding CloseCommand}" />
+                        </AbsoluteLayout>
+                        <StackLayout Spacing="0">
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal"
+                                                 Padding="0,20">
+                                        <Label Text="{Binding Report.Id, StringFormat='Signalement n°{0}'}"
+                                               FontSize="21"
+                                               FontFamily="{StaticResource Isidora}"
+                                               TextColor="{StaticResource kleinBlue}"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="StartAndExpand"
+                                               VerticalOptions="Center" />
+
+                                        <common:BadgeView Text="{Binding Report.Status}"
+                                                          BackgroundColor="{Binding Report.StatusColor}" />
+                                    </StackLayout>
+
+                                    <Grid RowSpacing="10"
+                                          ColumnSpacing="20">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Date -->
+                                        <Label Grid.Row="0"
+                                               Grid.Column="0"
+                                               Text="Déclaré le : "
+                                               Style="{StaticResource ReportPropertyName}" />
+
+                                        <Label Grid.Row="0"
+                                               Grid.Column="1"
+                                               Text="{Binding Report.Date, StringFormat='{0:dd/MM/yyyy}'}"
+                                               d:Text="Signalisation"
+                                               Style="{StaticResource ReportPropertyValue}" />
+                                        <!-- type -->
+                                        <Label Grid.Row="1"
+                                               Grid.Column="0"
+                                               Text="Type : "
+                                               Style="{StaticResource ReportPropertyName}" />
+
+                                        <Label Grid.Row="1"
+                                               Grid.Column="1"
+                                               Text="{Binding Report.TypeName}"
+                                               d:Text="Signalisation"
+                                               Style="{StaticResource ReportPropertyValue}" />
+
+                                        <!-- address -->
+                                        <Label Grid.Row="2"
+                                               Grid.Column="0"
+                                               Text="Adresse : "
+                                               Style="{StaticResource ReportPropertyName}" />
+
+                                        <Label Grid.Row="2"
+                                               Grid.Column="1"
+                                               Text="{Binding Report.Address}"
+                                               d:Text="14 rue de la Bataille 21000 Dijon"
+                                               Style="{StaticResource ReportPropertyValue}" />
+
+                                        <!-- description -->
+                                        <Label Grid.Row="3"
+                                               Grid.Column="0"
+                                               Text="Description : "
+                                               Style="{StaticResource ReportPropertyName}" />
+
+                                        <Label Grid.Row="3"
+                                               Grid.Column="1"
+                                               Text="{Binding Report.Description}"
+                                               d:Text="Le panneau au croisement de la rue Bataille et de la rue Rousseau semble cassé."
+                                               Style="{StaticResource ReportPropertyValue}" />
+                                    </Grid>
+
+
+                                    <!-- History -->
+                                    <Frame x:Name="HistoryFrameWithCollectionView"
+                                           IsVisible="{Binding ReportHistoryList, Converter={StaticResource NotEmptyCollectionToBoolValueConverter}}"
+                                           CornerRadius="15"
+                                           HasShadow="False"
+                                           Margin="0,30,0,0"
+                                           Padding="30,24,30,0">
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="Historique des échanges"
+                                                   Margin="0,0,0,24"
+                                                   FontAttributes="Bold"
+                                                   FontSize="16" />
+
+                                            <StackLayout BindableLayout.ItemsSource="{Binding ReportHistoryList}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate x:DataType="viewModels:ReportHistoryDtoWrapper">
+                                                        <Grid Padding="0,0,0,5"
+                                                              ColumnSpacing="15">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <detail:ReportDetailBreadcrumbView Grid.Column="0"
+                                                                                               Date="{Binding Date}"
+                                                                                               IsLastElement="{Binding IsLastItem}" />
+                                                            <StackLayout Grid.Column="1"
+                                                                         Padding="0,0,0,30"
+                                                                         Spacing="0">
+                                                                <common:BadgeView Text="{Binding Status}"
+                                                                                  HorizontalOptions="Start"
+                                                                                  BackgroundColor="{Binding Status, Converter={StaticResource ReportHistoryDtoStatusToColorValueConverter}}" />
+                                                                <Label Text="{Binding Description}"
+                                                                       Style="{StaticResource DescriptionLabel}" />
+                                                            </StackLayout>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                    </Frame>
+
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+
+                        <Button x:Name="ButtonSubscribe"
+                                Text="Confirmer ce signalement"
+                                Command="{Binding SubscribeCommand}"
+                                IsVisible="False"
+                                Style="{StaticResource ButtonConfirm}"
+                                HorizontalOptions="Center"
+                                AbsoluteLayout.LayoutFlags="PositionProportional"
+                                AbsoluteLayout.LayoutBounds="0.5, 1"
+                                Margin="0,0,0,30" />
+
+                    </StackLayout>
+
+                </ScrollView>
+            </RelativeLayout>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BaseView>

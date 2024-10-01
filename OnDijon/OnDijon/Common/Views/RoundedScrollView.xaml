@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Common.Views.RoundedScrollView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             VerticalOptions="FillAndExpand"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions">
+
+    <ScrollView x:Name="MainScrollView"
+                VerticalOptions="FillAndExpand">
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <ScrollView  Style="{StaticResource scrollViewForBackground}">
+                <StackLayout>
+                <ContentView x:Name="HeaderContainer"
+                                 HorizontalOptions="FillAndExpand"></ContentView>
+
+                <StackLayout x:Name="ContentContainer" 
+                                 Padding="10,0"
+                                 VerticalOptions="FillAndExpand"
+                                 HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </ScrollView>
+</ContentView>

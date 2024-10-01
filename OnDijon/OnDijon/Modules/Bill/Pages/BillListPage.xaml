@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="OnDijon.Modules.Bill.Pages.BillListPage" 
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"             
+    ios:Page.UseSafeArea="true"
+    xmlns:common="clr-namespace:OnDijon.Common.Views"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False"
+    xmlns:viewModel="clr-namespace:OnDijon.Modules.Bill.ViewModels"
+    xmlns:controls="clr-namespace:OnDijon.Modules.Bill.Tools"
+    x:TypeArguments="viewModel:BillListViewModel"
+    xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+
+            <DataTemplate x:Key="ToPayBill">
+                <Grid RowDefinitions="auto, *" ColumnDefinitions="*,auto">
+                    <Label Grid.ColumnSpan="2" Grid.Row="0" Text="Factures à payer"
+                        TextColor="{StaticResource LightBackgroundColor}"
+                        FontSize="20"
+                        FontFamily="{StaticResource Isidora}"
+                        FontAttributes="Bold"
+                            Margin="0,0,0,20"
+                            IsVisible="{Binding IsFirstBill}"/>
+                    <Frame Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="15" BackgroundColor="White" Padding="2" HasShadow="False">
+                        <Frame BackgroundColor="White" Padding="0" HasShadow="False" CornerRadius="14" IsClippedToBounds="True">
+                            <Grid RowDefinitions="10,40,25,*,50,50,10" ColumnDefinitions="10,auto,*,auto,10" Padding="0" >
+                                <Frame Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="2" Padding="15,0" BackgroundColor="{StaticResource kleinBlue}" HasShadow="False">
+                                    <Label VerticalOptions="Center" TextColor="White">
+                                        <Label.FormattedText>
+                                            <FormattedString >
+                                                <Span FontSize="12" FontFamily="{StaticResource Isidora}" Text="Avant le "/>
+                                                <Span FontAttributes="Bold" Text="{Binding LevyDate}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </Frame>
+                                <Image Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Alert}, Color={StaticResource WarningColor}, Size=40}"/>
+                                <Label Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Text="{Binding Title}" TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource kleinBlue}" Margin="0,0,0,20">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding ToPay}" FontSize="25" FontAttributes="Bold"/>
+                                            <Span Text=" €" FontSize="25" FontAttributes="Bold"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" 
+                                        Text="Payer"
+                                        BorderColor="{StaticResource kleinBlue}"
+                                        Command="{Binding PayLinkCommand, Source={RelativeSource AncestorType={x:Type viewModel:BillListViewModel}}}" 
+                                        CommandParameter="{Binding PayLink}" 
+                                        IsVisible="{Binding PayLink, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}" 
+                                        Style="{StaticResource ButtonConfirm}" />
+                                <common:DownloadButton Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Url="{Binding DownloadLink}" FileName="{Binding Number}" BorderColor="{StaticResource kleinBlue}"  BackgroundColor="White">
+                                    <Grid RowDefinitions="*" ColumnDefinitions="*,*">
+                                        <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.FilePdfOutline}, Color={StaticResource kleinBlue}, Size=25}" 
+                                                 BackgroundColor="Transparent"
+                                                 HorizontalOptions="EndAndExpand" Grid.Column="1"/>
+                                        <Label Grid.ColumnSpan="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Text="Afficher" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource kleinBlue}"></Label>
+                                    </Grid>
+                                </common:DownloadButton>
+                            </Grid>
+                        </Frame>
+                    </Frame>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="PaidBill">
+                <Grid RowDefinitions="auto, 20, *" ColumnDefinitions="*">
+                    <Label Text="Historique" TextColor="{StaticResource LightBackgroundColor}" FontSize="20" FontFamily="{StaticResource Isidora}" Margin="0,20,0,10" FontAttributes="Bold" IsVisible="{Binding IsFirstBill}"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Title}" TextColor="White"/>
+                    <Frame Grid.Row="2" CornerRadius="15" Padding="0">
+                        <Grid RowDefinitions="45" ColumnDefinitions="45,*,45">
+                            <Image Grid.Column="0" Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.CheckCircle}, Color={StaticResource GreenBreadcrumb}, Size=25}" 
+                                             BackgroundColor="Transparent"
+                                             HorizontalOptions="EndAndExpand" Margin="10,0,10,0"/>
+                            <Label Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" TextColor="{StaticResource kleinBlue}">
+                                <Label.FormattedText>
+                                    <FormattedString >
+                                        <Span Text="{Binding ToPay}" />
+                                        <Span Text=" €"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <common:DownloadButton IsVisible="{Binding DownloadLink, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}" 
+                                            Grid.Column="2"
+                                                Url="{Binding DownloadLink}"
+                                                FileName="{Binding Number}">
+                                <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.FilePdfOutline}, Color={StaticResource kleinBlue}, Size=25}" 
+                                             BackgroundColor="Transparent"/>
+                            </common:DownloadButton>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </DataTemplate>
+            <controls:BillTypeDataTemplateSelector x:Key="BillTypeSelector" PaidBill="{StaticResource PaidBill}" ToPayBill="{StaticResource ToPayBill}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <common:LoadingView  IsLoading="{Binding IsLoading}">
+            <Grid ColumnDefinitions="*,50" RowDefinitions="*,50,10">
+                <Image Grid.ColumnSpan="2" Grid.RowSpan="3" Style="{StaticResource imageBackground}" />
+                <ScrollView Grid.ColumnSpan="2" Grid.RowSpan="3" x:Name="ScrollViewPage" Scrolled="ScrollView_Scrolled" VerticalOptions="StartAndExpand" VerticalScrollBarVisibility="Never" >
+                    <Grid ColumnDefinitions="*" RowDefinitions="76, auto">
+                        <common:NavigationBarView Grid.Row="0" Title="Mes factures"  BackgroundColor="Transparent"/>
+                        <StackLayout Padding="24,15,24,10" Grid.Row="1" x:Name="BillList" Spacing="20" BindableLayout.ItemsSource="{Binding BillList}" BindableLayout.ItemTemplateSelector="{StaticResource BillTypeSelector}" Margin="0,0,0,100"/>
+                    </Grid>
+                </ScrollView>
+                <RelativeLayout Grid.Column="1" Grid.Row="1">
+                    <Frame x:Name="scrollableVisibility" IsVisible="true" BackgroundColor="{StaticResource kleinBlue}" WidthRequest="50" HeightRequest="30" CornerRadius="15" Padding="15,15,30,15"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=50}"
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant= 0}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-50}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+                        <Label Text="▲" FontAttributes="Bold" TextColor="White" FontSize="Medium"></Label>
+                    </Frame>
+                </RelativeLayout>
+            </Grid>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BasePage>
+    

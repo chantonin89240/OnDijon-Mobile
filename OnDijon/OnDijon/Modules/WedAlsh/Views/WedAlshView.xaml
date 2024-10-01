@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="OnDijon.Modules.WedAlsh.Views.WedAlshView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"  
+              xmlns:res="clr-namespace:OnDijon.Common.Utils.Resources"
+             xmlns:sr="clr-namespace:OnDijon.Modules.WedAlsh.Views"
+             Orientation="Vertical"
+             VerticalOptions="FillAndExpand"
+             Margin="0,10,0,10"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.WedAlsh.ViewModels">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    <common:LoadingView IsLoading="{Binding IsLoading}">
+        <StackLayout BindableLayout.ItemsSource="{Binding RegistrationSelected.Months}" Margin="10" Spacing="20">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Frame HasShadow="False" 
+                        BackgroundColor="Transparent" 
+                        BorderColor="{StaticResource kleinBlue}" 
+                        Padding="0" 
+                        CornerRadius="25" 
+                        IsClippedToBounds="True">
+
+                        <Grid RowDefinitions="30,auto" ColumnDefinitions="*">
+                            <Label Style="{StaticResource ciLittleTitle}" 
+                                Text="{Binding Name}"  
+                                Padding="0,10" 
+                                HorizontalOptions="FillAndExpand" 
+                                HorizontalTextAlignment="Center" 
+                                BackgroundColor="{StaticResource kleinBlue}" 
+                                TextColor="White"
+                                    Grid.Column="0" Grid.Row="0"></Label>
+                            <StackLayout BindableLayout.ItemsSource="{Binding Schedules}" Margin="10"
+                                    Grid.Column="0" Grid.Row="1">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid RowDefinitions="auto" 
+                                                ColumnDefinitions="*,auto" 
+                                                HorizontalOptions="FillAndExpand" 
+                                                BackgroundColor="{StaticResource LightBackgroundColor}"
+                                                Margin="5">
+                                            <Label Grid.Column="0"  
+                                                            Text="{Binding Source.StartDateString}" 
+                                                            VerticalOptions="Center" 
+                                                            FontSize="Small"/>
+                                            <common:SwitchView Grid.Column="1" 
+                                                                        IsSelected="{Binding IsCheck}" 
+                                                                        IsLocked="{Binding IsOpen, Converter={StaticResource negateBooleanConverter}}" 
+                                                                        SelectedLabel="Activé" 
+                                                                        UnselectedLabel="Désactivé" 
+                                                                            ShowLabel="False"
+                                                                        IsLockedLabel="{Binding ClosingReason}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </common:LoadingView>
+</StackLayout>

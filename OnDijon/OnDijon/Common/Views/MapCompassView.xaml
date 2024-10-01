@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ImageButton xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             x:Class="OnDijon.Common.Views.MapCompassView"
+             WidthRequest="40"
+             HeightRequest="40"
+             CornerRadius="20"
+             Padding="5"
+             BackgroundColor="White"
+             BorderColor="{StaticResource kleinBlue}"
+             BorderWidth="1"
+             Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Navigation}, Color={StaticResource kleinBlue}, Size=30}" />

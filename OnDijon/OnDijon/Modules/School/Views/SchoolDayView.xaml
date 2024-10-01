@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="OnDijon.Modules.School.Views.SchoolDayView"
+              xmlns:res="clr-namespace:OnDijon.Common.Utils.Resources"
+             xmlns:sr="clr-namespace:OnDijon.Modules.School.Views"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    <common:DatePickerSideMoveView 
+                                MinDate="{Binding MinDate}"
+                                MaxDate="{Binding MaxDate}"
+                                Date="{Binding SelectedDate}"
+                                IsEnabled="{Binding IsModify, Converter={StaticResource negateBooleanConverter}}"/>
+    <Label Style="{StaticResource ciLabel}"
+            Margin="0,20,0,0"
+            Text="Aucune activité pour cette journée" 
+            IsVisible="{Binding SchoolRestaurantBookingIsEmpty}"
+            HorizontalOptions="Center"
+            VerticalOptions="EndAndExpand"/>
+    <StackLayout BindableLayout.ItemsSource="{Binding SchoolRestaurantBooking}">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <StackLayout BackgroundColor="{StaticResource LightBackgroundColor}"
+                                Padding="5">
+                    <Grid RowDefinitions="auto" ColumnDefinitions="1*,auto" HorizontalOptions="FillAndExpand" >
+                        <Label Grid.Column="0"  Text="{Binding Source.ActivityTitle}" VerticalOptions="Center" FontSize="Small"/>
+                        <common:SwitchView Grid.Column="1" IsSelected="{Binding Scheduled}" IsLocked="{Binding IsOpen, Converter={StaticResource negateBooleanConverter}}" SelectedLabel="Réservé" UnselectedLabel="Non réservé" IsLockedLabel="{Binding ClosingReason}"/>
+                    </Grid>
+                </StackLayout>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </StackLayout>
+    <Grid ColumnDefinitions="*,auto,*,auto,*" Margin="0,0,0,5"
+            HorizontalOptions="Center"
+            IsVisible="{Binding SchoolRestaurantBookingIsEmpty,Converter={StaticResource negateBooleanConverter}}">
+        <Button Grid.Column="1"
+            Padding="20,0"
+            Text="annuler" 
+            IsEnabled="{Binding IsModify}"
+            Command="{Binding ResetReservationCommand}" 
+            Style="{StaticResource ButtonConfirm}"/>
+        <Button Grid.Column="3"
+            Padding="40,0"
+            Text="Envoyer" IsEnabled="{Binding IsModify}" 
+            Command="{Binding SendReservations}" 
+            Style="{StaticResource ButtonConfirm}"/>
+    </Grid>
+</StackLayout>

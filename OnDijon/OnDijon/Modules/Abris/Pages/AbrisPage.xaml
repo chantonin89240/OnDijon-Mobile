@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="OnDijon.Modules.Abris.Pages.AbrisPage"
+             x:DataType="viewModel:AbrisViewModel"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Abris.ViewModels"
+             xmlns:esri="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="rtGrid" TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="10" />
+                <Setter Property="RowSpacing" Value="10" />
+            </Style>
+            <Style TargetType="Image">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView Title="Abris" HasBackButton="True" BackgroundColor="Transparent"/>
+                <StackLayout Padding="25,0,10,10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <!-- Première colonne (SearchBarView) -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- Deuxième colonne (Image) -->
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <common:SearchBarView x:Name="SearchBarView"
+                          AutomationId="AdressInput"
+                          Placeholder="Chercher un lieu"
+                          Padding="25,0,20,0"
+                          Text="{Binding Recherche}"
+                          VerticalOptions="Start"
+                          SearchCommand="{Binding RechercheCommand}"
+                          HorizontalOptions="FillAndExpand"
+                          IsVisible="{Binding IsSingleSearchBarVisible}" />
+
+                        <common:SearchBarView  x:Name="DepartSearchBarView"
+                                              AutomationId="DepartAdressInput"
+                                              Placeholder="Adresse de départ"
+                                              Padding="25,0,20,0"
+                                              Text="{Binding DepartAddress}"
+                                              VerticalOptions="Start"
+                                              HorizontalOptions="FillAndExpand"
+                                              IsVisible="{Binding IsDepartSearchBarVisible}" />
+
+                        <common:SearchBarView x:Name="DestinationSearchBarView"
+                                              Grid.Row="1"
+                                              AutomationId="DestinationAdressInput"
+                                              Placeholder="Adresse d'arrivée"
+                                              Padding="25,0,20,0"
+                                              Text="{Binding DestinationAddress}"
+                                              VerticalOptions="Start"
+                                              HorizontalOptions="FillAndExpand"
+                                              IsVisible="{Binding IsDestinationSearchBarVisible}" />
+
+                        <StackLayout Padding="10,10,10,10" Grid.Column="1" IsVisible="{Binding IsSingleSearchBarVisible}">
+                            <ImageButton Source="{extensions:ImageResource OnDijon.Assets.targetPosition.png}"
+                 HeightRequest="28"
+                 VerticalOptions="CenterAndExpand"
+                 HorizontalOptions="End"
+                 BackgroundColor="Transparent"
+                 Command="{Binding LocateMeCommand}"/>
+                        </StackLayout>
+
+                        <StackLayout Padding="10,10,10,10" Grid.Column="1" IsVisible="{Binding IsDepartSearchBarVisible}">
+                            <ImageButton Source="{extensions:ImageResource OnDijon.Assets.targetPosition.png}"
+                 HeightRequest="28"
+                 VerticalOptions="CenterAndExpand"
+                 HorizontalOptions="End"
+                 BackgroundColor="Transparent"
+                 Command="{Binding LocateMeDepartAdressCommand}"/>
+                        </StackLayout>
+
+                        <StackLayout Padding="10,10,10,10" Grid.Row="1" Grid.Column="1" IsVisible="{Binding IsDestinationSearchBarVisible}">
+                            <ImageButton Source="{extensions:ImageResource OnDijon.Assets.targetPosition.png}"
+                 HeightRequest="28"
+                 VerticalOptions="CenterAndExpand"
+                 HorizontalOptions="End"
+                 BackgroundColor="Transparent"
+                 Command="{Binding LocateMeDestinationAdressCommand}"/>
+                        </StackLayout>
+
+                    </Grid>
+                    <Button Text="Rechercher"
+                            Command="{Binding SearchAddressCommand}"
+                            Style="{StaticResource ButtonConfirm}"
+                            IsVisible="{Binding IsDepartSearchBarVisible}"/>
+                    <Button Text="Changer de recherche"
+                            Command="{Binding ToggleSearchModeCommand}"
+                            Style="{StaticResource ButtonConfirm}"/>
+                </StackLayout>
+
+                <common:RoundedFrame VerticalOptions="FillAndExpand"
+                                     HorizontalOptions="FillAndExpand"
+                                     CornerRadius="15,15,0,0" Padding="0">
+                    <AbsoluteLayout HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand">
+                        <esri:MapView x:Name="MapView"
+                                      AutomationId="Map"
+                                      Map="{Binding Map}"
+                                      IsAttributionTextVisible="False"
+                                      AbsoluteLayout.LayoutFlags="All"
+                                      AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                      BackgroundColor="Gray"/>
+                        <common:MapCompassView MapView="{Reference MapView}"
+                                               Margin="10,30"
+                                               AbsoluteLayout.LayoutFlags="PositionProportional"
+                                               AbsoluteLayout.LayoutBounds="1, 1" />
+                        <common:MapScaleBarView MapView="{Reference MapView}"
+                                                Margin="10"
+                                                AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                AbsoluteLayout.LayoutBounds="1, 1" />
+                        <Button x:Name="UseLocationButton"
+                                Text="Centrer sur ma position"
+                                AbsoluteLayout.LayoutFlags="PositionProportional"
+                                Margin="0,0,0,24"
+                                AbsoluteLayout.LayoutBounds="0.5, 1"
+                                Command="{Binding GetCurrentLocationCommand}"
+                                Style="{StaticResource ButtonConfirm}" />
+                    </AbsoluteLayout>
+                </common:RoundedFrame>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BaseView>

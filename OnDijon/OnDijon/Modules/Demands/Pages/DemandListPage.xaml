@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 ios:Page.UseSafeArea="true"
+                 NavigationPage.HasBackButton="False"
+                 NavigationPage.HasNavigationBar="False"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:viewModel="clr-namespace:OnDijon.Modules.Demands.ViewsModels"
+                 x:Class="OnDijon.Modules.Demands.Pages.DemandListPage"
+                 x:TypeArguments="viewModel:DemandListViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DatetimeToStringConverter x:Key="datetimeToStringConverter"></converters:DatetimeToStringConverter>
+            <converters:IsNullConverter x:Key="isNullConverter"></converters:IsNullConverter>
+            <converters:CountToBooleanConverter x:Key="countToBooleanConverter"></converters:CountToBooleanConverter>
+            <Style x:Key="dFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <RelativeLayout>
+                <Image Style="{StaticResource imageBackground}"/>
+                <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                    <common:NavigationBarView BackgroundColor="Transparent" Title="Mon espace"/>
+                    <StackLayout Margin="20" 
+                                 IsVisible="{Binding DemandLayoutIsVisible}">
+                        <Frame Style="{StaticResource ciFrameStandardRounded}">
+                            <Label Text="Aucune démarche en cours"  HorizontalTextAlignment="Center"></Label>
+                        </Frame>
+                    </StackLayout>
+                    <ListView x:Name="ListDemand" 
+                              ItemsSource="{Binding DemandListFiltered}" 
+                              HasUnevenRows="True"  
+                              RefreshCommand="{Binding LoadItemsCommand}" 
+                              VerticalScrollBarVisibility="Never" 
+                              VerticalOptions="FillAndExpand" 
+                              SelectionMode="None"
+                              BackgroundColor="Transparent">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell x:Name="Item">
+                                    <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                        <StackLayout Spacing="3" >
+                                            <StackLayout Orientation="Horizontal">
+                                                <common:BadgeView BackgroundColor="{StaticResource BadgeColorRed}" 
+                                                              Text="{Binding CityContext}" 
+                                                              HorizontalOptions="Start"/>
+                                                <common:BadgeView BackgroundColor="{StaticResource BadgeColorGreen}" 
+                                                              Text="{Binding State}" 
+                                                              HorizontalOptions="Start"/>
+                                            </StackLayout>
+                                            <Label Text="{Binding Title}" 
+                                               FontAttributes="Bold"></Label>
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding FirstDescription.Title}" />
+                                                        <Span Text=" : " />
+                                                        <Span Text="{Binding FirstDescription.Value}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding SecondDescription.Title}" />
+                                                        <Span Text=" : " />
+                                                        <Span Text="{Binding SecondDescription.Value}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding SecondDescription, Converter={StaticResource isNullConverter}}" Value="true">
+                                                        <Setter Property="IsVisible" Value="False"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding SecondDescription, Converter={StaticResource isNullConverter}}" Value="false">
+                                                        <Setter Property="IsVisible" Value="True"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                            <Label >
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding ThirdDescription.Title}" />
+                                                        <Span Text=" : " />
+                                                        <Span Text="{Binding ThirdDescription.Value}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding ThirdDescription, Converter={StaticResource isNullConverter}}" Value="true">
+                                                        <Setter Property="IsVisible" Value="False"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding ThirdDescription, Converter={StaticResource isNullConverter}}" Value="false">
+                                                        <Setter Property="IsVisible" Value="True"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                            <Button Text="{Binding ActionDemand.Title}" 
+                                                Style="{StaticResource ButtonConfirm}"
+                                                Command="{Binding ActionButtonCommand, Source={RelativeSource AncestorType={x:Type viewModel:DemandListViewModel}}}"
+                                                CommandParameter="{Binding ActionDemand}"
+                                                Padding="30,0"
+                                                HeightRequest="40"
+                                                HorizontalOptions="Start" >
+                                                <Button.Triggers>
+                                                    <DataTrigger TargetType="Button" Binding="{Binding ActionDemand, Converter={StaticResource isNullConverter}}" Value="true">
+                                                        <Setter Property="IsVisible" Value="False"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Button" Binding="{Binding ActionDemand, Converter={StaticResource isNullConverter}}" Value="false">
+                                                        <Setter Property="IsVisible" Value="True"/>
+                                                    </DataTrigger>
+                                                </Button.Triggers>
+                                            </Button>
+                                        </StackLayout>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </RelativeLayout>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BasePage>

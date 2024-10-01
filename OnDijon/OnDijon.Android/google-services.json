@@ -1,0 +1,227 @@
+{
+  "project_info": {
+    "project_number": "208123582095",
+    "firebase_url": "https://ondijon-app.firebaseio.com",
+    "project_id": "ondijon-app",
+    "storage_bucket": "ondijon-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208123582095:android:0e51e99bd4a73ac29042fa",
+        "android_client_info": {
+          "package_name": "com.capgemini.ondijon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwzUUubHdHjzEqGU0_hL2u9dW5RVXQiJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208123582095-0l4lqkdarq288bkp9lvs0bo92buhbed8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.capgemini.ondijon"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208123582095:android:8a1ca46a582cfd0f9042fa",
+        "android_client_info": {
+          "package_name": "com.capgemini.ondijon.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwzUUubHdHjzEqGU0_hL2u9dW5RVXQiJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208123582095-0l4lqkdarq288bkp9lvs0bo92buhbed8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.capgemini.ondijon"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208123582095:android:b7a26e71a3a4cbdc9042fa",
+        "android_client_info": {
+          "package_name": "com.capgemini.ondijon.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwzUUubHdHjzEqGU0_hL2u9dW5RVXQiJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208123582095-0l4lqkdarq288bkp9lvs0bo92buhbed8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.capgemini.ondijon"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208123582095:android:f257867ac0c42fb19042fa",
+        "android_client_info": {
+          "package_name": "fr.dm.ondijon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwzUUubHdHjzEqGU0_hL2u9dW5RVXQiJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208123582095-0l4lqkdarq288bkp9lvs0bo92buhbed8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.capgemini.ondijon"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208123582095:android:fd4eb6f24c2213de9042fa",
+        "android_client_info": {
+          "package_name": "fr.dm.ondijon.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwzUUubHdHjzEqGU0_hL2u9dW5RVXQiJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208123582095-0l4lqkdarq288bkp9lvs0bo92buhbed8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.capgemini.ondijon"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208123582095:android:14d7babf336cb0309042fa",
+        "android_client_info": {
+          "package_name": "fr.dm.ondijon.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwzUUubHdHjzEqGU0_hL2u9dW5RVXQiJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208123582095-8a0boqonbr6qivtbt2r6lcogbbj95oak.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208123582095-0l4lqkdarq288bkp9lvs0bo92buhbed8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.capgemini.ondijon"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

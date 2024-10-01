@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.Simulator.Pages.SimulatorRateFormPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+            xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions">
+    <ContentPage.Resources>
+        <Style x:Key="LabelError" TargetType="Label">
+            <Setter Property="TextColor" Value="Red"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+        <Style x:Key="DefaultLabel"
+               TargetType="Label">
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="Small" />
+            <Setter Property="TextColor"
+                    Value="{StaticResource MediumGrayTextColor}" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView Title="Simulateur de tarif" BackgroundColor="Transparent"/>
+                <Frame CornerRadius="15" BackgroundColor="White" Margin="10">
+                    <StackLayout>
+                        <Label Style="{StaticResource DefaultLabel}"
+                               Text="Ville" 
+                               IsVisible="{Binding CityIsVisible}"/>
+                        <common:FormPickerView Title="Ville"
+                            ItemsSource="{Binding Cities}"
+                            SelectedItem="{Binding CityContext}"
+                            ItemDisplayBinding="{Binding Title}"
+                            IsVisible="{Binding CityIsVisible}"/>
+                        <Label x:Name="ChooseCityLayoutError" 
+                                       Style="{StaticResource LabelError}" 
+                                       Text="Veuillez choisir une ville"
+                                       IsVisible="{Binding CityLayoutErrorIsVisible}"/>
+                        <Label Style="{StaticResource DefaultLabel}"
+                                   Text="Nombre d'enfants à charge" 
+                                   IsVisible="{Binding ChildIsVisible}"/>
+                        <common:FormEntryView 
+                                    Text="{Binding ChildNumberString}" 
+                                    Placeholder="Nombre d'enfants à charge" 
+                                    Keyboard="Numeric"
+                                    IsVisible="{Binding ChildIsVisible}"/>
+                        <Label x:Name="ChooseChildNumberLayoutError" 
+                                       Style="{StaticResource LabelError}" 
+                                       Text="Il faut choisir un nombre (Supérieur à 0)"
+                                       IsVisible="{Binding ChildNumberLayoutErrorIsVisible}"/>
+                        <Label Style="{StaticResource DefaultLabel}"
+                                   Text="Revenus annuels du foyer"
+                                   IsVisible="{Binding IncomeIsVisible}" />
+                        <common:FormEntryView Text="{Binding IncomeString}"
+                                                      Placeholder="Revenus annuels du foyer"
+                                                      Keyboard="Numeric"
+                                                      IsVisible="{Binding IncomeIsVisible}"/>
+                        <Label x:Name="ChooseIncomeLayoutError" 
+                                       Style="{StaticResource LabelError}" 
+                                       Text="Il faut renseigner vos revenus annuels"
+                                       IsVisible="{Binding IncomeLayoutErrorIsVisible}"/>
+                        <Label Style="{StaticResource DefaultLabel}"
+                                   Text="QF CNAF" />
+                        <common:FormEntryView Text="{Binding QFString}"
+                                                      Placeholder="QF CNAF"
+                                                      Keyboard="Numeric"/>
+                        <Label x:Name="QFLayoutError" 
+                                       Style="{StaticResource LabelError}" 
+                                       Text="Il faut renseigner votre QF CNAF"
+                                       IsVisible="{Binding QFLayoutErrorIsVisible}"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Etes-vous résident ou assimilé ?"
+                                           VerticalOptions="Center"
+                                           TextColor="{StaticResource kleinBlue}" />
+                            <common:SwitchView SelectedLabel="Oui"
+                                                       UnselectedLabel="Non" 
+                                                       IsSelected="{Binding Resident}"
+                                                       HorizontalOptions="EndAndExpand" />
+                        </StackLayout>
+                        <Button Text="Calculer" 
+                                Style="{StaticResource ButtonConfirm}" 
+                                Margin="20,10,20,10"
+                                Command="{Binding CalculateButtonCommand}"/>
+                    </StackLayout>
+                </Frame>
+                <Label Margin="10,0" TextColor="White" Text="ATTENTION, ce calcul n'est qu'une SIMULATION de tarifs des activités proposées par la ville de Dijon (Cantines, gardes périscolaires, sports, etc...)," HorizontalTextAlignment="Center"></Label>
+                <Label Margin="10,0" TextColor="White" Text="effectuée à partir des données que vous avez saisies. Il ne peut en aucun cas se substituer à celui qui sera pratiqué par le Centre Traitement Unique, au vu des justificatifs à produire." HorizontalTextAlignment="Center"></Label>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BaseView>

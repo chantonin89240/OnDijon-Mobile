@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:FormBaseView xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:common="clr-namespace:OnDijon.Common.Views"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     x:Class="OnDijon.Modules.JobOffer.Views.FormFilePickerView">
+    <StackLayout>
+        <Button Style="{StaticResource ButtonConfirm}" Clicked="SelectFile" Text="Sélectionner"/>
+        <Label Style="{StaticResource ciContent}" x:Name="SelectedFileName" IsVisible="false"/>
+    </StackLayout>
+</common:FormBaseView>

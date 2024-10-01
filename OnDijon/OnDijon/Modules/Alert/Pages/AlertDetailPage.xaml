@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 ios:Page.UseSafeArea="true"
+                 NavigationPage.HasBackButton="False"
+                 NavigationPage.HasNavigationBar="False"
+                 xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+                 xmlns:viewModel="clr-namespace:OnDijon.Modules.Alert.ViewModels"
+                 x:Class="OnDijon.Modules.Alert.Pages.AlertDetailPage"
+                 x:TypeArguments="viewModel:AlertDetailViewModel" >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ElapsedTimeDateTimeConverter x:Key="ElapsedTime"></converters:ElapsedTimeDateTimeConverter>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image  Style="{StaticResource imageBackground}"/>
+            <ScrollView  Style="{StaticResource stackLayoutForBackground}">
+                <StackLayout>
+                    <common:NavigationBarView Title="Détail" HasBackButton="True" 
+                                            BackgroundColor="Transparent"/>
+                    <common:RoundedFrame CornerRadius="30"
+                                         IsClippedToBounds="True"
+                                         Margin="10,0,10,10"
+                                         Padding="10"
+                                         HasShadow="False">
+                        <StackLayout Orientation="Vertical"
+                                     Margin="10">
+                            <StackLayout Orientation="Horizontal">
+                                <common:BadgeView BackgroundColor="{StaticResource BadgeColorGreen}" 
+                                                  Text="{Binding Alert.Scope}" 
+                                                  HorizontalOptions="Start"/>
+                                <ImageButton Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.EyeOffOutline}, Color={StaticResource kleinBlue}, Size=28}" 
+                                             Command="{Binding MaskAsUnReadCommand}"
+                                             BackgroundColor="Transparent"
+                                             HorizontalOptions="EndAndExpand" />
+                            </StackLayout>
+                            <Grid HorizontalOptions="FillAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding Alert.Title}" 
+                                   TextColor="{StaticResource kleinBlue}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="StartAndExpand"/>
+                                <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding Alert.SendingDate, Converter={StaticResource ElapsedTime}}" 
+                                   TextColor="{StaticResource LightTextColor}"
+                                   FontSize="15"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="End"/>
+                            </Grid>
+                            <forms:CachedImage Source="{Binding Alert.Image}"
+                                               Aspect="AspectFill"
+                                               HorizontalOptions="Center"/>
+                            <Label Text="{Binding Alert.Content}"
+                                   Margin="0,10,0,0"/>
+                            <common:HyperlinkView IsVisible="{Binding Alert.NavigationLink, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}" Text="Voir le site" Url="{Binding Alert.NavigationLink}" Margin="0,10">
+                            </common:HyperlinkView>
+                        </StackLayout>
+                    </common:RoundedFrame>
+                </StackLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Strike.Pages.NurseryStrikeDetailPage" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+            xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+            xmlns:viewModel="clr-namespace:OnDijon.Modules.Strike.ViewModels"
+            x:TypeArguments="viewModel:NurseryStrikeDetailViewModel"
+            >
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <converters:IsNullConverter x:Key="IsNullConverter"></converters:IsNullConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <RelativeLayout>
+                <Image Style="{StaticResource imageBackground}" />
+                <StackLayout Style="{StaticResource stackLayoutForBackground}">
+                    <common:NavigationBarView Title="{Binding Title}"  BackgroundColor="Transparent"/>
+                    <StackLayout Spacing="10" Padding="10">
+
+                        <StackLayout Padding="8" Spacing="0">
+
+                            <common:SearchBarView Placeholder="Recherchez..."  x:Name="SearchBarCustom"
+                                                   Text="{Binding Filter}"
+                                                      DisplayOnFocus="True"
+                                                      RefreshOnTextChanged="True"
+                                                      SearchCommand="{Binding UpdatePickerContent}"/>
+
+                            <ScrollView  Style="{StaticResource scrollViewForBackground}"
+                                            IsVisible="{Binding IsNurseryListDisplay}"
+                                             HeightRequest="300"
+                                         x:Name="ScrollViewPage"
+                                         Margin="0,-5,0,0">
+
+                                <StackLayout x:Name="NurseList" Spacing="0"
+                                                     BindableLayout.ItemsSource="{Binding FilteredSessionStrike}">
+
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Frame CornerRadius="0">
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding SelectNurseryCommand,Source={RelativeSource AncestorType={x:Type viewModel:NurseryStrikeDetailViewModel}}}" 
+                                                                                  CommandParameter="{Binding}"
+                                                                                  Tapped="UnfocusSearchBar">
+                                                    </TapGestureRecognizer>
+                                                </Frame.GestureRecognizers>
+                                                <StackLayout>
+                                                    <Label Text="{Binding Name}" Style="{StaticResource ciBigContentNoMargin}"/>
+                                                </StackLayout>
+                                            </Frame>
+                                        </DataTemplate>
+
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </ScrollView>
+                        </StackLayout>
+
+
+
+
+                        <StackLayout Padding="8" IsVisible="{Binding IsNurserySelected}">
+                            <common:RoundedFrame CornerRadius="10" Padding="15">
+                                <StackLayout>
+
+                                    <Label Text="{Binding SelectedNursery.Name}" Style="{StaticResource ciCardTitle}" />
+
+                                    <Label Text="Detail :" Style="{StaticResource ciBigLabel}"/>
+                                    <Label Text="{Binding SelectedNursery.Detail}" Style="{StaticResource ciBigContent}"/>
+
+                                </StackLayout>
+                            </common:RoundedFrame>
+                        </StackLayout>
+
+                    </StackLayout>
+                </StackLayout>
+            </RelativeLayout>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BasePage>

@@ -1,0 +1,658 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Sonar needs this -->
+    <ProjectGuid>{08C765D3-87A8-4D2B-8F46-3FCEA795DAB5}</ProjectGuid>
+    <Configurations>Debug;Release;Staging</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+   <DebugSymbols>true</DebugSymbols>
+   <CodeAnalysisRuleSet>OnDijon.ruleset</CodeAnalysisRuleSet>
+   <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+	
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	<CodeAnalysisRuleSet>OnDijon.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants></DefineConstants>
+  </PropertyGroup>
+	
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Staging|AnyCPU'">
+	<CodeAnalysisRuleSet>OnDijon.ruleset</CodeAnalysisRuleSet>
+	<DefineConstants>STAGING</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DM\**" />
+    <Compile Remove="Modules\Bill\Views\**" />
+    <Compile Remove="Modules\Favorites\Views\**" />
+    <Compile Remove="Modules\_Template\**" />
+    <EmbeddedResource Remove="DM\**" />
+    <EmbeddedResource Remove="Modules\Bill\Views\**" />
+    <EmbeddedResource Remove="Modules\Favorites\Views\**" />
+    <EmbeddedResource Remove="Modules\_Template\**" />
+    <None Remove="DM\**" />
+    <None Remove="Modules\Bill\Views\**" />
+    <None Remove="Modules\Favorites\Views\**" />
+    <None Remove="Modules\_Template\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\arrow-left.svg" />
+    <None Remove="Assets\arrow-right.svg" />
+    <None Remove="Assets\Logo-white.png" />
+    <None Remove="Assets\news-standard-image.png" />
+    <None Remove="Assets\onboarding1.png" />
+    <None Remove="Assets\onboarding2.png" />
+    <None Remove="Assets\pin.png" />
+    <None Remove="Assets\pinMyPosition.png" />
+    <None Remove="Assets\PinPositionWhite.png" />
+    <None Remove="Assets\service-identity.svg" />
+    <None Remove="Assets\service-library.svg" />
+    <None Remove="Assets\service-point-of-interest.svg" />
+    <None Remove="Assets\service-rate-simulator.svg" />
+    <None Remove="Assets\service-report.svg" />
+    <None Remove="Assets\service-school.svg" />
+    <None Remove="Assets\service-useful-services.svg" />
+    <None Remove="Assets\OnDijon_Logo.png" />
+    <None Remove="Assets\targetPosition.png" />
+    <None Remove="Xamarin.Forms.InputKit" />
+    <None Remove="Common\Permissions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\.sonarlint\88ea8895-789f-48cc-a259-6805c2fdd313\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<EmbeddedResource Include="Assets\pinMyPosition.png" />
+	<EmbeddedResource Include="Assets\PinHome.png" />
+	<EmbeddedResource Include="Assets\PinPositionWhite.png" />
+	<EmbeddedResource Include="Assets\PinPosition.png" />
+	<EmbeddedResource Include="Assets\PinWork.png" />
+	<EmbeddedResource Include="Assets\App-store.png" />
+	<EmbeddedResource Include="Assets\arrow-left.svg" />
+	<EmbeddedResource Include="Assets\arrow-right.svg" />
+	<EmbeddedResource Include="Assets\culture-loisirs.svg" />
+	<EmbeddedResource Include="Assets\Google-play.png" />
+    <EmbeddedResource Include="Assets\Logo-white.png" />
+	<EmbeddedResource Include="Assets\loupe.png" />
+    <EmbeddedResource Include="Assets\news-standard-image.png" />
+    <EmbeddedResource Include="Assets\onboarding1.png" />
+    <EmbeddedResource Include="Assets\onboarding2.png" />
+    <EmbeddedResource Include="Assets\OnDijon_Logo.png" />
+	<EmbeddedResource Include="Assets\padlock.svg" />
+	<EmbeddedResource Include="Assets\pin.png" />
+	<EmbeddedResource Include="Assets\pinSelected.png" />
+	<EmbeddedResource Include="Assets\SchoolRestaurantMenu.svg" />
+    <EmbeddedResource Include="Assets\service-identity.svg" />
+    <EmbeddedResource Include="Assets\service-library.svg" />
+    <EmbeddedResource Include="Assets\service-point-of-interest.svg" />
+    <EmbeddedResource Include="Assets\service-rate-simulator.svg" />
+    <EmbeddedResource Include="Assets\service-report.svg" />
+    <EmbeddedResource Include="Assets\service-school.svg" />
+    <EmbeddedResource Include="Assets\service-useful-services.svg" />
+    <EmbeddedResource Include="Assets\SmallButtonLeft.svg" />
+	<EmbeddedResource Include="Assets\SmallButtonRight.svg" />
+	<EmbeddedResource Include="Assets\sondage-citoyen.svg" />
+	<EmbeddedResource Include="Assets\targetPosition.png" />
+	<EmbeddedResource Include="Assets\WaitingScreenOnDijon.jpg" />
+	<EmbeddedResource Include="Assets\backgrounds\BackgroundOn.jpg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-boy-1.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-boy-2.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-boy-3.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-boy-4.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-boy-5.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-boy-6.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-boy-7.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-boy-8.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-1.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-2.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-3.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-4.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-5.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-6.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-7.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-8.svg" />
+	<EmbeddedResource Include="Assets\avatars\kids\avatar-girl-9.svg" />
+	<EmbeddedResource Include="Assets\InfosTravaux.jpg" />
+	<EmbeddedResource Include="Assets\traffic_cone_current.svg" />
+	<EmbeddedResource Include="Assets\traffic_cone_incoming.svg" />
+	<EmbeddedResource Include="Assets\traffic_cone_newest.svg" />
+	<EmbeddedResource Include="Assets\traffic_cone_current.png" />
+	<EmbeddedResource Include="Assets\traffic_cone_incoming.png" />
+	<EmbeddedResource Include="Assets\traffic_cone_newest.png" />
+	<EmbeddedResource Include="Assets\debut.png" />
+	<EmbeddedResource Include="Assets\terminer.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="6.0.6" />
+    <PackageReference Include="Mapsui" Version="3.0.2" />
+    <PackageReference Include="Mapsui.Forms" Version="3.0.2" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+    <PackageReference Include="akavache" Version="9.0.1" />
+    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
+    <PackageReference Include="Esri.ArcGISRuntime.Xamarin.Forms" Version="100.15.0" />
+    <PackageReference Include="Microsoft.AppCenter" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Plugin.FirebasePushNotification" Version="3.4.35" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+    <PackageReference Include="Xam.Plugin.TabView" Version="1.1.1" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.4" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.4" />
+    <PackageReference Include="ZXing.Net" Version="0.16.8" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2545" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+    <PackageReference Include="Xamarin.Forms.InputKit" Version="4.1.6" />
+    <PackageReference Include="IdentityModel.OidcClient" Version="5.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Common\Utils\Resources\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\Carousel\Cards\CardVerticalView.xaml.cs">
+      <DependentUpon>CardVerticalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\StarsNotationView.xaml.cs">
+      <DependentUpon>StarsNotationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\DownloadButton.xaml.cs">
+      <DependentUpon>DownloadButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Account\Pages\ChangeProfileInfoPage.xaml.cs">
+      <DependentUpon>ChangeProfileInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Account\Pages\SignUpView.xaml.cs">
+      <DependentUpon>SignUpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Account\Pages\ResetPasswordView.xaml.cs">
+      <DependentUpon>ResetPasswordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\ComboSeachBarView.xaml.cs">
+      <DependentUpon>ComboSeachBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\AddressPickerView.xaml.cs">
+      <DependentUpon>AddressPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Views\RequestPasswordView.xaml.cs">
+      <DependentUpon>RequestPasswordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Views\AccountPopupView.xaml.cs">
+      <DependentUpon>AccountPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Alert\Pages\AlertRepositoryPage.xaml.cs">
+      <DependentUpon>AlertRepositoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Alert\View\AlertListView.xaml.cs">
+      <DependentUpon>AlertListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Report\Pages\Detail\ReportDetailBreadcrumbView.xaml.cs">
+      <DependentUpon>ReportDetailBreadcrumbView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\ScopesView.xaml.cs">
+      <DependentUpon>ScopesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\Breadcrumb\BreadcrumbValidatedStepView.xaml.cs">
+      <DependentUpon>BreadcrumbValidatedStepView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\Popup\PopupVersionSuspendedView.xaml.cs">
+      <DependentUpon>PopupVersionSuspendedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\Popup\PopupVersionObsoleteView.xaml.cs">
+      <DependentUpon>PopupVersionObsoleteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\RoundedScrollView.xaml.cs">
+      <DependentUpon>RoundedScrollView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\SwitchView.xaml.cs">
+      <DependentUpon>SwitchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\HyperlinkView.xaml.cs">
+      <DependentUpon>HyperlinkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\RoundedFrame.xaml.cs">
+      <DependentUpon>RoundedFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\PopupView.xaml.cs">
+      <DependentUpon>PopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\NavigationBarView.xaml.cs">
+      <DependentUpon>NavigationBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Views\TopBarView.xaml.cs">
+      <DependentUpon>TopBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Booking\Pages\BookingPage.xaml.cs">
+      <DependentUpon>BookingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Diary\Pages\EventListPage.xaml.cs">
+      <DependentUpon>EventListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Diary\Views\EventDetailsView.xaml.cs">
+      <DependentUpon>EventDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Diary\Views\EventListDashboardView.xaml.cs">
+      <DependentUpon>EventListDashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Pages\CatalogSearchPage.xaml.cs">
+      <DependentUpon>CatalogSearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Views\AddCardView.xaml.cs">
+      <DependentUpon>AddCardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Views\PopupAddCardView.xaml.cs">
+      <DependentUpon>PopupAddCardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Views\ReservationListView.xaml.cs">
+      <DependentUpon>ReservationListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Views\LoanListView.xaml.cs">
+      <DependentUpon>LoanListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Pages\LibraryMainPage.xaml.cs">
+      <DependentUpon>LibraryMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Library\Views\LibraryCardView.xaml.cs">
+      <DependentUpon>LibraryCardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\OnBoarding\Pages\OnBoardingPage.xaml.cs">
+      <DependentUpon>OnBoardingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\Rating\Views\RatingPopupView.xaml.cs">
+      <DependentUpon>RatingPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\School\Views\PopupRestaurantView.xaml.cs">
+      <DependentUpon>PopupRestaurantView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\School\Views\PopupMenuView.xaml.cs">
+      <DependentUpon>PopupMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\WedAlsh\Views\PopupInfoWedAlshView.xaml.cs">
+      <DependentUpon>PopupInfoWedAlshView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\WedAlsh\Views\WedAlshView.xaml.cs">
+      <DependentUpon>WedAlshView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\School\Views\WeekSchedulingView.xaml.cs">
+      <DependentUpon>WeekSchedulingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\School\Views\SchoolDayView.xaml.cs">
+      <DependentUpon>SchoolDayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Common\Utils\Resources\DMResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DMResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\UsefulContact\Views\PopupInfoContactView.xaml.cs">
+      <DependentUpon>PopupInfoContactView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\UsefulContact\Pages\WorkInfosPage.xaml.cs">
+      <DependentUpon>WorkInfosPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Modules\UsefulContact\Views\WorkInfosDetailView.xaml.cs">
+      <DependentUpon>WorkInfosDetailView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Common\Views\DownloadButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Abris\Pages\AbrisPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Abris\Views\AbrisDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Account\Pages\DeleteAccountPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Account\Pages\SignUpView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Utils\Resources\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Account\Pages\CguPopupView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Account\Pages\ChangeProfileInfoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Account\Pages\ResetPasswordView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Account\Pages\ProfileView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Account\Pages\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\AddressPickerView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\FormAddressView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Alert\Pages\AlertDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Alert\Pages\AlertRepositoryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Alert\View\AlertListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\Carousel\Cards\CardAlertView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\Carousel\Cards\CardDoubleView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Dashboard\Pages\DashboardView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\MenuView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Diary\Views\ElementEventListDashboardView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Favorites\Pages\ModifyFavoritesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Report\Pages\Detail\ReportDetailBreadcrumbView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Report\Pages\ReportDescriptionView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Report\Pages\ReportLocalisationView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Report\Pages\ReportsHomeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Report\Pages\ReportSuccessView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Report\Pages\ReportSummaryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Report\Pages\ReportsUserView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Report\Pages\ReportTypeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\Carousel\Cards\CardErrorView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\Carousel\Cards\CardStandartView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\School\Views\DietView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Services\Pages\ServiceButtonView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+	  <EmbeddedResource Update="Modules\Services\Pages\ServicesView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Common\Views\ScopesView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\BadgeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\Breadcrumb\BreadcrumbCurrentStepView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\Breadcrumb\BreadcrumbValidatedStepView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\Breadcrumb\BreadcrumbView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\Carousel\CustomCarouselView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\CustomCollectionView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\DatePickerSideMoveView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\EditorView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\HyperlinkView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\RoundedFrame.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\DatePickerPopupView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\FormBaseView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\FormDatePickerView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\FormEntryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\FormPickerView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\LoadingView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\MapCompassView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\MapScaleBarView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\NavigationCardView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\SearchBarView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\SwitchIconView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\SwitchView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\NavigationBarView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Views\TopBarView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Alert\View\AlertView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Booking\Pages\BookingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Booking\Pages\CancelBookingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\CustomContent\Views\CustomContentView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Demands\Pages\DemandListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Diary\Pages\EventListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Diary\Pages\EventDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Diary\Views\EventListDashboardView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\JobOffer\Pages\ApplicationFormPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\JobOffer\Pages\DetailJobOfferPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\JobOffer\Pages\ListJobOfferPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\JobOffer\Pages\SelectCityPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\JobOffer\Views\CustomFormFilePickerView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\JobOffer\Views\FormFilePickerView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Library\Pages\CatalogDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Library\Pages\CatalogSearchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Library\Pages\StreamingOnlinePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Library\Views\LoanListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Library\Pages\LibraryMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Library\Views\LibraryCardView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Library\Views\ProfilCardsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\RoadworkInformation\CustomComponent\CustomOSM.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\RoadworkInformation\Pages\RoadworkInformationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\RoadworkInformation\Views\RoadworkDashboardView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\RoadworkInformation\Views\RoadworkDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\RoadworkInformation\Views\RoadworkPopupView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\RoadworkInformation\Views\RoadworkDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\RoadworkInformation\Views\RoadworkPopupView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Rating\Views\RatingPopupView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\School\Pages\SchoolRestaurantDisplayPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\School\Views\DishView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\School\Pages\SchoolHomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\School\Views\SchoolRestaurantView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Simulator\Pages\SimulatorRateFormPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Simulator\Pages\SimulatorRatePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Utils\Resources\DMResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DMResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\avatars\" />
+    <Folder Include="Modules\Diary\Tools\" />
+    <EmbeddedResource Update="Modules\Library\Pages\SearchLibraryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Utils\Validators\Views\DefaultTemplates.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Utils\Validators\Views\ErrorSummaryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\Utils\Validators\Views\ErrorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Strike\Pages\NurseryStrikeDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Strike\Pages\StrikeDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\UsefulContact\Views\ContactDetailView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\Web\Views\WebPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Modules\WedAlsh\Pages\WedAlshMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Folder Include="Modules\Report\Entities\Models\" />
+    <Folder Include="Modules\Notification\Entities\Dto\" />
+    <Folder Include="Modules\Notification\Entities\Request\" />
+    <Folder Include="Modules\Notification\Pages\" />
+    <Folder Include="Modules\Notification\Services\Interfaces\" />
+    <Folder Include="Modules\Notification\ViewModels\" />
+    <Folder Include="Modules\OnBoarding\Entities\" />
+    <Folder Include="Modules\OnBoarding\Services\" />
+    <Folder Include="Modules\OnBoarding\Views\" />
+    <Folder Include="Modules\Strike\Views\" />
+    <Folder Include="Modules\WedAlsh\Tools\" />
+    <Folder Include="Common\Permissions\" />
+  </ItemGroup>
+
+  
+</Project>

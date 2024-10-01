@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:local="clr-namespace:OnDijon.Common.Utils"
+             ios:Page.UseSafeArea="true"
+             mc:Ignorable="d"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Report.ViewModels"
+             x:TypeArguments="viewModel:ReportSummaryViewModel"
+             x:Class="OnDijon.Modules.Report.Pages.ReportSummaryView"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ReportPropertyName"
+                   TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource PlaceholderColor}" />
+            </Style>
+
+            <Style x:Key="ReportPropertyValue"
+                   TargetType="Label"
+                   BasedOn="{StaticResource ReportPropertyName}">
+                <Setter Property="TextColor"
+                        Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <RelativeLayout>
+                <Image Style="{StaticResource imageBackground}"/>
+                <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                    <common:NavigationBarView Title="Déclarer un signalement" BackButtonCommand ="{Binding CloseCommand}" HeightRequest="90" BackgroundColor="Transparent"/>
+                    <AbsoluteLayout VerticalOptions="FillAndExpand">
+                        <ScrollView VerticalOptions="FillAndExpand"
+                                AbsoluteLayout.LayoutFlags="All"
+                                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                Padding="0,20,0,0">
+                            <common:RoundedFrame VerticalOptions="FillAndExpand"
+                                             HorizontalOptions="FillAndExpand"
+                                             Padding="24,20,24,80">
+                                <StackLayout Spacing="0"
+                                         Orientation="Vertical">
+                                    <common:BreadcrumbView StepCount="4"
+                                                       StepTitleList="{x:Static local:RecipeUIConstants.StepTitleReport}"
+                                                       CurrentStep="4" />
+
+                                    <Image Margin="-24,24,-24,0"
+                                       Source="{Binding PhotoSource}"
+                                       IsVisible="{Binding PhotoAvailable}"
+                                       HeightRequest="180"
+                                       Aspect="AspectFill"
+                                       BackgroundColor="Gray" />
+
+                                    <Grid Margin="0,24,0,0"
+                                      RowSpacing="10"
+                                      ColumnSpacing="50">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- type -->
+                                        <Label Grid.Row="0"
+                                           Grid.Column="0"
+                                           Text="Type"
+                                           Style="{StaticResource ReportPropertyName}" />
+
+                                        <Label Grid.Row="0"
+                                           Grid.Column="1"
+                                           Text="{Binding Report.ReportContent.ReportTypeName}"
+                                           d:Text="Signalisation"
+                                           AutomationId="TypeResult"
+                                           Style="{StaticResource ReportPropertyValue}" />
+
+                                        <!-- address -->
+                                        <Label Grid.Row="1"
+                                           Grid.Column="0"
+                                           Text="Adresse"
+                                           Style="{StaticResource ReportPropertyName}" />
+
+                                        <Label Grid.Row="1"
+                                           Grid.Column="1"
+                                           Text="{Binding Report.ReportContent.Address}"
+                                           AutomationId="AddressResult"
+                                           d:Text="14 rue de la Bataille 21000 Dijon"
+                                           Style="{StaticResource ReportPropertyValue}" />
+
+                                        <!-- description -->
+                                        <Label Grid.Row="2"
+                                           Grid.Column="0"
+                                           Text="Description"
+                                           Style="{StaticResource ReportPropertyName}" />
+
+                                        <Label Grid.Row="2"
+                                           Grid.Column="1"
+                                           Text="{Binding Report.ReportContent.Description}"
+                                           AutomationId="DescriptionResult"
+                                           d:Text="Le panneau au croisement de la rue Bataille et de la rue Rousseau semble cassé."
+                                           Style="{StaticResource ReportPropertyValue}" />
+                                    </Grid>
+                                </StackLayout>
+                            </common:RoundedFrame>
+                        </ScrollView>
+                        <Button Text="Envoyer le signalement"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            AbsoluteLayout.LayoutBounds="0.5,1"
+                            Margin="0,0,0,24"
+                            Command="{Binding SendReportCommand}"
+                            Style="{StaticResource ButtonConfirm}" />
+                    </AbsoluteLayout>
+
+                </StackLayout>
+            </RelativeLayout>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BasePage>

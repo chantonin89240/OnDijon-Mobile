@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:CardViewBase xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:common="clr-namespace:OnDijon.Common.Views"
+                     xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                     x:Class="OnDijon.Common.Views.CardDoubleView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ActionTitle"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="MaxLines"
+                        Value="1" />
+                <Setter Property="LineBreakMode"
+                        Value="TailTruncation" />
+            </Style>
+
+            <Style x:Key="ActionDescription"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource PlaceholderColor}" />
+                <Setter Property="MaxLines"
+                        Value="1" />
+                <Setter Property="LineBreakMode"
+                        Value="TailTruncation" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <common:RoundedFrame Style="{StaticResource CarouselCard}">
+        <StackLayout Orientation="Vertical"
+                     Spacing="0">
+            <!-- Header -->
+            <common:RoundedFrame Style="{StaticResource CarouselCard}"
+                                 BackgroundColor="{Binding Color}"
+                                 CornerRadius="15,15,0,0"
+                                 HasShadow="False">
+                <StackLayout HeightRequest="80"
+                             Orientation="Horizontal"
+                             Padding="20,20,20,0">
+
+                    <StackLayout Orientation="Vertical"
+                                 HorizontalOptions="FillAndExpand">
+                        <common:BadgeView x:Name="NotificationCountBadge"
+                                          BackgroundColor="{StaticResource NotificationBackground}"
+                                          Text="{Binding NotificationCount}"
+                                          HorizontalOptions="Start"
+                                          IsVisible="False"
+                                          TextColor="White" />
+                        <Label Text="{Binding Title}"
+                               FontSize="20"
+                               MaxLines="3"
+                               LineBreakMode="TailTruncation"
+                               FontAttributes="Bold"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               TextColor="{StaticResource kleinBlue}" />
+                    </StackLayout>
+                    <ff:SvgCachedImage x:Name="Image"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="EndAndExpand" />
+                </StackLayout>
+            </common:RoundedFrame>
+
+            <!-- Bottom buttons -->
+            <StackLayout Orientation="Vertical"
+                         Padding="20,0"
+                         Spacing="16"
+                         VerticalOptions="CenterAndExpand">
+                <!-- Button 1 -->
+                <StackLayout Orientation="Vertical"
+                             Spacing="0">
+                    <Label Text="{Binding Actions[0].Title}"
+                           Style="{StaticResource ActionTitle}" />
+                    <Label Text="{Binding Actions[0].Description}"
+                           Style="{StaticResource ActionDescription}" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
+                                              CommandParameter="{Binding Actions[0]}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout HeightRequest="1"
+                             HorizontalOptions="FillAndExpand"
+                             BackgroundColor="{StaticResource DividerColor}" />
+
+                <!-- Button 2 -->
+                <StackLayout Orientation="Vertical"
+                             Spacing="0">
+                    <Label Text="{Binding Actions[1].Title}"
+                           Style="{StaticResource ActionTitle}" />
+                    <Label Text="{Binding Actions[1].Description}"
+                           Style="{StaticResource ActionDescription}" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
+                                              CommandParameter="{Binding Actions[1]}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+            </StackLayout>
+        </StackLayout>
+    </common:RoundedFrame>
+</common:CardViewBase>

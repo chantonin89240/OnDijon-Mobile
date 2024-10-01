@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.RoadworkInformation.Views.RoadworkDashboardView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:dashboardviewModel="clr-namespace:OnDijon.Common.ViewModels"   
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:viewModel="clr-namespace:OnDijon.Common.ViewModels"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions">
+    <Frame Style="{StaticResource ciFrameStandardRounded}" Margin="10" Padding="0" IsClippedToBounds="True">
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding GoToRoadworkInfoCommand}"/>
+        </Frame.GestureRecognizers>
+        <Grid ColumnDefinitions="100,10,*" RowDefinitions="30,2,40,*,*,25">
+            <Image Source="{extensions:ImageResource OnDijon.Assets.InfosTravaux.jpg}" Aspect="AspectFill" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="6"/>
+            <Label Text="Infos travaux" Style="{StaticResource ciLittleTitle}" VerticalOptions="End" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+            <BoxView Style="{StaticResource ciSeparator}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+            <Label Text="Toutes les informations près de chez vous !" Style="{StaticResource ciLabelBadge}"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+            <Label Text="{Binding NewWorkDashboardString}" Style="{StaticResource ciLabel}" VerticalOptions="End" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1"/>
+            <Label Text="{Binding CurrentWorkDashboardString}" VerticalOptions="Start" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="1"/>
+            <Label Text="Consulter la carte ➞" HorizontalOptions="End" Margin="0,0,10,0" Style="{StaticResource ciLabel}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+        </Grid>
+    </Frame>
+</StackLayout>

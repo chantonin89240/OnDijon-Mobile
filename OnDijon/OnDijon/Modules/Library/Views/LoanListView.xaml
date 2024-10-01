@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Library.Views.LoanListView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Library.ViewModels"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters" 
+             VerticalOptions="CenterAndExpand">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+        <Style x:Key="BadgeButton" 
+               TargetType="Button" 
+               BasedOn="{StaticResource ButtonConfirm}">
+            <Setter Property="HorizontalOptions"
+                    Value="End" />
+            <Setter Property="HeightRequest"
+                    Value="20" />
+                <Setter Property="CornerRadius"
+                        Value="15" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="Margin"
+                    Value="0,0,5,0"/>
+        </Style>
+    </StackLayout.Resources>
+    <StackLayout HorizontalOptions="CenterAndExpand" 
+                 Orientation="Vertical" 
+                 VerticalOptions="CenterAndExpand">
+        <Label Style="{StaticResource ciTitle}"
+               Text="Aucun emprunt en cours" 
+               IsVisible="{Binding LoanListIsEmpty}"
+               HorizontalOptions="Center"
+               VerticalOptions="EndAndExpand"/>
+    </StackLayout>
+    <StackLayout BindableLayout.ItemsSource="{Binding LoanList}"
+                 Padding="0,20,0,80">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <StackLayout>
+                    <Frame CornerRadius="15"
+                           Margin="5"
+                           Padding="20"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand">
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <common:BadgeView Text="En cours" 
+                                                  BackgroundColor="{StaticResource BadgeColorGreen}" 
+                                                  IsVisible="{Binding IsCurrentLoan}" 
+                                                  Margin="0,0,5,0"/>
+                                <common:BadgeView Text="En retard" 
+                                                  BackgroundColor="{StaticResource BadgeColorRed}" 
+                                                  IsVisible="{Binding IsLate}" 
+                                                  Margin="0,0,5,0"/>
+                                <common:BadgeView Text="Bientôt en retard" 
+                                                  BackgroundColor="{StaticResource BadgeColorYellow}" 
+                                                  IsVisible="{Binding IsSoonLate}" 
+                                                  HorizontalOptions="Start" Margin="0,0,5,0"/>
+
+                                <Button Style="{StaticResource BadgeButton}" 
+                                    IsVisible="{Binding CanRenew}" 
+                                    Text="Prolonger"
+                                    Command="{Binding RenewLoanCommand,Source={RelativeSource AncestorType={x:Type viewModel:LoanListViewModel}}}"  
+                                    CommandParameter="{Binding}"/>
+                            </StackLayout>
+                            <Label Text="{Binding DateDescription}"></Label>
+                            <!--<Label Text="{Binding ReturnDateDescription}" FontSize="Small" HorizontalOptions="Start" Margin="0,-10,0,10"/>-->
+                            <Image Source="{Binding ImageUrl}" HeightRequest="120"/>
+                            <Label Text="{Binding Title}" Style="{StaticResource ciLabel}" FontSize="Medium"/>
+                            <Label Text="{Binding Author}" Style="{StaticResource ciContent}"/>
+                                <Label Text="Edité par :"  Style="{StaticResource ciLabel}"/>
+                            <Label Text="{Binding Publisher}" Style="{StaticResource ciContent}"/>
+                            <Label Text="Site d'emprunt :"  Style="{StaticResource ciLabel}"/>
+                            <Label Text="{Binding Location}" Style="{StaticResource ciContent}"/>
+                        </StackLayout>
+                </Frame>
+                </StackLayout>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </StackLayout>
+   
+</StackLayout>

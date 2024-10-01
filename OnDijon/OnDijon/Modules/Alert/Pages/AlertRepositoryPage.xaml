@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 ios:Page.UseSafeArea="true"
+                 NavigationPage.HasBackButton="False"
+                 NavigationPage.HasNavigationBar="False"          
+                 xmlns:alert="clr-namespace:OnDijon.Modules.Alert.View"
+                 xmlns:viewModel="clr-namespace:OnDijon.Modules.Alert.ViewModels"
+                 x:Class="OnDijon.Modules.Alert.Pages.AlertRepositoryPage"
+                 x:TypeArguments="viewModel:AlertRepositoryViewModel" >
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image  Style="{StaticResource imageBackground}"/>
+            <ScrollView Style="{StaticResource scrollViewForBackground}">
+                <StackLayout>
+                    <common:NavigationBarView BackgroundColor="Transparent" Title="Mes Infos"/>
+                    <alert:AlertListView BindingContext="{Binding AlertListViewModel}"/>
+                </StackLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

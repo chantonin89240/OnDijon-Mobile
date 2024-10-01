@@ -1,0 +1,60 @@
+# Xamarin.Android
+# Build a Xamarin.Android project.
+# Add steps that test, sign, and distribute an app, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/xamarin
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+- name: buildConfiguration
+  value: 'Staging'
+- name: outputDirectory
+  value: '$(build.binariesDirectory)/$(buildConfiguration)'
+- group: android-keystore-staging
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.302'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    
+- task: XamarinAndroid@1
+  inputs:
+    projectFile: 'OnDijon/OnDijon.Android/OnDijon.Android.csproj'
+    outputDirectory: '$(outputDirectory)'
+    configuration: '$(buildConfiguration)'
+    msbuildVersionOption: 'latest'
+    msbuildArchitectureOption: 'x64'
+    msbuildArguments: '/restore'
+    clean: true
+    jdkOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+
+- task: AndroidSigning@3
+  inputs:
+    apkFiles: 'D:\a\1\b\$(buildConfiguration)\fr.dm.ondijon.staging.apk'
+    apksignerKeystoreFile: 'OnDijonStaging.keystore'
+    apksignerKeystorePassword: '$(keystore-password)'
+    apksignerKeystoreAlias: '$(key-alias)'
+    apksignerKeyPassword: '$(key-password)'
+    apksignerFile: 'C:\Program Files (x86)\Android\android-sdk\build-tools\29.0.2\apksigner.bat'
+    zipalignFile: 'C:\Program Files (x86)\Android\android-sdk\build-tools\29.0.2\zipalign.exe'
+    
+- task: AppCenterDistribute@3
+  inputs:
+    serverEndpoint: 'App OnDijon'
+    appSlug: 'Dijon-Metropole/testOnDijonAndroid'
+    appFile: 'D:\a\1\b\$(buildConfiguration)\fr.dm.ondijon.staging.apk'
+    symbolsOption: 'Android'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'Mise à jour de fonctionnalités et correction de bugs'
+    isMandatory: true
+    destinationType: 'groups'
+    isSilent: false

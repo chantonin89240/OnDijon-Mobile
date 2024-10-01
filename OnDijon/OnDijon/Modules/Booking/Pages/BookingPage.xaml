@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.Booking.Pages.BookingPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             ios:Page.UseSafeArea="true"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:local="clr-namespace:OnDijon.Common.Utils"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Booking.ViewModels"
+             x:TypeArguments="viewModel:BookingViewModel">
+    <ContentPage.Resources>
+        <converters:RadioButtonBoolToStringConverter x:Key="radioButtonConverter"></converters:RadioButtonBoolToStringConverter>
+        <converters:IsNullConverter x:Key="isNullConverter"></converters:IsNullConverter>
+        <Style TargetType="Label">
+            <Setter Property="Margin"
+                    Value="0,0,0,0" />
+        </Style>
+        <Style TargetType="Picker">
+            <Setter Property="FontFamily"
+                    Value="{StaticResource Isidora}" />
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="Margin"
+                    Value="10,0,0,0" />
+            <Setter Property="HorizontalOptions"
+                    Value="FillAndExpand" />
+            <Setter Property="VerticalOptions"
+                    Value="CenterAndExpand" />
+            <Setter Property="TitleColor"
+                    Value="Black" />
+        </Style>
+        <Style TargetType="ImageButton">
+            <Setter Property="BackgroundColor"
+                    Value="Transparent" />
+            <Setter Property="WidthRequest"
+                    Value="20" />
+            <Setter Property="HorizontalOptions"
+                    Value="Start" />
+            <Setter Property="VerticalOptions"
+                    Value="CenterAndExpand" />
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="VerticalOptions"
+                    Value="CenterAndExpand" />
+        </Style>
+        <Style x:Key="ButtonIdentityDocumentForm" 
+               TargetType="Button" 
+               BasedOn="{StaticResource ButtonConfirm}">
+            <Setter Property="Text"
+                    Value="Suivant"/>
+            <Setter Property="Margin"
+                    Value="20,0"/>
+            <Setter Property="VerticalOptions"
+                    Value="EndAndExpand"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView Title="Titre d'identité" BackButtonCommand ="{Binding GoDashboardCommand}" BackgroundColor="Transparent"/>
+                <ScrollView IsVisible="{Binding ReasonVisible}">
+                    <StackLayout>
+                    <Frame  Style="{StaticResource ciFrameStandardRounded}">
+                        <common:BreadcrumbView StepCount="3"
+                                                   StepTitleList="{x:Static local:RecipeUIConstants.stepTitleBooking}"
+                                                   CurrentStep="1" />
+                    </Frame>
+                        <Frame Style="{StaticResource ciFrameStandardRounded}">
+                            <StackLayout>
+                                <StackLayout Orientation="Horizontal" 
+                                              Margin="0,36,0,0">
+                                    <CheckBox x:Name="CNI"
+                                              IsChecked="{Binding CNI, Converter={StaticResource radioButtonConverter}, ConverterParameter = {x:Static local:RecipeUIConstants.IdentityCard}}"/>
+                                    <Label Text="Carte d'identité"
+                                           Style="{StaticResource CardText}"></Label>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Frame_TappedToCheck" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <CheckBox x:Name="Passeport"
+                                              IsChecked="{Binding Passeport, Converter={StaticResource radioButtonConverter}, ConverterParameter = {x:Static local:RecipeUIConstants.Passeport}}"/>
+                                    <Label Text="Passeport"
+                                           Style="{StaticResource CardText}"></Label>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Frame_TappedToCheck" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <Label IsVisible="{Binding RequestReasonErrorIsVisible}"
+                                       Style="{StaticResource LabelErrorForm}"
+                                       Text="Au moins un motif doit être sélectionné !" />
+                                <common:RoundedFrame VerticalOptions="FillAndExpand"
+                                             HorizontalOptions="FillAndExpand"
+                                             BackgroundColor="White"
+                                             Padding="24,20,24,20" 
+                                             CornerRadius="30,30,30,30">
+                                    <StackLayout>
+                                        <Label Text="Pour obtenir un titre d'identité, veuillez constituer votre dossier:"/>
+                                        <Label Text="Soit en ligne :" 
+                                               Style="{StaticResource DefaultLabelForm}"
+                                               Margin="0,29,0,0"/>
+                                        <common:HyperlinkView Text="Comment demander un passeport" 
+                                                              Url="https://www.service-public.fr/particuliers/vosdroits/N360" />
+                                        <common:HyperlinkView Text="Comment demander une carte d'identité" 
+                                                              Url="https://www.service-public.fr/particuliers/vosdroits/N358"/>
+                                        <common:HyperlinkView Text="Faire ma demande en ligne" 
+                                                              Url="https://ants.gouv.fr/"/>
+                                        <common:HyperlinkView Text="Achetez vos timbres fiscaux en ligne" 
+                                                        Url="https://timbres.impots.gouv.fr/"/>
+                                    </StackLayout>
+                                </common:RoundedFrame>
+                                <Button Command="{Binding ReasonChoice}"
+                                        Style="{StaticResource ButtonIdentityDocumentForm}"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </ScrollView>
+                <ScrollView IsVisible="{Binding ContactInformationVisible}">
+                    <StackLayout>
+                        <Frame  Style="{StaticResource ciFrameStandardRounded}" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}">
+                            <common:BreadcrumbView StepCount="3"
+                                                   StepTitleList="{x:Static local:RecipeUIConstants.stepTitleBooking}"
+                                                   CurrentStep="2" />
+                        </Frame>
+                        <Frame Style="{StaticResource ciFrameStandardRounded}">
+                            <StackLayout Spacing="20">
+                                    <Label Style="{StaticResource DetailLabelForm}"
+                                       Text="*Champs obligatoire" />
+                                <StackLayout>
+                                    <Label Style="{StaticResource DefaultLabelForm}"
+                                       Text="Civilité*" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <!-- gender -->
+                                        <RadioButton BackgroundColor="Transparent"
+                                                     Content="{x:Static local:RecipeUIConstants.GenderFemale}" 
+                                                     GroupName="MyGroupCivility"
+                                                     FontFamily="{StaticResource Isidora}"
+                                                     IsChecked="{Binding Mrs, Converter={StaticResource radioButtonConverter}, ConverterParameter = {x:Static local:RecipeUIConstants.GenderFemale}}"/>
+                                        <RadioButton BackgroundColor="Transparent" 
+                                                     Content="{x:Static local:RecipeUIConstants.GenderMale}"
+                                                     FontFamily="{StaticResource Isidora}"
+                                                     GroupName="MyGroupCivility"
+                                                     IsChecked="{Binding Mr, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static local:RecipeUIConstants.GenderMale}}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal"
+                                                 IsVisible="{Binding CivilityErrorIsVisible}"
+                                                 Spacing="0">
+                                        <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Alert}, Color={StaticResource ErrorColor}, Size=14}"/>
+                                        <Label IsVisible="true"
+                                               Margin="5,0"
+                                               Style="{StaticResource LabelErrorForm}"
+                                               Text="Civilité requise" />
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Style="{StaticResource DefaultLabelForm}"
+                                           Text="Nom*" />
+                                    <common:FormEntryView Text="{Binding BookingItyDocRequest.DocumentName.Value}"
+                                                          Errors="{Binding BookingItyDocRequest.DocumentName.Errors}"
+                                                          Placeholder="Nom"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Style="{StaticResource DefaultLabelForm}"
+                                           Text="Prénom*" />
+                                    <common:FormEntryView Text="{Binding BookingItyDocRequest.DocumentFirstName.Value}"
+                                                          Errors="{Binding BookingItyDocRequest.DocumentFirstName.Errors}"
+                                                          Placeholder="Prénom"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Style="{StaticResource DefaultLabelForm}"
+                                       Text="Date de naissance*" />
+                                    <common:FormDatePickerView x:Name="BirthdayDate"
+                                                           Placeholder="Date de naissance"
+                                                           AutomationId="Date"
+                                                           Errors="{Binding BookingItyDocRequest.DocumentBirthDate.Errors}"
+                                                           Date="{Binding BookingItyDocRequest.DocumentBirthDate.Value}"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Style="{StaticResource DefaultLabelForm}"
+                                       Text="Téléphone* (rappel SMS)" />
+                                    <common:FormEntryView Text="{Binding BookingItyDocRequest.ApplicantPhone.Value}"
+                                                      Errors="{Binding BookingItyDocRequest.ApplicantPhone.Errors}"
+                                                      Placeholder="Téléphone"
+                                                      Keyboard="Telephone"/>
+                                </StackLayout>
+                                <Button Command="{Binding ValidIdentityDocumentCommand}"
+                                        Style="{StaticResource ButtonIdentityDocumentForm}"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </ScrollView>
+                <AbsoluteLayout IsVisible="{Binding BookingVisible}"
+                                HorizontalOptions="FillAndExpand" 
+                                VerticalOptions="FillAndExpand">
+                    <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                AbsoluteLayout.LayoutFlags="All">
+                        <StackLayout>
+                        <Frame  Style="{StaticResource ciFrameStandardRounded}">
+                            <common:BreadcrumbView StepCount="3"
+                                                    StepTitleList="{x:Static local:RecipeUIConstants.stepTitleBooking}"
+                                                    CurrentStep="3" />
+                        </Frame>
+                            <Frame  Style="{StaticResource ciFrameStandardRounded}">
+                                <StackLayout Spacing="20">
+                                    <StackLayout>
+                                        <Label Style="{StaticResource DefaultLabelForm}"
+                                    Text="Ville"/>
+                                        <common:FormPickerView Title="Ville"
+                                                       ItemsSource="{Binding Cities}"
+                                                       SelectedItem="{Binding SelectedCity}"/>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding ChooseInstitutionVisible}">
+                                        <Label Style="{StaticResource DefaultLabelForm}"
+                                           Text="Lieu de rendez-vous" />
+                                        <common:FormPickerView Title="Lieu de rendez-vous"
+                                                           ItemDisplayBinding="{Binding Name}"
+                                                           ItemsSource="{Binding Institutions}"
+                                                           SelectedItem="{Binding SelectedInstitution}"/>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding ChoosePersonNumberVisible}">
+                                        <Label Style="{StaticResource DefaultLabelForm}"
+                                           Text="Nombre de personnes"/>
+                                        <common:FormPickerView Title="Nombre de personnes"
+                                                           ItemsSource="{Binding ListNumberOfPerson}"
+                                                           SelectedItem="{Binding SelectedPersonNumber}"/>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding ChooseDateVisible}">
+                                        <Label Style="{StaticResource DefaultLabelForm}"
+                                       Text="Jour du rendez-vous" />
+                                        <common:FormPickerView Title="Jour du rendez-vous"
+                                                           ItemsSource="{Binding SchedulesDate}"
+                                                           SelectedItem="{Binding SelectedDateSchedule}"
+                                                           ItemDisplayBinding="{Binding Day, StringFormat='{0:D}'}"/>
+                                        <StackLayout Orientation="Horizontal"
+                                                     HorizontalOptions="Center"
+                                                    IsVisible="{Binding ScheduleUnavaibleVisible}">
+                                            <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.AlertBoxOutline}, Color={StaticResource kleinBlue}, Size=28}" />
+                                            <Label Padding="0,20"  
+                                                Style="{StaticResource DefaultLabelForm}"
+                                                TextColor="{StaticResource kleinBlue}">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Aucun rendez-vous disponible sous "/>
+                                                        <Span Text="{Binding SelectedInstitution.OpeningTime}"/>
+                                                        <Span Text=" jours"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding ChooseHourVisible}">
+                                        <Label Style="{StaticResource DefaultLabelForm}"
+                                       Text="Heure du rendez-vous" />
+                                        <common:FormPickerView Title="Heure du rendez-vous"
+                                                       ItemsSource="{Binding Schedules}"
+                                                       SelectedItem="{Binding SelectedSchedule}"
+                                                       ItemDisplayBinding="{Binding StartDate, StringFormat='{0:HH:mm}'}"/>
+                                    </StackLayout>
+                                    <Button Command="{Binding SendBook}"
+                                        Text="Valider le rendez-vous"
+                                        Style="{StaticResource ButtonIdentityDocumentForm}" 
+                                        IsVisible="{Binding SubmitButtonVisible}"/>
+
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </ScrollView>
+                    <ActivityIndicator AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                                       AbsoluteLayout.LayoutFlags="XProportional,YProportional"
+                                       Color="{StaticResource kleinBlue}"
+                                       IsRunning="{Binding IsLoading}" />
+                </AbsoluteLayout>
+                <ScrollView IsVisible="{Binding ConfirmVisible}">
+                    <StackLayout>
+                        <Frame  Style="{StaticResource ciFrameStandardRounded}">
+                            <common:BreadcrumbView StepCount="3"
+                                                StepTitleList="{x:Static local:RecipeUIConstants.stepTitleBooking}"
+                                                CurrentStep="4" />
+                        </Frame>
+                        <StackLayout Margin="10">
+                            <common:RoundedFrame VerticalOptions="Fill"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        BackgroundColor="White"
+                                                        Padding="24,20,24,24"
+                                                        Margin="0,50"
+                                                        CornerRadius="30,30,30,30">
+                                <StackLayout>
+                                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,Auto">
+                                        <common:BreadcrumbValidatedStepView Scale="2" 
+                                                                                HorizontalOptions="Start" 
+                                                                                Grid.Row="1" 
+                                                                                Grid.Column="1" 
+                                                                                Margin="10,0"/>
+                                        <Label Grid.Row="1" 
+                                                    Grid.Column="2" 
+                                                    Style="{StaticResource LayoutTitleForm}"
+                                                    Text="Rendez-vous pris avec succès" 
+                                                    FontSize="16"
+                                                    TextColor="{StaticResource GreenBreadcrumb}"/>
+                                    </Grid>
+                                    <Label Margin="0,10,0,0" Text="Vous pouvez désormais suivre son traitement dans la rubrique mon compte"/>
+                                </StackLayout>
+                            </common:RoundedFrame>
+                            <Button Command="{Binding NavigateBack}"
+                                            Text="Retour à l'accueil"
+                                            Style="{StaticResource ButtonIdentityDocumentForm}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

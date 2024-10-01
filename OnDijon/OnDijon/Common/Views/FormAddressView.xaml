@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:FormBaseView xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:common="clr-namespace:OnDijon.Common.Views"
+                     x:Class="OnDijon.Common.Views.FormAddressView">
+
+    <StackLayout.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnAddressTapped" />
+    </StackLayout.GestureRecognizers>
+    <Label x:Name="AddressLabel" />
+
+</common:FormBaseView>

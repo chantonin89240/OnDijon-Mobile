@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 x:Class="OnDijon.Modules.Library.Views.PopupAddCardView"
+                 CloseWhenBackgroundIsClicked="True"
+                 HasKeyboardOffset="False"
+                 xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+                 xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:resources="clr-namespace:OnDijon.Common.Utils.Resources"
+            xmlns:common="clr-namespace:OnDijon.Common.Views">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageFromResourcesUrlConverter x:Key="imageFromResourcesUrlConverter"></converters:ImageFromResourcesUrlConverter>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <Frame VerticalOptions="Center"
+           HorizontalOptions="FillAndExpand"
+           Margin="38,0"
+           BackgroundColor="White" 
+           CornerRadius="20" 
+           Padding="25">
+
+        <StackLayout Spacing="25">
+            <StackLayout Orientation="Horizontal" 
+                         Spacing="10">
+
+                <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.HelpCircleOutline}, Color=White,Size=20}"/>
+
+                <StackLayout Spacing="0">
+                    <Label Text="Ajouter une carte de bibliothèque"
+                           Style="{StaticResource PopupTitle}"/>
+                </StackLayout>
+            </StackLayout>
+
+
+            <StackLayout
+            VerticalOptions="Center"  
+            HorizontalOptions="Center" >
+
+
+                <common:FormEntryView Text="{Binding Login}" Placeholder="Numéro de carte ou identifiant" Margin="0, 0, 0, 10"/>
+                <common:FormEntryView Text="{Binding Password}" Placeholder="Mot de passe"  Margin="0, 0, 0, 10" IsPassword="True"/>
+
+            </StackLayout>
+
+            <Button
+                    Text="Ajouter"
+                    Command="{Binding AssociateAccountCommand}"
+                            Style="{StaticResource ButtonConfirm}"
+                    Clicked="OnClose"
+                    WidthRequest="80"
+                    HeightRequest="50">
+            </Button>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Class="OnDijon.Modules.Service.Pages.ServicesView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:servicesviewmodels="clr-namespace:OnDijon.Modules.Services.ViewModels;assembly=OnDijon"
+             xmlns:pages="clr-namespace:OnDijon.Modules.Services.Pages;assembly=OnDijon"
+             ios:Page.UseSafeArea="True"
+             mc:Ignorable="d"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <common:LoadingView IsLoading="{Binding IsLoading}"
+                                VerticalOptions="FillAndExpand">
+            <RelativeLayout>
+                <Image Style="{StaticResource imageBackground}"/>
+                <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                    <common:NavigationBarView BackgroundColor="Transparent" Title="Mes services"/>
+
+                    <Grid BindableLayout.ItemsSource="{Binding Services}" 
+                          RowSpacing="12"
+                          Padding="10,20,10,20">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <pages:ServiceButtonView Title="{Binding Title}"
+                                                         Grid.Row="{Binding Row}"
+                                                         Grid.Column="{Binding Column}"
+                                                         ImageName="{Binding Icon}"
+                                                         NotificationCount="0"
+                                                         IsFavourite="{Binding IsFavourite}"
+                                                         IsFavouriteVisible="{Binding IsChooseFavourite, Source={RelativeSource AncestorType={x:Type  servicesviewmodels:ServicesViewModel}}}"
+                                                         >
+                                    <pages:ServiceButtonView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TapOnServiceCommand, Source={RelativeSource AncestorType={x:Type  servicesviewmodels:ServicesViewModel}}}" CommandParameter="{Binding}"/>
+                                    </pages:ServiceButtonView.GestureRecognizers>
+                                </pages:ServiceButtonView>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </Grid>
+                    <Button Style="{StaticResource ButtonConfirm}"
+                                Command="{Binding ChooseFavouriteCommand}"
+                                Margin="30,10,30,30"
+                                IsVisible="{Binding IsChooseFavouriteButtonVisibility}"
+                                Text="{Binding ChooseFavouriteLabelButton}"
+                                AbsoluteLayout.LayoutFlags="PositionProportional"
+                                AbsoluteLayout.LayoutBounds="0.5,1" />
+                </StackLayout>
+            </RelativeLayout>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BaseView>

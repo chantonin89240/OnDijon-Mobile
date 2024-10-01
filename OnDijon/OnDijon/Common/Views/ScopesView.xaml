@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:views="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Class="OnDijon.Common.Views.ScopesView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             ios:Page.UseSafeArea="True"
+             mc:Ignorable="d"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <ScrollView  Style="{StaticResource scrollViewForBackground}" >
+                <StackLayout>
+                    <common:NavigationBarView  BackgroundColor="Transparent" Title="Mes préférences"/>
+                    <Frame Style="{StaticResource ciFrameStandardRounded}">
+                        <StackLayout>
+                            <Label Style="{StaticResource DefaultLabelForm}" Text="Sélectionnez les communes par lesquelles vous souhaitez être informés en temps réel :"/>
+                            <StackLayout x:Name="ServicesContainer" BindableLayout.ItemsSource="{Binding FavouriteScopes}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal">
+                                            <CheckBox IsChecked="{Binding Checked}"></CheckBox>
+                                            <Label Text="{Binding Title}" Style="{StaticResource CardText}"></Label>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="Frame_TappedToCheck" />
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                    <Button Style="{StaticResource ButtonConfirm}"
+                                Command="{Binding ChooseScopeFavouriteCommand}"
+                                Margin="30,10,30,30"
+                                Text="Valider mes préférences"/>
+                </StackLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BaseView>

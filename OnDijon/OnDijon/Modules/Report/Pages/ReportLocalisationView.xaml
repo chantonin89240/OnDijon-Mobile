@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:esri="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:local="clr-namespace:OnDijon.Common.Utils"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Report.ViewModels"
+             x:TypeArguments="viewModel:ReportLocalisationViewModel"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.Report.Pages.ReportLocalisationView"
+             AutomationId="Localisation"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView Title="Déclarer un signalement" BackButtonCommand ="{Binding CloseCommand}" HeightRequest="90" BackgroundColor="Transparent"/>
+
+                <common:RoundedFrame
+                Margin="0,20,0,0"
+                Padding="0,20,0,0"
+                VerticalOptions="FillAndExpand">
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Vertical"
+                                 Margin="24,0,24,12">
+                            <common:BreadcrumbView StepCount="4"
+                                               CurrentStep="2"
+                                               StepTitleList="{x:Static local:RecipeUIConstants.StepTitleReport}"/>
+
+                            <common:SearchBarView AutomationId="AdressInput"
+                                              Placeholder="Entrez une adresse (rue, place)"
+                                              Text="{Binding Address}"
+                                              VerticalOptions="Start"
+                                              Margin="0,24,0,0"/>
+                        </StackLayout>
+
+
+                        <AbsoluteLayout HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand">
+
+                            <esri:MapView x:Name="MapView"
+                                      AutomationId="Map"
+                                      Map="{Binding Map}"
+                                      IsAttributionTextVisible="False"
+                                      AbsoluteLayout.LayoutFlags="All"
+                                      AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                      BackgroundColor="Gray" />
+
+                            <common:MapCompassView MapView="{Reference MapView}"
+                                               Margin="10,30"
+                                               AbsoluteLayout.LayoutFlags="PositionProportional"
+                                               AbsoluteLayout.LayoutBounds="1, 1" />
+
+                            <common:MapScaleBarView MapView="{Reference MapView}"
+                                                Margin="10"
+                                                AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                AbsoluteLayout.LayoutBounds="1, 1" />
+
+                            <Button x:Name="UseLocationButton"
+                                Text="Utiliser ma position actuelle"
+                                AbsoluteLayout.LayoutFlags="PositionProportional"
+                                Margin="0,24,0,0"
+                                AbsoluteLayout.LayoutBounds="0.5, 0"
+                                Clicked="OnLocationButtonClicked"
+                                Command="{Binding GetCurrentLocationCommand}"
+                                Style="{StaticResource ButtonConfirm}" />
+                            <Frame x:Name="ReportsCountContainer" 
+                               IsVisible="False"
+                               AbsoluteLayout.LayoutFlags="PositionProportional"
+                               Margin="8,28,8,0"
+                               AbsoluteLayout.LayoutBounds="0.5, 0"
+                               Padding="0"
+                               HasShadow="False"
+                               CornerRadius="20">
+                                <Label x:Name="ReportsCountLabel" 
+                                   d:Text="Il y a 3 signalements existants autour de votre position"
+                                   Padding="24,12"
+                                   FontSize="12"
+                                   FontFamily="{StaticResource Isidora}"
+                                   TextColor="{StaticResource kleinBlue}"/>
+                            </Frame>
+
+                            <ActivityIndicator AbsoluteLayout.LayoutFlags="PositionProportional"
+                                           AbsoluteLayout.LayoutBounds="0.5, 0.5"
+                                           IsRunning="{Binding IsLoading}" />
+
+                            <Frame x:Name="SuggestionsLayout"
+                               AbsoluteLayout.LayoutFlags="WidthProportional"
+                               AbsoluteLayout.LayoutBounds="0, 0, 1, 200"
+                               BackgroundColor="White"
+                               Padding="10"
+                               IsVisible="False">
+
+                                <ListView x:Name="SuggestionsListView"
+                                      BackgroundColor="Transparent"
+                                      ios:ListView.RowAnimationsEnabled="false"
+                                      ios:ListView.SeparatorStyle="FullWidth"
+                                      AutomationId="AdressList"
+                                      ItemsSource="{Binding Suggestions}"
+                                      ItemTapped="OnSuggestionSelected">
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextCell Text="{Binding}"
+                                                  TextColor="Black" />
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Frame>
+
+                            <ContentView Margin="30"
+                                     AbsoluteLayout.LayoutFlags="PositionProportional"
+                                     AbsoluteLayout.LayoutBounds="0.5, 1">
+
+                                <Button x:Name="btNext"
+                                    Text="Suivant"
+                                    AutomationId="Suivant"
+                                    Command="{Binding GoToNextPageCommand}"
+                                    Style="{StaticResource ButtonConfirm}" />
+                            </ContentView>
+                        </AbsoluteLayout>
+                    </StackLayout>
+                </common:RoundedFrame>
+            </StackLayout>
+        </RelativeLayout>
+
+    </ContentPage.Content>
+</common:BasePage>

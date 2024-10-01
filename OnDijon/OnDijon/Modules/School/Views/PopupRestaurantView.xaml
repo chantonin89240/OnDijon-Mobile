@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 x:Class="OnDijon.Modules.School.Views.PopupRestaurantView"
+                 CloseWhenBackgroundIsClicked="True"
+                 HasKeyboardOffset="False"
+                 xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+                 xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:resources="clr-namespace:OnDijon.Common.Utils.Resources">
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageFromResourcesUrlConverter x:Key="imageFromResourcesUrlConverter"></converters:ImageFromResourcesUrlConverter>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+    <Frame VerticalOptions="Center"
+           HorizontalOptions="FillAndExpand"
+           Margin="30,30"
+           BackgroundColor="White" 
+           CornerRadius="20" 
+           Padding="25">
+
+        <Grid ColumnDefinitions="*" RowDefinitions="auto,*,auto">
+            <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.HelpCircleOutline}, Color=Blue,Size=20}"
+                   Grid.Column="0" Grid.Row="0"/>
+            <ScrollView 
+                   Grid.Column="0" Grid.Row="1">
+                <Label x:Name="Content" TextType="Html"></Label>
+            </ScrollView>
+
+            <Button Text="J'ai compris"
+                    Clicked="OnClose"
+                    Padding="0"
+                    Style="{StaticResource ButtonConfirm}"
+                   Grid.Column="0" Grid.Row="2"/>
+        </Grid>
+    </Frame>
+</pages:PopupPage>

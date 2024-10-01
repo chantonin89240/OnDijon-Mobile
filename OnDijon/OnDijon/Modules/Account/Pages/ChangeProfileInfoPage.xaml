@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             AutomationId="ChangeProfileInfoView"
+             x:Class="OnDijon.Modules.Account.Pages.ChangeProfileInfoView"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="HeaderLabel"
+                   TargetType="Label">
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+            </Style>
+
+            <Style TargetType="{x:Type common:CustomLabel}">
+                <Setter Property="CustomStyle"
+                        Value="{StaticResource HeaderLabel}" />
+            </Style>
+
+            <Style x:Key="PasswordEntry"
+                   TargetType="common:FormEntryView">
+                <Setter Property="IsPassword"
+                        Value="True" />
+                <Setter Property="Margin"
+                        Value="0,0,0,12" />
+            </Style>
+
+            <Style TargetType="common:FormEntryView">
+                <Setter Property="Margin"
+                        Value="0,0,0,12" />
+            </Style>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Spacing="0"
+                 Style="{StaticResource StackLayoutGradientBackground}">
+        <common:TopBarView x:Name="TopBarView" />
+        <common:NavigationBarView Title="Modifier mes informations"
+                                  HasBackButton="False" />
+
+        <ScrollView Padding="0,20,0,0">
+            <common:RoundedFrame>
+                <StackLayout Spacing="10">
+
+                    <!-- gender -->
+                    <common:CustomLabel Text="Civilité"
+                                        IsRequired="True" />
+                    <input:RadioButtonGroupView x:Name="GenderRadioButtonGroup"
+                                                SelectedItem="{Binding Profile.Gender.Value}"
+                                                SelectedItemChangedCommand="{Binding GenderSelectionChangedCommand}">
+                        <input:RadioButton Text="Madame"
+                                           Value="Madame" />
+                        <input:RadioButton Text="Monsieur"
+                                           Value="Monsieur" />
+                    </input:RadioButtonGroupView>
+
+                    <!-- name -->
+                    <common:CustomLabel Text="Nom"
+                                        IsRequired="True"/>
+                    <common:FormEntryView Text="{Binding Profile.Name.Value}"
+                                          Placeholder="Mon nom"
+                                          Errors="{Binding Profile.Name.Errors}"
+                                          ReturnType="Next"
+                                          AutomationId="Name" />
+
+                    <!-- firstname -->
+                    <common:CustomLabel Text="Prénom"
+                                        IsRequired="True" />
+                    <common:FormEntryView Text="{Binding Profile.FirstName.Value}"
+                                          Placeholder="Mon prénom"
+                                          Errors="{Binding Profile.FirstName.Errors}"
+                                          ReturnType="Next"
+                                          AutomationId="FirstName" />
+
+                    <!-- birthday -->
+                    <common:CustomLabel Text="Date de naissance"/>
+                    <common:FormDatePickerView Date="{Binding Profile.Birthday.Value}"
+                                               Placeholder="Ma date de naissance"
+                                               Errors="{Binding Profile.Birthday.Errors}"
+                                               AutomationId="Date" />
+
+                    <!-- mail -->
+                    <common:CustomLabel Text="Email"
+                                        IsRequired="True" />
+                    <common:FormEntryView Text="{Binding Profile.Mail.Value}"
+                                          Placeholder="Mon adresse email"
+                                          Errors="{Binding Profile.Mail.Errors}"
+                                          Keyboard="Email"
+                                          AutomationId="Email" />
+
+                    <!-- phone number -->
+                    <common:CustomLabel Text="Téléphone"/>
+                    <common:FormEntryView Text="{Binding Profile.PhoneNumber.Value}"
+                                          Placeholder="Mon numéro de téléphone"
+                                          Errors="{Binding Profile.PhoneNumber.Errors}"
+                                          Keyboard="Telephone"
+                                          AutomationId="PhoneNumber" />
+
+                    <!-- old password -->
+                    <common:CustomLabel Text="Mot de passe actuel"
+                                        IsRequired="True" />
+                    <common:FormEntryView x:Name="OldPassword"
+                                          Text="{Binding OldPassword.Value}"
+                                          Placeholder="Mon mot de passe actuel"
+                                          Errors="{Binding OldPassword.Errors}"
+                                          ReturnType="Next"
+                                          AutomationId="OldPassword"
+                                          Style="{StaticResource PasswordEntry}" />
+
+                    <Label IsVisible="{Binding IsUpdatePasswordContainerVisible, Converter={StaticResource negateBooleanConverter}}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Modifier le mot de passe"
+                                      TextColor="{StaticResource kleinBlue}"
+                                      FontFamily="{StaticResource Isidora}"
+                                      FontSize="16"
+                                      TextDecorations="Underline"
+                                      FontAttributes="Bold">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding UpdatePasswordCommand}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <StackLayout Orientation="Vertical"
+                                 IsVisible="{Binding IsUpdatePasswordContainerVisible}">
+                        <!-- new password -->
+                        <common:CustomLabel Text="Nouveau mot de passe"
+                                            IsRequired="True" />
+                        <common:FormEntryView x:Name="NewPassword"
+                                              Text="{Binding Profile.Password.Value}"
+                                              Placeholder="Nouveau mot de passe"
+                                              Errors="{Binding Profile.Password.Errors}"
+                                              ReturnType="Next"
+                                              AutomationId="NewPassword"
+                                              Style="{StaticResource PasswordEntry}" />
+
+                        <!-- new password confirmation -->
+                        <common:CustomLabel Text="Confirmer nouveau mot de passe"
+                                            IsRequired="True" />
+                        <common:FormEntryView x:Name="NewPasswordConfirmation"
+                                              Text="{Binding Profile.PasswordConfirmation.Value}"
+                                              Placeholder="Confirmer mot de passe"
+                                              Errors="{Binding Profile.PasswordConfirmation.Errors}"
+                                              AutomationId="NewPasswordConfirmation"
+                                              Style="{StaticResource PasswordEntry}" />
+                    </StackLayout>
+
+                    <common:LoadingView IsLoading="{Binding IsLoading}"
+                                        LoadingIndicatorColor="White"
+                                        Margin="0,20,0,0">
+                        <Button Text="Sauvegarder les modifications"
+                                Command="{Binding UpdateProfile}"
+                                Padding="0"
+                                AutomationId="Validate"
+                                Style="{StaticResource ButtonConfirm}" />
+                    </common:LoadingView>
+                </StackLayout>
+            </common:RoundedFrame>
+        </ScrollView>
+    </StackLayout>
+</common:BaseView>

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.JobOffer.Pages.ListJobOfferPage" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+            xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+            xmlns:viewModel="clr-namespace:OnDijon.Modules.JobOffer.ViewModels"
+            x:TypeArguments="viewModel:ListJobOfferViewModel"
+            >
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <converters:IsNullConverter x:Key="IsNullConverter"></converters:IsNullConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <Grid ColumnDefinitions="*,50" RowDefinitions="*,50,10" >
+                <Image Style="{StaticResource imageBackground}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+                <ScrollView  Style="{StaticResource scrollViewForBackground}" x:Name="ScrollViewPage"  Scrolled="ScrollView_Scrolled" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Grid.RowSpan="3">
+                    <StackLayout Spacing="10" Padding="10">
+                        <common:NavigationBarView Title="Offres d'emploi"  BackgroundColor="Transparent" BackButtonCommand="{Binding CloseCommand}"/>
+                        <StackLayout x:Name="SchooList" Spacing="20" Margin="0"
+                                                         BindableLayout.ItemsSource="{Binding ListJobOffer}">
+
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame CornerRadius="15" Padding="0">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectJobOfferCommand,Source={RelativeSource AncestorType={x:Type viewModel:ListJobOfferViewModel}}}" 
+                                                                                          CommandParameter="{Binding}">
+                                            </TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                        <Grid ColumnDefinitions="*" RowDefinitions="*,80,20,20,20,5">
+                                            <Label Text="{Binding Title}" Style="{StaticResource ciFrameTitle}" FontSize="Subtitle" Margin="10,10,10,0" Grid.Row="0"/>
+                                            <Image Source="{Binding Picture}" Aspect="AspectFill"  Grid.Row="1"/>
+                                            <Label  Grid.Row="2" Margin="10,0">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Ville : " TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"></Span>
+                                                        <Span Text="{Binding City}"></Span>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label Grid.Row="3" Margin="10,0">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Secteur : "  TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"></Span>
+                                                        <Span Text="{Binding Subtitle}"></Span>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label Grid.Row="4" Margin="10,0">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Date limite : " TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"></Span>
+                                                        <Span Text="{Binding LimitDate, StringFormat='{0:dd/MM/yyyy}'}"></Span>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                        <Button Text="Candidature spontanée" Style="{StaticResource ButtonSelect}" Margin="0,10" Command="{Binding GoToApplicationFormCommmand}" CornerRadius="15"/>
+                    </StackLayout>
+                </ScrollView>
+
+                <RelativeLayout Grid.Column="1" Grid.Row="1">
+                    <Frame x:Name="scrollableVisibility" IsVisible="true" BackgroundColor="{StaticResource kleinBlue}" WidthRequest="50" HeightRequest="30" CornerRadius="15" Padding="15,15,30,15"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=50}"
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant= 0}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-50}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+                        <Label Text="▲" FontAttributes="Bold" TextColor="White" FontSize="Medium"></Label>
+                    </Frame>
+                </RelativeLayout>
+            </Grid>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BasePage>

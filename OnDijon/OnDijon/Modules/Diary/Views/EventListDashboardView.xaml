@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Diary.Views.EventFilterDashboardView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Diary.ViewModels"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Margin="10,10"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:views="clr-namespace:OnDijon.DM.Diary.Views">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    <Label Text="Agenda"  Style="{StaticResource ciMainTitle}"></Label>
+    <Grid ColumnDefinitions="*,*" Margin="10,0,10,10">
+        <Grid Grid.Column="0" RowDefinitions="auto,auto,auto">
+            <views:ElementEventListDashboardView Grid.Row="0" Event="{Binding EventList[0]}">
+                <views:ElementEventListDashboardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoadEventViewCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListDashboardViewModel}}}" CommandParameter="{Binding EventList[0]}"/>
+                </views:ElementEventListDashboardView.GestureRecognizers>
+            </views:ElementEventListDashboardView>
+            <views:ElementEventListDashboardView Grid.Row="1" Event="{Binding EventList[2]}">
+                <views:ElementEventListDashboardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoadEventViewCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListDashboardViewModel}}}" CommandParameter="{Binding EventList[2]}"/>
+                </views:ElementEventListDashboardView.GestureRecognizers>
+            </views:ElementEventListDashboardView>
+            <views:ElementEventListDashboardView Grid.Row="2" Event="{Binding EventList[4]}">
+                <views:ElementEventListDashboardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoadEventViewCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListDashboardViewModel}}}" CommandParameter="{Binding EventList[4]}"/>
+                </views:ElementEventListDashboardView.GestureRecognizers>
+            </views:ElementEventListDashboardView>
+        </Grid>
+        <Grid Grid.Column="1" RowDefinitions="auto,auto,auto" Margin="0,40,0,0">
+            <views:ElementEventListDashboardView Grid.Row="0" Event="{Binding EventList[1]}">
+                <views:ElementEventListDashboardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoadEventViewCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListDashboardViewModel}}}" CommandParameter="{Binding EventList[1]}"/>
+                </views:ElementEventListDashboardView.GestureRecognizers>
+            </views:ElementEventListDashboardView>
+            <views:ElementEventListDashboardView Grid.Row="1" Event="{Binding EventList[3]}">
+                <views:ElementEventListDashboardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoadEventViewCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListDashboardViewModel}}}" CommandParameter="{Binding EventList[3]}"/>
+                </views:ElementEventListDashboardView.GestureRecognizers>
+            </views:ElementEventListDashboardView>
+            <views:ElementEventListDashboardView Grid.Row="2" Event="{Binding EventList[5]}">
+                <views:ElementEventListDashboardView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoadEventViewCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListDashboardViewModel}}}" CommandParameter="{Binding EventList[5]}"/>
+                </views:ElementEventListDashboardView.GestureRecognizers>
+            </views:ElementEventListDashboardView>
+        </Grid>
+    </Grid>
+
+
+    <Frame Style="{StaticResource DashboardViewMoreFrame}">
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding GotoEvenetDiaryListViewCommand, Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListDashboardViewModel}}}"/>
+        </Frame.GestureRecognizers>
+        <Label Text="Tout mon agenda ➞" TextColor="White"/>
+    </Frame>
+</StackLayout>

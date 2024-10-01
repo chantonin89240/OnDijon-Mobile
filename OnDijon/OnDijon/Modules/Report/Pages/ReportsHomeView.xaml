@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             x:Class="OnDijon.Modules.Report.Pages.ReportsHomeView"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             AutomationId="ReportsHomePage">
+
+    <ContentPage.Content>
+        <StackLayout Spacing="0">
+            <common:NavigationBarView Title="Signalements" />
+
+            <StackLayout Style="{StaticResource CardsList}">
+                <common:NavigationCardView Text="Faire un signalement"
+                                           PageKey="ReportTypeView"
+                                           AutomationId="ReportEvent" />
+
+                <common:NavigationCardView Text="Suivre mes signalements"
+                                           PageKey="ReportsUserView"
+                                           AutomationId="FollowReport" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BaseView>

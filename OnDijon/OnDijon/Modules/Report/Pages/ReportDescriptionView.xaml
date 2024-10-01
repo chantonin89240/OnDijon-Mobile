@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:enums="clr-namespace:OnDijon.Common.Utils.Enums;assembly=OnDijon"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:local="clr-namespace:OnDijon.Common.Utils"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Report.ViewModels"
+             x:TypeArguments="viewModel:ReportDescriptionViewModel"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             ios:Page.UseSafeArea="true"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.Report.Pages.ReportDescriptionView"
+             x:Name="ReportDescriptionPage"
+             AutomationId="ReportDescriptionPage"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontSize"
+                        Value="20" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalOptions"
+                        Value="StartAndExpand" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+            </Style>
+
+            <Style x:Key="PhotoButton"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonConfirm}">
+                <Setter Property="HorizontalOptions"
+                        Value="Start" />
+                <Setter Property="Padding"
+                        Value="16,0" />
+                <Setter Property="ContentLayout"
+                        Value="Left, 12" />
+            </Style>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView Title="Déclarer un signalement" BackButtonCommand ="{Binding CloseCommand}" HeightRequest="90" BackgroundColor="Transparent"/>
+
+
+                <AbsoluteLayout VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand">
+                    <ScrollView Padding="0,20,0,0"
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                        <common:RoundedFrame VerticalOptions="FillAndExpand"
+                                         HorizontalOptions="FillAndExpand"
+                                         Padding="24,20,24,80">
+
+                            <StackLayout Orientation="Vertical"
+                                     Spacing="0">
+                                <common:BreadcrumbView StepCount="4"
+                                                   StepTitleList="{x:Static local:RecipeUIConstants.StepTitleReport}"
+                                                   CurrentStep="3" />
+
+                                <Label Text="Photo"
+                                   Margin="0,24,0,0" />
+
+                                <Label Text="Ajoutez une photo pour illustrer votre description"
+                                   FontSize="16"
+                                   HorizontalOptions="StartAndExpand"
+                                   FontAttributes="None"
+                                   TextColor="{StaticResource PlaceholderColor}"
+                                   HorizontalTextAlignment="Start" />
+
+                                <Button x:Name="AddPhotoButton"
+                                    Text="Ajouter une photo"
+                                    IsVisible="{Binding CanAddPhoto}"
+                                    ImageSource="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.CameraPlusOutline}, Color=White, Size=24}"
+                                    Style="{StaticResource PhotoButton}"
+                                    Command="{Binding DisplayPhotoLayoutCommand }"
+                                    Margin="0,16,0,0"
+                                    AutomationId="AddPhotoButton"/>
+
+
+                                <StackLayout x:Name="PhotoActionsLayout"
+                                         IsVisible="{Binding IsPhotoActionVisible}"
+                                         d:IsVisible="True"
+                                         Margin="0,16,0,0">
+
+                                    <Button Text="Prendre une photo"
+                                        ImageSource="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.CameraOutline}, Color=White, Size=24}"
+                                        Style="{StaticResource PhotoButton}"
+                                        Command="{Binding SwitchPhotoModeCommand}"
+                                        AutomationId="TakePhotoButton" />
+
+                                    <Button Text="Voir la galerie"
+                                        ImageSource="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.ImageMultiple}, Color=White, Size=24}"
+                                        Style="{StaticResource PhotoButton}"
+                                        Command="{Binding AddPhotoCommand}"
+                                        AutomationId="GaleryButton"
+                                        CommandParameter="{Static enums:PhotoSourceEnum.PhotoLibrary}" />
+                                </StackLayout>
+
+
+                                <StackLayout x:Name="PhotoGalleryLayout"
+                                         Orientation="Horizontal"
+                                         HorizontalOptions="Start"
+                                         Margin="0,20,0,0"
+                                         BindableLayout.ItemsSource="{Binding PhotoSources}">
+
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <AbsoluteLayout>
+                                                <Frame CornerRadius="10"
+                                                   IsClippedToBounds="True"
+                                                   Margin="0,10,10,0"
+                                                   Padding="0"
+                                                   HasShadow="False"
+                                                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                   AbsoluteLayout.LayoutBounds="0, 0, 160, 120">
+
+                                                    <Image Source="{Binding}"
+                                                       Aspect="AspectFill" />
+                                                </Frame>
+
+                                                <ImageButton Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Close}, Color=White, Size=13}"
+                                                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                         AbsoluteLayout.LayoutBounds="1, 0, 20, 20"
+                                                         BackgroundColor="{StaticResource cyanBlue}"
+                                                         CornerRadius="10"
+                                                         Padding="3.5"
+                                                         Command="{Binding Source={x:Reference ReportDescriptionPage}, Path=BindingContext.RemovePhotoCommand}"
+                                                         CommandParameter="{Binding}" />
+                                            </AbsoluteLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+
+                                <Label Text="Description"
+                                   Margin="0,24,0,0" />
+
+                                <common:EditorView Placeholder="Donnez des précisions sur l'incident, sur sa localisation, etc."
+                                               Text="{Binding Description}"
+                                               MaxLength="500" />
+
+
+
+                                <Label Text="{Binding Description.Length, StringFormat='{0}/500'}"
+                                   FontSize="14"
+                                   FontAttributes="Italic"
+                                   Margin="12,0"
+                                   HorizontalOptions="End" />
+
+                            </StackLayout>
+                        </common:RoundedFrame>
+                    </ScrollView>
+                    <ScrollView x:Name="CameraViewContainer" IsVisible="{Binding TakePhotoMode}"
+                                AbsoluteLayout.LayoutFlags="All"
+                                AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <xct:CameraView IsVisible="True" x:Name="CameraView" CaptureMode="Photo" CameraOptions="Back"  AbsoluteLayout.LayoutFlags="All" 
+                                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1" >
+                                <xct:CameraView.Behaviors>
+                                    <xct:EventToCommandBehavior EventName="MediaCaptured" Command="{Binding TakePhotoCommand}" />
+                                </xct:CameraView.Behaviors>
+                            </xct:CameraView>
+                            <Button BorderColor="White" BackgroundColor="Gray" BorderWidth="2" CornerRadius="31" HorizontalOptions="{Binding PhotoBtnHorizontalLayout}" VerticalOptions="{Binding PhotoBtnVerticalLayout}" FontSize="1" 
+                                    HeightRequest="60" WidthRequest="60" Margin="{Binding PhotoBtnMargin}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" 
+                                    AbsoluteLayout.LayoutFlags="All" Command="{Binding ShutterCommand, Source={x:Reference CameraView}}" ></Button>
+                        </AbsoluteLayout>
+                    </ScrollView>
+                    <Button x:Name="btNext"
+                            Text="Suivant" IsVisible="{Binding TakePhotoMode, Converter={StaticResource InvertedBoolConverter}}"
+                        Command="{Binding GoToNextPageCommand}"
+                        Style="{StaticResource ButtonConfirm}"
+                        IsEnabled="{Binding Description, Converter={StaticResource NotEmptyStringToBoolConverter}}"
+                        HorizontalOptions="Center"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        AbsoluteLayout.LayoutBounds="0.5, 1"
+                        Margin="0,0,0,24"
+                        AutomationId="Suivant" />
+                </AbsoluteLayout>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

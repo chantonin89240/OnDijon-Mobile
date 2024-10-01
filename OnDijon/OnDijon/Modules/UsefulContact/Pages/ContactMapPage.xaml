@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="OnDijon.Modules.UsefulContact.Pages.ContactMapPage"
+             x:DataType="viewModel:ContactMapViewModel"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:views="clr-namespace:OnDijon.Modules.UsefulContact.Views"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.UsefulContact.ViewsModels"
+             xmlns:esri="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="rtGrid" TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="10" />
+                <Setter Property="RowSpacing" Value="10" />
+            </Style>
+            <Style TargetType="Image">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView Title="Points d'intérêt" HasBackButton="True" BackgroundColor="Transparent"/>
+                <StackLayout Padding="10,0,10,10">
+                    <common:FormPickerView Title="Selectionner un domaine"
+                                       x:Name="DomainPicker"
+                                        ItemsSource="{Binding DomainList}"
+                                        ItemDisplayBinding="{Binding Name}"
+                                        SelectedIndexChanged="Domain_Selected"
+                                        Margin="0"/>
+                    <common:SearchBarView AutomationId="AdressInput"
+                                      Placeholder="Chercher un lieu"
+                                      Padding="25,0,20,0"
+                                      Text="{Binding Recherche}"
+                                      VerticalOptions="Start"/>
+                    <Label x:Name="ResultatNumber" TextColor="White" Margin="5,0"></Label>
+                </StackLayout>
+
+                <common:RoundedFrame 
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            CornerRadius="15,15,0,0" Padding="0">
+                    <AbsoluteLayout HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
+                        <esri:MapView x:Name="MapView"
+                                  AutomationId="Map"
+                                  Map="{Binding Map}"
+                                  IsAttributionTextVisible="False"
+                                  AbsoluteLayout.LayoutFlags="All"
+                                  AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                  BackgroundColor="Gray"/>
+                        <common:MapCompassView MapView="{Reference MapView}"
+                                           Margin="10,30"
+                                           AbsoluteLayout.LayoutFlags="PositionProportional"
+                                           AbsoluteLayout.LayoutBounds="1, 1" />
+                        <common:MapScaleBarView MapView="{Reference MapView}"
+                                            Margin="10"
+                                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                                            AbsoluteLayout.LayoutBounds="1, 1" />
+                        <Button x:Name="UseLocationButton"
+                                    Text="Centrer sur ma position"
+                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                    Margin="0,0,0,24"
+                                    AbsoluteLayout.LayoutBounds="0.5, 1"
+                                    Clicked="OnLocationButtonClicked"
+                                    Command="{Binding GetCurrentLocationCommand}"
+                                    Style="{StaticResource ButtonConfirm}" />
+                    </AbsoluteLayout>
+                </common:RoundedFrame>
+            </StackLayout>
+            <StackLayout 
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                IsVisible="{Binding IsContactDetailDisplay, Source={RelativeSource AncestorType={x:Type viewModel:ContactMapViewModel}}}">
+                <views:ContactDetailView BindingContext="{Binding ContactDetail}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            </StackLayout>
+            <StackLayout 
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                IsVisible="{Binding IsWorkInfosDetailDisplay, Source={RelativeSource AncestorType={x:Type viewModel:ContactMapViewModel}}}">
+                <views:WorkInfosDetailView BindingContext="{Binding WorkInfosDetail}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            </StackLayout>
+
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BaseView>

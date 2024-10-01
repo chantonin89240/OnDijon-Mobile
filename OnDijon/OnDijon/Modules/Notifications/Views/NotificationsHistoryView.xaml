@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             ios:Page.UseSafeArea="true"
+             x:Class="OnDijon.Modules.Notifications.Views.NotificationsHistoryView"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Notifications.ViewModels">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+        </ResourceDictionary>
+        <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image  Style="{StaticResource imageBackground}"/>
+            <StackLayout Style="{StaticResource stackLayoutForBackground}">
+            <common:NavigationBarView Title="Mes notifications" BackgroundColor="Transparent" Margin="0"/>
+
+            <ListView x:Name="SuggestionsListView"
+                        BackgroundColor="Transparent"
+                        Margin="0"
+                        HasUnevenRows="True"
+                        SelectionMode="None"
+                        SeparatorVisibility="None"
+                        IsPullToRefreshEnabled="True"
+                        RefreshCommand="{Binding GetNotificationsCommand}"
+                        IsRefreshing="{Binding IsLoading}"
+                        RefreshControlColor="{StaticResource kleinBlue}"
+                        ItemsSource="{Binding Notifications}">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Style="{StaticResource Card}"
+                                    HeightRequest="-1"
+                                    Padding="10"
+                                    Margin="12,5">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding RelayNotificationCommand,Source={RelativeSource AncestorType={x:Type viewModel:NotificationsHistoryViewModel}}}"  
+                                            CommandParameter="{Binding}"/>
+                                    </Frame.GestureRecognizers>
+
+                                    <StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Title}"
+                                                FontSize="18"
+                                                HorizontalOptions="StartAndExpand">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsRead}" Value="false">
+                                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+
+                                        <Label Text="{Binding DateSent, StringFormat='{0:dd MMM HH:mm}'}">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsRead}" Value="false">
+                                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </StackLayout>
+
+                                    <Label Text="{Binding Body}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsRead}" Value="false">
+                                                <Setter Property="FontAttributes" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                        <Label Text="➞" TextColor="{StaticResource kleinBlue}" HorizontalOptions="End" IsVisible="{Binding ServiceId, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"/>
+
+                                    </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BaseView>

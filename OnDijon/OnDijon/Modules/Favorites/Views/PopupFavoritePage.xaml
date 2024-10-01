@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 x:Class="OnDijon.Modules.UsefulContact.Views.PopupInfoContactView"
+                 CloseWhenBackgroundIsClicked="True"
+                 HasKeyboardOffset="False"
+                 xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+                 xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:resources="clr-namespace:OnDijon.Common.Utils.Resources"
+            xmlns:common="clr-namespace:OnDijon.Common.Views">
+    <pages:PopupPage.Resources>
+    </pages:PopupPage.Resources>
+    <Frame VerticalOptions="Center"
+           HorizontalOptions="FillAndExpand"
+           Margin="38,0"
+           BackgroundColor="White" 
+           CornerRadius="20" 
+           Padding="25">
+
+        <StackLayout Spacing="10">
+            <Label Text="Êtes-vous sur de vouloir supprimer ce favoris?"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource kleinBlue}"></Label>
+
+            <StackLayout x:Name="OpenStatutStackLayout" Margin="10">
+                <Button Command="{Binding DeleteFavCommand,Source={RelativeSource AncestorType={x:Type viewModel:FavoritesViewModel}}}" CommandParameter="{Binding}"
+                    Text="Confirmer"
+                    Clicked="OnClose"
+                    Style="{StaticResource ButtonConfirm}"></Button>
+                <Button Command="{Binding CancelCommand}"
+                    Text="Annuler"
+                    Clicked="OnClose"
+                    Style="{StaticResource ButtonConfirm}"></Button>
+            </StackLayout>
+            
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

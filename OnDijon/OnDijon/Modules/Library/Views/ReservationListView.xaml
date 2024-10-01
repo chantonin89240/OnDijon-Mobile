@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Library.Views.ReservationListView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"             
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Library.ViewModels"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             VerticalOptions="CenterAndExpand">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+        </ResourceDictionary>
+        <Style x:Key="BadgeButton" 
+               TargetType="Button" 
+               BasedOn="{StaticResource ButtonConfirm}">
+            <Setter Property="HorizontalOptions"
+                    Value="Fill" />
+            <Setter Property="HeightRequest"
+                    Value="20" />
+                <Setter Property="CornerRadius"
+                        Value="15" />
+            <Setter Property="TextColor"
+                        Value="White" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Margin"
+                    Value="0,0,5,0"/>
+            <Setter Property="Padding"
+                    Value="5"/>
+        </Style>
+    </StackLayout.Resources>
+    <StackLayout HorizontalOptions="CenterAndExpand" 
+                 Orientation="Vertical" 
+                 VerticalOptions="CenterAndExpand">
+        <Label Style="{StaticResource ciTitle}"
+               Text="Aucune réservation en cours" 
+               IsVisible="{Binding ReservationListIsEmpty}"
+               HorizontalOptions="Center"
+               VerticalOptions="EndAndExpand"/>
+    </StackLayout>
+
+    <StackLayout BindableLayout.ItemsSource="{Binding ReservationList}"
+                 Padding="0,20,0,80" >
+        <BindableLayout.ItemTemplate>
+            <DataTemplate x:Name="libraryCardTemplate">
+                <StackLayout >
+                        <Frame CornerRadius="15"
+                           Margin="5"
+                           Padding="20"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand">
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <common:BadgeView Text="En cours" 
+                                                  BackgroundColor="{StaticResource BadgeColorGreen}"
+                                                  Margin="0,0,5,0"/>
+                                <Button Style="{StaticResource BadgeButton}" 
+                                    Text="Annuler" 
+                                    Command="{Binding CancelReservationCommand,Source={RelativeSource AncestorType={x:Type viewModel:ReservationListViewModel}}}"   
+                                    CommandParameter="{Binding}" />
+                            </StackLayout>
+                                <Label Text="{Binding WhenCreatedDescription}" 
+                                       FontSize="Small" 
+                                       HorizontalOptions="Start" 
+                                       Margin="0,0,0,20"/>
+
+                                <!--<Label Text="{Binding AvailableDescription}" FontSize="Small" HorizontalOptions="Start" Margin="0,0,0,20"/>-->
+                                <Image Source="{Binding ImageUrl}"></Image>
+                            <Label Text="{Binding Reservation.Title}" Style="{StaticResource ciLabel}" FontSize="Medium"/>
+                            <Label Text="{Binding Reservation.Author}" Style="{StaticResource ciContent}"/>
+                                <Label Text="Edité par :" Style="{StaticResource ciLabel}"/>
+                                <Label Text="{Binding Reservation.Publisher}" Style="{StaticResource ciContent}"/>
+                                <Label Text="Isbn :" Style="{StaticResource ciLabel}" IsVisible="{Binding Reservation.Isbn, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"/>
+                                <Label Text="{Binding Reservation.Isbn}" Style="{StaticResource ciContent}"  IsVisible="{Binding Reservation.Isbn, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </StackLayout>
+</StackLayout>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:res="clr-namespace:OnDijon.Common.Utils.Resources"
+             xmlns:sr="clr-namespace:OnDijon.Modules.School.Views"
+             xmlns:tabview="clr-namespace:Xam.Plugin.TabView;assembly=Xam.Plugin.TabView"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             mc:Ignorable="d"
+             Title="Restauration Scolaire"
+             x:Class="OnDijon.Modules.School.Pages.SchoolRestaurantDisplayPage"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <StackLayout Spacing="0">
+                <common:NavigationBarView Title="Les menus" />
+
+          
+                <DatePicker  HorizontalOptions="Center"
+                            Format="D"
+                            MinimumDate="{Binding MinDate}"
+                            MaximumDate="{Binding MaxDate}"
+                            Date="{Binding SelectedDate}"
+                             Margin="12,20"/>
+
+
+                <StackLayout>
+                    <StackLayout Padding="24,10"
+                                             BackgroundColor="White" IsVisible="{Binding Calendar.Ferie}">
+                        <Label HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Margin="20" Text="La cantine est fermée à cette date."></Label>
+                    </StackLayout>
+                    <StackLayout Padding="24,10"
+                                            BackgroundColor="White" IsVisible="{Binding Calendar.Ouvert}">
+                        <Label Text="{Binding Calendar.Day}"
+                                           TextColor="Black"
+                                           FontSize="20"
+                                           FontAttributes="Bold" 
+                                           Margin="0,10,0,10"/>
+                        <Label Text="{Binding Calendar.Nom}"
+                                           TextColor="Black" 
+                                           Margin="0,10,0,10"/>
+
+                        <sr:DishView Dish="{Binding Calendar.Entree}"
+                                                 Icon="{Static res:DMResources.SchoolRestaurantCalendar_Starter_Icon}" />
+
+                        <sr:DishView Dish="{Binding Calendar.Proteine}"
+                                                 Icon="{Static res:DMResources.SchoolRestaurantCalendar_Protein_Icon}" />
+
+                        <sr:DishView Dish="{Binding Calendar.Legume}"
+                                                 Icon="{Static res:DMResources.SchoolRestaurantCalendar_Vegetable_Icon}" />
+
+                        <sr:DishView Dish="{Binding Calendar.Fromage}"
+                                                 Icon="{Static res:DMResources.SchoolRestaurantCalendar_Cheese_Icon}" />
+
+                        <sr:DishView Dish="{Binding Calendar.Dessert}"
+                                                 Icon="{Static res:DMResources.SchoolRestaurantCalendar_Desert_Icon}" />
+                    </StackLayout>
+                </StackLayout>
+                
+                
+            </StackLayout>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BaseView>

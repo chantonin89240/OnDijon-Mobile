@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="OnDijon.Modules.School.Views.DietView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+              xmlns:res="clr-namespace:OnDijon.Common.Utils.Resources"
+             xmlns:sr="clr-namespace:OnDijon.Modules.School.Views"
+             Orientation="Vertical"
+             VerticalOptions="FillAndExpand"
+             Margin="0,10,0,10"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.School.ViewModel"
+             IsVisible="{Binding HasOption}">
+    <Label Text="Choix alimentaire"
+               Padding="10"
+               FontSize="16"
+               HorizontalOptions="Center"
+               Style="{StaticResource ciLittleTitle}"
+               HorizontalTextAlignment="Center" />
+    <Grid RowDefinitions="50,auto,50,auto" 
+        ColumnDefinitions="*,150" 
+        HorizontalOptions="FillAndExpand" 
+        BackgroundColor="{StaticResource LightBackgroundColor}"
+        Margin="5">
+        <Label Grid.Column="0" Grid.Row="0"  
+            Text="Avoir un deuxième menu végétarien par semaine" 
+            VerticalOptions="Center" 
+            FontSize="Small"/>
+        <common:SwitchView Grid.Column="1" Grid.Row="0" 
+            IsSelected="{Binding OptionDiet}" 
+            SelectedLabel="Activé" 
+            UnselectedLabel="Désactivé" 
+            ShowLabel="False"
+            HorizontalOptions="End"/>
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+               Text="Attention à partir de cette date, la demande de changement d'option sera prise en compte sous un mois." 
+               IsVisible="{Binding OptionDiet}"
+               Style="{StaticResource DetailLabelGray}"/>
+        <Label Grid.Column="0" Grid.Row="2" 
+            Text="Régime" 
+            VerticalOptions="Center" 
+            FontSize="Small"/>
+        <common:FormPickerView x:Name="DietPicker"
+                               Grid.Column="1" Grid.Row="2" 
+                               SelectedIndex="{Binding IndiceStandardDiet}"
+                               SelectedItem="{Binding StandardDiet}"
+                               ItemsSource="{Binding PossibleStandardDiets}"
+                               WidthRequest="150" />
+        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+               Text="La demande de changement de régime alimentaire sera prise en compte sous 3 jours ouvrés."
+               Style="{StaticResource DetailLabelGray}"/>
+        <ActivityIndicator Grid.ColumnSpan="2"
+                           Grid.RowSpan="4"
+                           HorizontalOptions="Center"
+                           Color="{StaticResource kleinBlue}"
+                           IsRunning="{Binding IsLoading}" />
+    </Grid>
+    <Grid ColumnDefinitions="*,auto,*,auto,*" Margin="0,0,0,5"
+            HorizontalOptions="Center">
+        <Button Grid.Column="1"
+                    Text="Annuler" 
+                    IsEnabled="{Binding IsModify}"
+                    Command="{Binding ResetDietCommand, Source={RelativeSource AncestorType={x:Type viewModel:DietViewModel}}}" 
+                    Style="{StaticResource ButtonConfirm}"/>
+        <Button Grid.Column="3"
+                    Text="Envoyer" IsEnabled="{Binding IsModify}" 
+                    Command="{Binding GoUpdate, Source={RelativeSource AncestorType={x:Type viewModel:DietViewModel}}}" 
+                    Style="{StaticResource ButtonConfirm}"/>
+    </Grid>
+    <BoxView Style="{StaticResource ciCenterSeparator}" Margin="20"/>
+</StackLayout>

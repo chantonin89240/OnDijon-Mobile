@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<AbsoluteLayout xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="OnDijon.Common.Views.BreadcrumbCurrentStepView"
+                VerticalOptions="Center">
+    <Frame HeightRequest="12.5"
+           WidthRequest="12.5"
+           CornerRadius="7"
+           Padding="0"
+           AbsoluteLayout.LayoutBounds="0.5, 0.5"
+           AbsoluteLayout.LayoutFlags="PositionProportional"
+           BackgroundColor="{StaticResource kleinBlue}" />
+    <Ellipse StrokeThickness="2.5"
+             Stroke="{StaticResource kleinBlueSolidColorBrush}"
+             WidthRequest="25"
+             HeightRequest="25" />
+</AbsoluteLayout>

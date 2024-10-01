@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Common.Views.MenuView"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             mc:Ignorable="d"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ImageButton x:Key="closeButton"
+                         Style="{StaticResource NavBarButton}"
+                         Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Close}, Color=White, Size=24}"
+                         AutomationId="closeButton"
+                         Command="{Binding CloseMenu}" />
+            <Style x:Key="baseText"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="White" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+            </Style>
+            <Style x:Key="TextWelcome"
+                   TargetType="Span">
+                <Setter Property="TextColor"
+                        Value="White" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="18" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+            </Style>
+            <Style x:Key="TextButton"
+                   BasedOn="{StaticResource baseText}"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="24" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="Padding"
+                        Value="0,12,0,12" />
+            </Style>
+            <Style x:Key="TextFooter"
+                   BasedOn="{StaticResource baseText}"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="12" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="Padding"
+                        Value="0,12,0,12" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <StackLayout Orientation="Vertical" Spacing="0">
+                    <common:TopBarView x:Name="TopBarView" 
+                               IsNotificationButtonVisible="False"
+                               IsCloseButtonVisible="True"
+                                        Margin="0"/>
+                    <!-- Header profile -->
+                    <StackLayout 
+                        IsVisible="{Binding IsProfilVisible}"
+                        BackgroundColor="{StaticResource darkBlue}"
+                        Padding="24">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Style="{StaticResource TextWelcome}"
+                                          Text="Bienvenue, "  />
+                                    <Span Style="{StaticResource TextWelcome}"
+                                          Text="{Binding FirstName, TargetNullValue=''}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Frame
+                            CornerRadius="13"
+                            Padding="10,5,10,5"
+                            BackgroundColor="{StaticResource darkBlue}"
+                            HorizontalOptions="Start"
+                            BorderColor="White">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToProfileCommand}"/>
+                            </Frame.GestureRecognizers>
+                            <Label
+                                Text="Mon compte"
+                                TextColor="White"
+                                FontFamily="{StaticResource Isidora}"
+                                FontSize="12"/>
+                        </Frame>
+                    </StackLayout>
+                    <!-- Menu navigation -->
+                    <StackLayout
+                        VerticalOptions="StartAndExpand"
+                        Padding="24,35,24,24">
+
+                        <Label Style="{StaticResource TextButton}"
+                               Text="Accueil">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToDashboardCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Style="{StaticResource TextButton}"
+                               Text="Mes services">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToServicesCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Style="{StaticResource TextButton}"
+                               IsVisible="{Binding IsProfilVisible}"
+                               Text="Mon espace">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToMySpaceCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Style="{StaticResource TextButton}"
+                               IsVisible="{Binding IsConnected}"
+                               Text="Mes préférences">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToScopesCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        <Label Style="{StaticResource TextButton}"
+                               IsVisible="{Binding IsConnected}"
+                               Text="Mes Infos">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToAlertsCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Style="{StaticResource TextButton}"
+                               IsVisible="{Binding IsConnected}"
+                               Text="Mes favoris">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToManageFavoritesCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Button x:Name="btLogin"
+                                Margin="0,30,0,0"
+                                Text="{Binding LoginText}"
+                                Command="{Binding LoginLogoutCommand}"
+                                Style="{StaticResource ButtonConfirm}"
+                                HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    
+                </StackLayout>
+            </StackLayout>
+            <!-- Footer -->
+            <StackLayout BackgroundColor="{StaticResource darkBlue}" 
+                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-40}" >
+                <FlexLayout JustifyContent="SpaceAround">
+                    <Label Style="{StaticResource TextFooter}"
+                                Text="Contact" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ContactSupportCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Style="{StaticResource TextFooter}"
+                                Text="Mentions légales" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToLegalNoticeCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Style="{StaticResource TextFooter}"
+                                   FontAttributes="None"
+                                   Text="{Binding Version}" />
+                </FlexLayout>
+            </StackLayout>
+
+            <!-- Centered and 1/3 width and height of parent -->
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BaseView>

@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:viewModels="clr-namespace:OnDijon.Modules.Account.ViewModels;assembly=OnDijon"
+             ios:Page.UseSafeArea="true"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.Account.Pages.SignUpView"
+             AutomationId="SignUpView"
+             x:DataType="viewModels:SignUpViewModel"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <converters:CountToBooleanConverter x:Key="countToBoolean" />
+
+            <Style TargetType="Span">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+            </Style>
+
+            <Style x:Key="SectionTitle"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="18" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+            </Style>
+
+            <Style TargetType="common:FormEntryView">
+                <Setter Property="Margin"
+                        Value="0,10,0,0" />
+            </Style>
+
+            <Style TargetType="CheckBox">
+                <Setter Property="Color"
+                        Value="{StaticResource kleinBlue}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="0"
+                         Padding="24,20">
+
+                <Button Text="Retour à la connexion"
+                        Style="{StaticResource ButtonRegular}"
+                        TextColor="Black"
+                        BackgroundColor="Transparent"
+                        ImageSource="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.ChevronLeft}, Color=Black, Size=36}"
+                        ContentLayout="Left, 12"
+                        HorizontalOptions="Start"
+                        Padding="0,0,10,0"
+                        AutomationId="NavBarBack"
+                        Command="{Binding NavigateBack}" />
+
+                <Label Text="Créer un compte"
+                       Style="{StaticResource SectionTitle}"
+                       FontSize="25"
+                       Margin="0,20,0,0" />
+
+                <!-- name -->
+                <common:FormEntryView x:Name="NameEntry"
+                                      Text="{Binding Profile.Name.Value}"
+                                      Placeholder="Mon nom (*)"
+                                      AutomationId="Name"
+                                      Margin="0,20,0,0"
+                                      Errors="{Binding Profile.Name.Errors}"
+                                      ReturnType="Next" />
+
+                <!-- firstname -->
+                <common:FormEntryView x:Name="FirstNameEntry"
+                                      Text="{Binding Profile.FirstName.Value}"
+                                      Placeholder="Mon prénom (*)"
+                                      AutomationId="Firstname"
+                                      Errors="{Binding Profile.FirstName.Errors}"
+                                      ReturnType="Next"/>
+
+                <!-- email -->
+                <common:FormEntryView x:Name="MailEntry"
+                                      Text="{Binding Profile.Mail.Value}"
+                                      Placeholder="Mon adresse email (*)"
+                                      AutomationId="Email"
+                                      Errors="{Binding Profile.Mail.Errors}"
+                                      Keyboard="Email" />
+
+                <!-- birthday -->
+                <!--<common:FormDatePickerView Date="{Binding Profile.Birthday.Value}"
+                                           Placeholder="Ma date de naissance"
+                                           Errors="{Binding Profile.Birthday.Errors}"
+                                           AutomationId="Date"
+                                           Margin="0,10,0,0" />-->
+
+                <!-- phone -->
+                <common:FormEntryView Text="{Binding Profile.PhoneNumber.Value}"
+                                      Placeholder="Mon numéro de téléphone"
+                                      AutomationId="Phone"
+                                      Errors="{Binding Profile.PhoneNumber.Errors}"
+                                      Keyboard="Telephone" />
+
+                <common:CustomLabel Text="Civilité"
+                                    Margin="0,20,0,10"
+                                    CustomStyle="{StaticResource SectionTitle}"
+                                    IsRequired="True"/>
+
+                <!-- gender -->
+                <StackLayout Orientation="Vertical">
+                    <input:RadioButtonGroupView x:Name="GenderRadioButtonGroup"
+                                                SelectedItem="{Binding Profile.Gender.Value, Mode=OneWayToSource}" >
+                        <input:RadioButton Text="Madame"
+                                           Value="Madame"/>
+                        <input:RadioButton Text="Monsieur"
+                                           Value="Monsieur" />
+                    </input:RadioButtonGroupView>
+                    <StackLayout x:Name="GenderErrorContainer"
+                                 Orientation="Horizontal"
+                                 IsVisible="{Binding Profile.Gender.Errors.Count, Converter={StaticResource countToBoolean}}">
+                        <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Alert}, Color={StaticResource ErrorColor}, Size=14}"
+                               Aspect="AspectFit" />
+                        <Label Text="{Binding Profile.Gender.Errors[0]}"
+                               VerticalOptions="Center"
+                               TextColor="{StaticResource ErrorColor}" />
+                    </StackLayout>
+                </StackLayout>
+
+                <!-- password -->
+                <common:FormEntryView x:Name="PasswordEntry"
+                                      Text="{Binding Profile.Password.Value}"
+                                      Placeholder="Mon mot de passe (*)"
+                                      AutomationId="Password"
+                                      Margin="0,20,0,0"
+                                      Errors="{Binding Profile.Password.Errors}"
+                                      ReturnType="Next"
+                                      IsPassword="true" />
+
+                <!-- password confirmation -->
+                <common:FormEntryView x:Name="PasswordConfirmationEntry"
+                                      Text="{Binding Profile.PasswordConfirmation.Value}"
+                                      Placeholder="Mon mot de passe - confirmation (*)"
+                                      AutomationId="PasswordConfirmation"
+                                      Errors="{Binding Profile.PasswordConfirmation.Errors}"
+                                      IsPassword="true" />
+
+                <Label Text="Protection de mes données"
+                       Style="{StaticResource SectionTitle}"
+                       Margin="0,20,0,10" />
+
+                <!-- data protection -->
+                <StackLayout Orientation="Horizontal"
+                             Spacing="10">
+                    <CheckBox x:Name="DataProtectionCB"
+                              VerticalOptions="Start"
+                              AutomationId="Data"
+                              IsChecked="{Binding DataProtectionAccepted}" />
+
+                    <Label LineBreakMode="WordWrap">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="En créant un compte, j'accepte que Dijon Métropole collecte et utilise les données personnelles que je viens de renseigner dans ce formulaire et celles qui seront collectées lors de l'usage de l'application, dans le seul but de m'offrir une experience personnalisée et en accord avec la " />
+                                <Span Text="politique de protection des données"
+                                      TextDecorations="Underline"
+                                      FontAttributes="Bold">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding DisplayCGUCommand}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+                <Label Text="Conditions générales d'utilisation"
+                       Style="{StaticResource SectionTitle}"
+                       Margin="0,20,0,10" />
+
+                <!-- cgu -->
+                <StackLayout Orientation="Horizontal"
+                             Spacing="10">
+                    <CheckBox x:Name="CguCB"
+                              IsChecked="{Binding CguAccepted}"
+                              VerticalOptions="Start"
+                              AutomationId="CGU"/>
+
+                    <Label LineBreakMode="WordWrap">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="En créant un compte, j'accepte les " />
+                                <Span Text="Conditions Générales d'Utilisation (CGU)"
+                                      TextDecorations="Underline"
+                                      FontAttributes="Bold">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding DisplayCGUCommand}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text=" de l'application mobile OnDijon et des services associés" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+                <common:LoadingView IsLoading="{Binding IsLoading}"
+                                    LoadingIndicatorColor="White"
+                                    Margin="0,30,0,0">
+                    <Button x:Name="SignUpButton"
+                            Text="Créer un compte"
+                            AutomationId="Validate"
+                            Command="{Binding SignUp}"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource ButtonConfirm}">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource AllTrueMultiConverter}">
+                                <Binding Path="Profile.Name.Value" Converter="{StaticResource NotEmptyStringToBoolConverter}" />
+                                <Binding Path="Profile.FirstName.Value" Converter="{StaticResource NotEmptyStringToBoolConverter}" />
+                                <Binding Path="Profile.Mail.Value" Converter="{StaticResource NotEmptyStringToBoolConverter}"/>
+                                <Binding Path="Profile.Gender.Value" Converter="{StaticResource NotEmptyStringToBoolConverter}" />
+                                <Binding Path="Profile.Password.Value" Converter="{StaticResource NotEmptyStringToBoolConverter}" />
+                                <Binding Path="Profile.PasswordConfirmation.Value" Converter="{StaticResource NotEmptyStringToBoolConverter}" />
+                                <Binding Path="CguAccepted" />
+                                <Binding Path="DataProtectionAccepted" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                </common:LoadingView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</common:BaseView>

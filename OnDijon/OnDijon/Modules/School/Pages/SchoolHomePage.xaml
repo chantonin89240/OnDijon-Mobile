@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:OnDijon.Modules.School.Pages;assembly=OnDijon"
+             xmlns:sr="clr-namespace:OnDijon.Modules.School.Views"
+             mc:Ignorable="d"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             x:Class="OnDijon.Modules.School.Pages.SchoolHomePage"  
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions" 
+             xmlns:common="clr-namespace:OnDijon.Common.Views"  
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.School.ViewModel"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             AutomationId="SchoolHomePage" >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+            <DataTemplate x:Key="ChildTemplate">
+                <Grid Padding="5,0">
+                    <common:RoundedFrame HeightRequest="210"
+                                             CornerRadius="15" 
+                                             VerticalOptions="FillAndExpand"
+                                             Padding="0">
+                        <Grid ColumnDefinitions="*,70" RowDefinitions="90,10,45,45,10">
+                            <common:RoundedFrame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{Binding Color}" CornerRadius="15,15,0,0">
+                                <Label Text="{Binding Title}"
+                                               FontSize="20"
+                                               VerticalOptions="CenterAndExpand"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource kleinBlue}"/>
+                            </common:RoundedFrame>
+                            <ff:SvgCachedImage Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                                                    x:Name="Image"
+                                                    Source="{Binding ChildModel.ImageSource}"
+                                                    Scale="1"/>
+                            <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                                            Text="Préférences"
+                                            IsEnabled="{Binding SchoolDayIsVisible, Source={RelativeSource AncestorType={x:Type viewModel:SchoolHomeViewModel}}}"
+                                            Style="{StaticResource ButtonSelect}"
+                                            Padding="10"
+                                            Margin="20,0,20,2"
+                                            Command="{Binding WeekButtonCommand, Source={RelativeSource AncestorType={x:Type viewModel:SchoolHomeViewModel}}}"/>
+                            <Button  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"
+                                            Text="Organiser une journée"
+                                            IsEnabled="{Binding SchoolScheduledIsVisible, Source={RelativeSource AncestorType={x:Type viewModel:SchoolHomeViewModel}}}"
+                                            Style="{StaticResource ButtonSelect}"
+                                            Padding="10"
+                                            Margin="20,2"
+                                            Command="{Binding DayButtonCommand, Source={RelativeSource AncestorType={x:Type viewModel:SchoolHomeViewModel}}}" />
+                        </Grid>
+                    </common:RoundedFrame>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="RestaurantTemplate" >
+                <Grid Padding="5,0">
+                    <common:RoundedFrame VerticalOptions="CenterAndExpand"
+                                         HeightRequest="200"
+                                         CornerRadius="15"
+                                         Padding="20"
+                                         Margin="8,0"
+                                         BackgroundColor="{StaticResource MistyRoseColor}">
+                        <Grid ColumnDefinitions="*,160" RowDefinitions="140,55">
+                            <ff:SvgCachedImage  Grid.Column="1" Grid.Row="0"
+                                                   x:Name="Image"
+                                                   Source="{extensions:ImageResource OnDijon.Assets.SchoolRestaurantMenu.svg}"
+                                                   Margin="10, 20, 10 ,0"
+                                                   HorizontalOptions="EndAndExpand" />
+                            <Label  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                                        Text="Menu du jour"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       VerticalOptions="StartAndExpand"
+                                       Margin="0,0,0,0"
+                                       TextColor="{StaticResource kleinBlue}" />
+                            <Label   Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                                       Text="Découvrez le menu équilibré concocté pour votre enfant.."
+                                       Margin="10,0"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="CenterAndExpand"
+                                       FontSize="14"/>
+                        </Grid>
+                    </common:RoundedFrame>
+                </Grid>
+            </DataTemplate>
+            <local:CardsDataTemplateSelector x:Key="CardSelector"
+                                             RestaurantTemplate="{StaticResource RestaurantTemplate}"
+                                             ChildTemplate="{StaticResource ChildTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Spacing="0">
+            <common:RoundedScrollView >
+                <common:RoundedScrollView.HeaderView>
+                    <StackLayout Spacing="0" 
+                                VerticalOptions="FillAndExpand">
+                        <common:NavigationBarView Title="Périscolaire" BackgroundColor="Transparent"/>
+                        <CarouselView x:Name="CardsCarousel" 
+                                        ItemsSource="{Binding SchoolCardList}"                   
+                                        ItemTemplate="{StaticResource CardSelector}"
+                                        HeightRequest="220" 
+                                        MinimumHeightRequest="220" 
+                                        PeekAreaInsets="24" 
+                                        Loop="False" 
+                                        Margin="0,12,0,12" 
+                                        CurrentItem="{Binding SelectedSchoolCard, Mode=OneWayToSource}"
+                                        IsSwipeEnabled="{Binding IsModify, Converter={StaticResource negateBooleanConverter}}">
+                        </CarouselView>
+                        <Grid ColumnDefinitions="30,*,18,30,18" RowDefinitions="25" Margin="20,0">
+                            <ImageButton Grid.Column="0"
+                                        Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.HelpCircleOutline}, Color=White,Size=30}"
+                                        BackgroundColor="Transparent" 
+                                        Command="{Binding OpenHelp}"/>
+                            <ff:SvgCachedImage Grid.Column="2"
+                                            x:Name="LeftArrow" 
+                                            Source="{extensions:ImageResource OnDijon.Assets.arrow-left.svg}"
+                                            IsVisible="{Binding IsLeftArrowVisible}">
+                             </ff:SvgCachedImage>
+                            <Label  Grid.Column="3"
+                                        x:Name="PageCounter" 
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"
+                                        FontFamily="{StaticResource Isidora}"
+                                        Text="{Binding PageCounter}"
+                                        FontSize="12"
+                                        TextColor="White" />
+                            <ff:SvgCachedImage  Grid.Column="4"
+                                            x:Name="RightArrow" 
+                                            IsVisible="{Binding IsRightArrowVisible}"
+                                            Source="{extensions:ImageResource OnDijon.Assets.arrow-right.svg}">
+                            </ff:SvgCachedImage>
+                        </Grid>
+                    </StackLayout>
+                </common:RoundedScrollView.HeaderView>
+                <common:RoundedScrollView.ContentView>
+                    <common:RoundedFrame Padding="5"
+                                         Margin="0,0,0,10"
+                                            HorizontalOptions="FillAndExpand"
+                                            CornerRadius="30"
+                                            BackgroundColor="{StaticResource LightBackgroundColor}" >
+                        <!--<StackLayout VerticalOptions="FillAndExpand">-->
+                        <common:LoadingView IsLoading="{Binding IsLoading}"
+                                            LoadingIndicatorColor="{StaticResource kleinBlue }">
+                            <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+                                <sr:SchoolDayView BindingContext="{Binding DayScheduled}" IsVisible="{Binding SchoolDayIsVisible, Source={RelativeSource AncestorType={x:Type viewModel:SchoolHomeViewModel}}}" />
+                                <sr:WeekSchedulingView BindingContext="{Binding WeekScheduling}" IsVisible="{Binding SchoolScheduledIsVisible, Source={RelativeSource AncestorType={x:Type viewModel:SchoolHomeViewModel}}}"/>
+                                <sr:SchoolRestaurantView BindingContext="{Binding SchoolRestaurantModel}" IsVisible="{Binding SchoolRestaurantIsVisible, Source={RelativeSource AncestorType={x:Type viewModel:SchoolHomeViewModel}}}"/>
+                            </StackLayout>
+                        </common:LoadingView>
+                        <!--</StackLayout>-->
+                    </common:RoundedFrame>
+                </common:RoundedScrollView.ContentView>
+            </common:RoundedScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BaseView>

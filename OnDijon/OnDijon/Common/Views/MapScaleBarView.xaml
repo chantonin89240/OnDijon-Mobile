@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Common.Views.MapScaleBarView"
+             Orientation="Horizontal"
+             HeightRequest="10"
+             Spacing="0">
+
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <Style TargetType="BoxView">
+                <Setter Property="Color"
+                        Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </StackLayout.Resources>
+
+    <Label x:Name="Label"
+           TextColor="Black"
+           FontSize="10"
+           Margin="5,-5" />
+
+    <BoxView WidthRequest="2"
+             VerticalOptions="Fill" />
+
+    <BoxView x:Name="ScaleBar"
+             HeightRequest="2"
+             VerticalOptions="End" />
+
+    <BoxView WidthRequest="2"
+             VerticalOptions="Fill" />
+</StackLayout>

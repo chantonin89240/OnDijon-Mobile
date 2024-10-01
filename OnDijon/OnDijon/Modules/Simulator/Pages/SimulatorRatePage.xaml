@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Simulator.ViewsModels"
+             x:TypeArguments="viewModel:SimulatorRateViewModel"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.Simulator.Pages.SimulatorRatePage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <Style x:Key="gridLabel" TargetType="Label">
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5,10"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <ScrollView  Style="{StaticResource scrollViewForBackground}">
+                <StackLayout >
+                    <common:NavigationBarView Title="Simulateur de tarif" BackgroundColor="Transparent"/>
+
+                    <common:FormPickerView x:Name="DomainPicker" Title="{Binding DomainSimulatorRateSelected.Title}"
+                                               ItemsSource="{Binding DomainsSimulatorRate, Mode=OneWay}"
+                                               ItemDisplayBinding="{Binding Title}"
+                                               SelectedItem="{Binding DomainSimulatorRateSelected}"
+                                               Margin="12,20"/>
+                    <CollectionView ItemsSource="{Binding DomainSimulatorRateSelected.Categories}" >
+                        <CollectionView.Header>
+                            <Grid ColumnDefinitions="6*,2*,3*" Margin="0,5" BackgroundColor="White">
+                                <Label Grid.Column="0" HorizontalOptions="Center" Text="Prestation" Style="{StaticResource gridLabel}"/>
+                                <Label Grid.Column="1" HorizontalOptions="Center" Text="Tarif"      Style="{StaticResource gridLabel}"/>
+                                <Label Grid.Column="2" HorizontalOptions="Center" Text="Unité"      Style="{StaticResource gridLabel}"/>
+                                <BoxView Grid.ColumnSpan="3" HeightRequest="1" VerticalOptions="End" Color="LightGray"/>
+                            </Grid>
+                        </CollectionView.Header>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="6*,2*,3*" BackgroundColor="White">
+                                    <Label Grid.Column="0" HorizontalOptions="Center" Text="{Binding Title}" Style="{StaticResource gridLabel}"/>
+                                    <BoxView Grid.Column="0" HorizontalOptions="End" WidthRequest="1" Color="LightGray"/>
+                                    <Label Grid.Column="1" HorizontalOptions="Center" Text="{Binding Rate}" Style="{StaticResource gridLabel}"/>
+                                    <BoxView Grid.Column="1" WidthRequest="1" HorizontalOptions="End" Color="LightGray"/>
+                                    <Label Grid.Column="2"  HorizontalOptions="Center" Text="{Binding Detail}" Style="{StaticResource gridLabel}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

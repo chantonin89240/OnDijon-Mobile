@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+                 xmlns:customMaps="clr-namespace:OnDijon.Modules.RoadworkInformation.CustomComponent"
+                 ios:Page.UseSafeArea="true"
+                 NavigationPage.HasBackButton="False"
+                 NavigationPage.HasNavigationBar="False"
+                 xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+                 xmlns:viewModel="clr-namespace:OnDijon.Modules.RoadworkInformation.ViewModels"
+                 xmlns:views="clr-namespace:OnDijon.Modules.RoadworkInformation.Views"
+                 xmlns:mapsui="clr-namespace:Mapsui.UI.Forms;assembly=Mapsui.UI.Forms"
+                 x:Class="OnDijon.Modules.RoadworkInformation.Pages.RoadworkInformationPage"
+                 x:TypeArguments="viewModel:RoadworkInformationViewModel" 
+                 >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ElapsedTimeDateTimeConverter x:Key="ElapsedTime"></converters:ElapsedTimeDateTimeConverter>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+         <common:LoadingView  IsLoading="{Binding IsLoading}"
+                            LoadingIndicatorColor="{StaticResource kleinBlue }">
+        <Grid ColumnDefinitions="*,50" RowDefinitions="76,*" >
+            <Image  Style="{StaticResource imageBackground}" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" ColumnDefinitions="2*,2*,*,*" RowDefinitions="76,30,30,*">
+                <common:NavigationBarView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"
+                                      Title="Infos Travaux" HasBackButton="True" BackButtonCommand="{Binding OnCloseCommand}"
+                                      BackgroundColor="Transparent"    />
+                <common:SwitchIconView
+                                       LeftIcon="{Static icons:MaterialDesignIcons.MapCheckOutline}"
+                                       RightIcon="{Static icons:MaterialDesignIcons.FormatListBulleted}"
+                                       IsRightSelected="{Binding DoDisplayList}" HorizontalOptions="End" VerticalOptions="CenterAndExpand"
+                                       Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2"/>
+                <Label Text="Nombre de travaux en cours :" TextColor="White" HorizontalOptions="Center" HorizontalTextAlignment="End"
+                       Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"/>
+                <Label Text="{Binding RoadworkCount}" TextColor="White" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"
+                       Grid.Column="2" Grid.Row="1" />
+                <Button Text="En cours" Command="{Binding SelectCurrentWorkCommand}" Style="{StaticResource ButtonSelectTab}" HorizontalOptions="FillAndExpand" BorderColor="Transparent" BackgroundColor="Transparent"
+                        Grid.Column="0" Grid.Row="2" IsEnabled="{Binding CurrentWorkSelected, Converter={StaticResource negateBooleanConverter}}"/>
+                <Button Text="Nouveau" Command="{Binding SelectNewestWorkCommand}" Style="{StaticResource ButtonSelectTab}" HorizontalOptions="FillAndExpand"  VerticalOptions="Center" BorderColor="Transparent" BackgroundColor="Transparent"
+                        Grid.Column="1" Grid.Row="2" IsEnabled="{Binding NewestWorkSelected, Converter={StaticResource negateBooleanConverter}}"/>
+                <Button Text="A venir" Command="{Binding SelectIncomingWorkCommand}" Style="{StaticResource ButtonSelectTab}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" BorderColor="Transparent" BackgroundColor="Transparent"
+                        Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" IsEnabled="{Binding IncomingWorkSelected, Converter={StaticResource negateBooleanConverter}}"/>
+                <customMaps:CustomOSM IsVisible="{Binding DisplayMap}" MyHomeLocation="{Binding MyHomeLocation}" MyWorkLocation="{Binding MyWorkLocation}" ListPin="{Binding RoadworkPinsList}"
+                        Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Grid.RowSpan="1"/>
+                <ScrollView IsVisible="{Binding DisplayDetail}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Grid.RowSpan="1">
+                    <StackLayout BindableLayout.ItemsSource="{Binding FilteredRoadworkList}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectRoadworkOnTapCommand,Source={RelativeSource AncestorType={x:Type viewModel:RoadworkInformationViewModel}}}" CommandParameter="{Binding}"/>
+                                    </Frame.GestureRecognizers>
+                                    <StackLayout>
+                                        <Label Text="{Binding Title}" Style="{StaticResource ciLittleTitle}" HorizontalOptions="CenterAndExpand"/>
+                                        <StackLayout>
+                                            <Label Text="Date de début :" Style="{StaticResource ciLabel}"/>
+                                            <Label Text="{Binding DateBeginRoadwork}" Style="{StaticResource ciContent}"/>
+                                        </StackLayout>
+                                        <StackLayout>
+                                            <Label Text="Date de fin :" Style="{StaticResource ciLabel}"/>
+                                            <Label Text="{Binding DateEndRoadwork}" Style="{StaticResource ciContent}"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
+            <StackLayout   Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Grid.RowSpan="2"
+                IsVisible="{Binding DisplayRoadworkDetail, Source={RelativeSource AncestorType={x:Type viewModel:RoadworkInformationViewModel}}}">
+                <views:RoadworkDetailView BindingContext="{Binding RoadworkDetailViewModel}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            </StackLayout>
+        </Grid>
+        </common:LoadingView>
+        
+    </ContentPage.Content>
+
+</common:BasePage>
+    

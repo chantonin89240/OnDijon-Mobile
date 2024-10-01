@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="OnDijon.Modules.School.Views.SchoolRestaurantView"
+              xmlns:res="clr-namespace:OnDijon.Common.Utils.Resources"
+             xmlns:sr="clr-namespace:OnDijon.Modules.School.Views"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             Orientation="Vertical"
+             Spacing="10"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    <common:DatePickerSideMoveView 
+                    MinDate="{Binding MinDate}"
+                    MaxDate="{Binding MaxDate}"
+                    Date="{Binding SelectedDate}"/>
+    <StackLayout Padding="24,0" BackgroundColor="White" IsVisible="{Binding Calendar.Ferie}">
+        <Label HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Margin="20" Text="La cantine est fermée à cette date."></Label>
+    </StackLayout>
+    <ScrollView Margin="0,10">
+        <StackLayout Padding="10,0"
+                     IsVisible="{Binding Calendar.Ouvert}"
+                     HeightRequest="250">
+            <Label Text="{Binding Calendar.Nom}"
+                   TextColor="Black"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding Calendar.Nom, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"/>
+            <sr:DishView Dish="{Binding Calendar.Entree}"
+                         IsVisible="{Binding Calendar.Entree.Nom, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"
+                         Icon="{Static res:DMResources.SchoolRestaurantCalendar_Starter_Icon}" />
+            <sr:DishView Dish="{Binding Calendar.Proteine}"
+                         IsVisible="{Binding Calendar.Proteine.Nom, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"
+                         Icon="{Static res:DMResources.SchoolRestaurantCalendar_Protein_Icon}" />
+            <sr:DishView Dish="{Binding Calendar.Legume}"
+                         IsVisible="{Binding Calendar.Legume.Nom, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"
+                         Icon="{Static res:DMResources.SchoolRestaurantCalendar_Vegetable_Icon}" />
+            <sr:DishView Dish="{Binding Calendar.Fromage}"
+                         IsVisible="{Binding Calendar.Fromage.Nom, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"
+                         Icon="{Static res:DMResources.SchoolRestaurantCalendar_Cheese_Icon}" />
+            <sr:DishView Dish="{Binding Calendar.Dessert}"
+                         IsVisible="{Binding Calendar.Dessert.Nom, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"
+                         Icon="{Static res:DMResources.SchoolRestaurantCalendar_Desert_Icon}" />
+        </StackLayout>
+    </ScrollView>
+</StackLayout>

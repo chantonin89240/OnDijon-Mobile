@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.JobOffer.Pages.DetailJobOfferPage" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+            xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+            xmlns:viewModel="clr-namespace:OnDijon.Modules.JobOffer.ViewModels"
+            x:TypeArguments="viewModel:DetailJobOfferViewModel"
+            >
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <converters:IsNullConverter x:Key="IsNullConverter"></converters:IsNullConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <Grid ColumnDefinitions="*,50" RowDefinitions="*,50,10" >
+                <Image Style="{StaticResource imageBackground}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+                <ScrollView  Style="{StaticResource scrollViewForBackground}"  x:Name="ScrollViewPage"  Scrolled="ScrollView_Scrolled" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Grid.RowSpan="3">
+                    <StackLayout Spacing="10" Padding="10">
+                        <common:NavigationBarView Title="Offres d'emploi" BackgroundColor="Transparent" BackButtonCommand="{Binding GoBack}"/>
+                        <common:RoundedFrame CornerRadius="10" Padding="15">
+                            <StackLayout>
+
+                                <Label Text="{Binding SelectedJobOffer.Title}" Style="{StaticResource ciFrameTitle}" FontSize="Subtitle" Margin="0,0,10,0" />
+                                <Image Source="{Binding SelectedJobOffer.Picture}" Aspect="AspectFill" Margin="-15,5"/>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Ville : " TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"></Span>
+                                            <Span Text="{Binding SelectedJobOffer.City}"></Span>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Secteur : " TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"></Span>
+                                            <Span Text="{Binding SelectedJobOffer.Subtitle}"></Span>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Type de demande : " TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"></Span>
+                                            <Span Text="{Binding SelectedJobOffer.Type}"></Span>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Date limite de candidature : " TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"></Span>
+                                            <Span Text="{Binding SelectedJobOffer.LimitDate}"></Span>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="Descriptif : " TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"
+                                        IsVisible="{Binding SelectedJobOffer.Content, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"/>
+                                <Label Text="{Binding SelectedJobOffer.Content}" TextType="Html" 
+                                            IsVisible="{Binding SelectedJobOffer.Content, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"/>
+                                <Label Text="Conditions : " TextColor="{StaticResource kleinBlue}" FontAttributes="Bold"
+                                        IsVisible="{Binding SelectedJobOffer.Conditions, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"/>
+                                <Label Text="{Binding SelectedJobOffer.Conditions}" TextType="Html"
+                                            IsVisible="{Binding SelectedJobOffer.Conditions, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"/>
+                                <Button Text="Candidater" Style="{StaticResource ButtonConfirm}" Margin="25,0,25,0" Command="{Binding GoToAplicationPageCommand}"/>
+
+                            </StackLayout>
+                        </common:RoundedFrame>
+                    </StackLayout>
+                </ScrollView>
+
+                <RelativeLayout Grid.Column="1" Grid.Row="1">
+                    <Frame x:Name="scrollableVisibility" IsVisible="true" BackgroundColor="{StaticResource kleinBlue}" WidthRequest="50" HeightRequest="30" CornerRadius="15" Padding="15,15,30,15"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=50}"
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant= 0}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-50}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+                        <Label Text="▲" FontAttributes="Bold" TextColor="White" FontSize="Medium"></Label>
+                    </Frame>
+                </RelativeLayout>
+            </Grid>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BasePage>

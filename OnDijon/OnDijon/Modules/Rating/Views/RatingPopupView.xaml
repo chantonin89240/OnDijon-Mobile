@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                xmlns:common="clr-namespace:OnDijon.Common.Views"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                mc:Ignorable="d"
+                xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+                xmlns:viewmodels="clr-namespace:OnDijon.Modules.Rating.ViewModels"
+                AutomationId="RatingPopupView"
+                CloseWhenBackgroundIsClicked="{Binding CloseWhenBackgroundIsClicked}"
+                x:Class="OnDijon.Modules.Rating.Views.RatingPopupView"
+                x:DataType="viewmodels:RatingViewModel"
+                >
+    <Grid ColumnDefinitions="20,*,20" RowDefinitions="*,auto,*">
+        <Frame Grid.Column="1" Grid.Row="1" IsClippedToBounds="True" Padding="0" CornerRadius="10">
+            <StackLayout Spacing="0">
+                <Frame 
+                       BackgroundColor="{StaticResource kleinBlue}" Margin="0" CornerRadius="0">
+                    <Label Text="Recommanderiez-vous l'application OnDijon à votre entourage ?" TextColor="White" HorizontalOptions="Center" FontSize="20"></Label>
+                </Frame>
+                <common:StarsNotationView   StarsNumber="{Binding Note}" Margin="0,10,0,10"></common:StarsNotationView>
+                <Label IsVisible="{Binding DisplayQuestion1}" Text="Aidez-nous à vous donner satisfaction, dites-nous en plus sur vos attentes ?" Margin="10,10,10,5"></Label>
+                <Label IsVisible="{Binding DisplayQuestion2}" Text="Que pourrions-nous améliorer pour que vous soyez encore plus satisfait ?" Margin="10,10,10,5"></Label>
+                <Label IsVisible="{Binding DisplayQuestion3}" Text="Nous sommes ravis de cette évaluation ! Dites-nous en davantage sur ce qui vous a plu et sur ce qui pourrait être amélioré ?" Margin="10,10,10,5"></Label>
+                <Frame CornerRadius="10"  Margin="10,0,10,10" Padding="0" IsVisible="{Binding DisplayComment}" BorderColor="{StaticResource GrayBreadcrumb}" HasShadow="False">
+                    <Editor Text="{Binding Comment}" HeightRequest="100" Margin="5" FontSize="12" Background="White"/>
+                </Frame>
+                <Grid ColumnDefinitions="*,*" RowDefinitions="50" Margin="10">
+                    <Button Text="Plus tard"
+                                Style="{StaticResource ButtonOutlined}" HorizontalOptions="Center"
+                                Clicked="OnClose"
+                                Grid.Column="0"/>
+                    <Button Text="Valider"
+                                Style="{StaticResource ButtonConfirm}" HorizontalOptions="Center"
+                                IsEnabled="{Binding EnableValidate}"
+                                Grid.Column="1"
+                            Clicked="OnValidate"/>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</pages:PopupPage>

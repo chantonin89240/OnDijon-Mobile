@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.JobOffer.Pages.ApplicationFormPage" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+            xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+            xmlns:viewModel="clr-namespace:OnDijon.Modules.JobOffer.ViewModels"
+            xmlns:local="clr-namespace:OnDijon.Common.Utils"
+            xmlns:customView="clr-namespace:OnDijon.Modules.JobOffer.Views"
+            x:TypeArguments="viewModel:ApplicationFormViewModel">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <converters:IsNullConverter x:Key="IsNullConverter"></converters:IsNullConverter>
+            <converters:RadioButtonBoolToStringConverter x:Key="radioButtonConverter"></converters:RadioButtonBoolToStringConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <Grid ColumnDefinitions="*,50" RowDefinitions="*,50,10" >
+                <Image Style="{StaticResource imageBackground}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+                <ScrollView  Style="{StaticResource scrollViewForBackground}" x:Name="ScrollViewPage" Scrolled="ScrollView_Scrolled"  Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Grid.RowSpan="3">
+                    <StackLayout Spacing="10" Padding="0,10">
+                        <common:NavigationBarView Title="Offres d'emploi"  BackgroundColor="Transparent" BackButtonCommand="{Binding GoBack}"/>
+                        <StackLayout IsVisible="{Binding FirstPartForm}">
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                <common:BreadcrumbView StepCount="3" StepTitleList="{x:Static local:RecipeUIConstants.stepTitleJobOffer}" CurrentStep="1"/>
+                            </Frame>
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                <StackLayout>
+                                    <Label Text="Je choisis la ville où je souhaite candidater"/>
+                                    <StackLayout Spacing="0" Margin="0" BindableLayout.ItemsSource="{Binding ListCitiesSpontaneousApplication}">
+
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout>
+                                                    <Button Text="{Binding}" Style="{StaticResource ButtonSelect}"  Margin="10" Command="{Binding SelectCityCommand,Source={RelativeSource AncestorType={x:Type viewModel:ApplicationFormViewModel}}}" CommandParameter="{Binding}"/>
+                                                </StackLayout>
+                                            </DataTemplate>
+
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding SecondPartForm}">
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                <common:BreadcrumbView StepCount="3" StepTitleList="{x:Static local:RecipeUIConstants.stepTitleJobOffer}" CurrentStep="2"/>
+                            </Frame>
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                <StackLayout>
+                                    <Label Text="Je choisis le type d'emploi que je veux"/>
+                                    <StackLayout Spacing="0" Margin="0" BindableLayout.ItemsSource="{Binding ListTypeJobOffer}">
+
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout>
+                                                    <Button Text="{Binding}" Style="{StaticResource ButtonSelect}"  Margin="10" Command="{Binding SelectJobTypeCommand,Source={RelativeSource AncestorType={x:Type viewModel:ApplicationFormViewModel}}}" CommandParameter="{Binding}"/>
+                                                </StackLayout>
+                                            </DataTemplate>
+
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding ThirdPartForm}">
+                            <Frame Style="{StaticResource ciFrameStandardRounded}"  IsVisible="{Binding DisplayBreadcrumbView}">
+                                <common:BreadcrumbView StepCount="3" StepTitleList="{x:Static local:RecipeUIConstants.stepTitleJobOffer}" CurrentStep="3"/>
+                            </Frame>
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+
+                                <StackLayout>
+                                    <Label Text="Formulaire de candidature"  Margin="10,10,10,10"/>
+                                    <Label Text="{Binding Title}" />
+                                    <Label Style="{StaticResource ciContent}" Text="* Champs obligatoire" Margin="0,10" />
+                                    <StackLayout>
+                                        <Label Text="* Civilité : "/>
+                                        <StackLayout Orientation="Horizontal">
+                                            <!-- gender -->
+                                            <RadioButton BackgroundColor="Transparent"
+                                                     Content="{x:Static local:RecipeUIConstants.GenderFemale}" 
+                                                     GroupName="Civility"
+                                                     FontFamily="{StaticResource Isidora}"
+                                                     IsChecked="{Binding Mrs, Converter={StaticResource radioButtonConverter}, ConverterParameter = {x:Static local:RecipeUIConstants.GenderFemale}}"/>
+                                            <RadioButton BackgroundColor="Transparent" 
+                                                     Content="{x:Static local:RecipeUIConstants.GenderMale}"
+                                                     FontFamily="{StaticResource Isidora}"
+                                                     GroupName="Civility"
+                                                     IsChecked="{Binding Mr, Converter={StaticResource radioButtonConverter}, ConverterParameter={x:Static local:RecipeUIConstants.GenderMale}}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal"
+                                                         IsVisible="{Binding CivilityErrorDisplay}">
+                                            <Label Text="Civilité requise"/>
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                    <StackLayout>
+                                        <Label Text="* Nom : "/>
+                                        <common:FormEntryView Text="{Binding JobApplicationDocRequest.ApplicantName.Value}"
+                                                Errors="{Binding JobApplicationDocRequest.ApplicantName.Errors}"
+                                                Placeholder="Nom"
+                                                Margin="0,0,0,7"/>
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <Label Text="* Prénom : " />
+                                        <common:FormEntryView Text="{Binding JobApplicationDocRequest.ApplicantFirstName.Value}"
+                                                Errors="{Binding JobApplicationDocRequest.ApplicantFirstName.Errors}"
+                                                Placeholder="Prénom"
+                                                Margin="0,0,0,7"/>
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <Label Text=" * E-mail : " />
+                                        <common:FormEntryView Text="{Binding JobApplicationDocRequest.ApplicantEmail.Value}"
+                                                Errors="{Binding JobApplicationDocRequest.ApplicantEmail.Errors}"
+                                                Placeholder="E-mail"
+                                                Margin="0,0,0,7"/>
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <Label Text="* Mobile : "/>
+                                        <common:FormEntryView Text="{Binding JobApplicationDocRequest.ApplicantPhone.Value}"
+                                                Errors="{Binding JobApplicationDocRequest.ApplicantPhone.Errors}"
+                                                Placeholder="Mobile"
+                                                Keyboard="Telephone"
+                                                 Margin="0,0,0,7"/>
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <Label Text="* Adresse : " />
+                                        <common:FormAddressView Address="{Binding JobApplicationDocRequest.ApplicantAddressModel.Value}"
+                                                                    Errors="{Binding JobApplicationDocRequest.ApplicantAddressModel.Errors}"
+                                                                    Margin="0,0,0,7"/>
+                                    </StackLayout>
+                                    <StackLayout>
+                                        <Label Text="  Message : " />
+                                        <Frame CornerRadius="5"  Margin="0,0,0,7" Padding="0" BorderColor="LightGray" HasShadow="False">
+                                            <Editor Text="{Binding JobApplicationDocRequest.JobApplicationRequest.Message}" HeightRequest="100" Margin="5" FontSize="12"></Editor>
+                                        </Frame>
+                                    </StackLayout>
+
+                                    <StackLayout Margin="5">
+                                        <Label Text="* CV : " />
+                                        <customView:CustomFormFilePickerView Errors="{Binding JobApplicationDocRequest.ApplicantCV.Errors}"
+                                                                           FileContent="{Binding JobApplicationDocRequest.ApplicantCV.Value}"
+                                                                           FileName="{Binding CVTitle}"
+                                                                           SupportedExtensions="{Binding DocumentExtensions}"
+                                                                           CancelReinitialize="{Binding CancelReinitialize}" 
+                                                                           Margin="15,0,15,0"/>
+                                        <Label Text="formats autorisés : pdf, jpg, jpeg, png, doc, docx, odt" Style="{StaticResource DetailLabelForm}" FontSize="11"/>
+                                    </StackLayout>
+
+                                    <StackLayout Margin="5">
+                                        <Label Text="* Lettre de motivation : " />
+                                        <customView:CustomFormFilePickerView Errors="{Binding JobApplicationDocRequest.ApplicantCoverLetter.Errors}"
+                                                                           FileContent="{Binding JobApplicationDocRequest.ApplicantCoverLetter.Value}"
+                                                                           FileName="{Binding CoverLetterTitle}"
+                                                                           SupportedExtensions="{Binding DocumentExtensions}"
+                                                                           CancelReinitialize="{Binding CancelReinitialize}" 
+                                                                           Margin="15,0,15,0"/>
+                                        <Label Text="formats autorisés : pdf, jpg, jpeg, png, doc, docx, odt" Style="{StaticResource DetailLabelForm}" FontSize="11"/>
+                                    </StackLayout>
+
+                                    <Button Text="Envoyer" Style="{StaticResource  ButtonConfirm}"
+                                                Command="{Binding SendJobApplication}"
+                                                Margin="80,20"/>
+
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding FourthPartForm}">
+                            <Frame Style="{StaticResource ciFrameStandardRounded}" IsVisible="{Binding DisplayBreadcrumbView}">
+                                <common:BreadcrumbView StepCount="3" StepTitleList="{x:Static local:RecipeUIConstants.stepTitleJobOffer}" CurrentStep="4"/>
+                            </Frame>
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                <StackLayout>
+                                    <Label Text="Votre candidature a bien été prise en compte" HorizontalTextAlignment="Center" Margin="0,20"/>
+
+                                    <Button Command="{Binding GoDashboardCommand}"
+                                            Text="Retour à l'accueil"
+                                            Style="{StaticResource ButtonConfirm}"/>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+
+                    </StackLayout>
+                </ScrollView>
+                <RelativeLayout Grid.Column="1" Grid.Row="1">
+                    <Frame x:Name="scrollableVisibility" IsVisible="true" BackgroundColor="{StaticResource kleinBlue}" WidthRequest="50" HeightRequest="30" CornerRadius="15" Padding="15,15,30,15"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant=50}"
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant= 0}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-50}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                        </Frame.GestureRecognizers>
+                        <Label Text="▲" FontAttributes="Bold" TextColor="White" FontSize="Medium"></Label>
+                    </Frame>
+                </RelativeLayout>
+            </Grid>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BasePage>

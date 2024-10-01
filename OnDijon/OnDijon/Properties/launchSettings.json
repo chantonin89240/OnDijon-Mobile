@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "OnDijon": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

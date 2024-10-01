@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+        xmlns:common="clr-namespace:OnDijon.Common.Views"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+        xmlns:mapsui="clr-namespace:Mapsui.UI.Forms;assembly=Mapsui.UI.Forms"
+        mc:Ignorable="d"
+        x:Class="OnDijon.Modules.RoadworkInformation.CustomComponent.CustomOSM">
+    <Grid
+        ColumnDefinitions="*,220,*"
+        RowDefinitions="*,50,10" 
+             VerticalOptions="FillAndExpand">
+        <mapsui:MapView x:Name="UserMap"
+                            BackgroundColor="Gray"
+                        IsNorthingButtonVisible="False"
+                        Grid.Column="0" Grid.Row="0"
+                        Grid.ColumnSpan="3" Grid.RowSpan="3" IsMyLocationButtonVisible="False" MyLocationFollow="True"
+                />
+        <Frame x:Name="MyHomeButton"
+               CornerRadius="20"
+               Margin="20,1"
+               Padding="5"
+               BackgroundColor="Transparent"
+               Grid.Column="0" Grid.Row="1"
+               IsVisible="False">
+            <Image Style="{StaticResource ImageHome}"></Image>
+        </Frame>
+        <!--<Frame x:Name="MyLocationButton"
+               CornerRadius="20"
+               Margin="20,1"
+               Padding="5"
+               BackgroundColor="Transparent"
+               Grid.Column="1" Grid.Row="1">
+            --><!--<Label Text="Centrer sur ma position"></Label>--><!--
+            <Image Style="{StaticResource ImagePosition}"></Image>
+        </Frame>-->
+
+        <Button x:Name="MyLocationButton"
+                Grid.Column="1" Grid.Row="1"
+                Text="Centrer sur ma position"
+                Margin="0,0,0,0"
+                Style="{StaticResource ButtonConfirm}" />
+        <Frame x:Name="MyWorkButton"
+               CornerRadius="20"
+               Margin="20,1"
+               Padding="5"
+               BackgroundColor="Transparent"
+               Grid.Column="2" Grid.Row="1"
+               IsVisible="False">
+            <Image Style="{StaticResource ImageWork}"></Image>
+        </Frame>
+    </Grid>
+</StackLayout>

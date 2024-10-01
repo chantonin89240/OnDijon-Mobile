@@ -1,0 +1,49 @@
+pool:
+  name: Azure Pipelines
+  vmImage: windows-2019
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET Core v3.x'
+  inputs:
+    packageType: 'sdk'
+    version: '3.x'
+
+- task: SonarCloudPrepare@1
+  displayName: 'Prepare analysis on SonarCloud'
+  inputs:
+    SonarCloud: OnDijonDev
+    organization: '018b2ae9-4a3b-4334-82e5-d6ebd4a754e3'
+    projectKey: '88ea8895-789f-48cc-a259-6805c2fdd313'
+    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Pipeline.Workspace)\TestResults\*\coverage.opencover.xml'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build project OnDijon'
+  inputs:
+    command: 'build'
+    projects: 'OnDijon\OnDijon\OnDijon.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run unit tests'
+  continueOnError: true
+  inputs:
+    command: 'test'
+    projects: 'OnDijon.UnitTest\OnDijon.UnitTest.csproj'
+    arguments: '--collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+
+- task: CopyFiles@2
+  displayName: 'Copy test report file'
+  inputs:
+    SourceFolder: '$(Agent.TempDirectory)'
+    Contents: '*.trx'
+    TargetFolder: '$(Pipeline.Workspace)\TestResults'
+
+- task: CopyFiles@2
+  displayName: 'Copy coverage report file'
+  inputs:
+    SourceFolder: '$(Agent.TempDirectory)'
+    Contents: '*\coverage.opencover.xml'
+    TargetFolder: '$(Pipeline.Workspace)\TestResults'
+
+- task: SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'

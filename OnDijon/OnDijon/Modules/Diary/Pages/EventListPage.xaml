@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Diary.Pages.EventListPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Diary.ViewModels"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:tools="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             x:TypeArguments="viewModel:EventDiaryListViewModel"
+             xmlns:views="clr-namespace:OnDijon.Modules.Diary.Views" >
+    <common:BasePage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <tools:ImageOrNotHeightConverter x:Key="imageOrNotHeightConverter"></tools:ImageOrNotHeightConverter>
+        </ResourceDictionary>
+    </common:BasePage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView BackgroundColor="Transparent" Title="Mon Agenda"/>
+                <ScrollView  x:Name="ScrollViewPage"  Scrolled="ScrollView_Scrolled">
+                    <RelativeLayout>
+
+                        <StackLayout 
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}">
+                            <FlexLayout  Margin="10,60,10,5"  Direction="Row" Wrap="Wrap">
+                                <StackLayout Margin="0,0,5,5">
+                                    <Frame Style="{StaticResource TagFrame}">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ResetSearchCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                        <Label Text="Tous" TextColor="White"></Label>
+                                    </Frame>
+                                </StackLayout>
+                                <StackLayout Margin="0,0,5,5">
+                                    <Frame Style="{StaticResource TagFrame}">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding TodaySearchCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                        <Label Text="Aujourd'hui"  TextColor="White"></Label>
+                                    </Frame>
+                                </StackLayout>
+                                <StackLayout  Margin="0,0,5,5">
+                                    <Frame Style="{StaticResource TagFrame}">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding TomorrowSearchCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                        <Label Text="Demain" TextColor="White"></Label>
+                                     </Frame>
+                                </StackLayout>
+                                <StackLayout Margin="0,0,5,5">
+                                    <Frame Style="{StaticResource TagFrame}">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding WeekendSearchCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                        <Label Text="{Binding WeekendButtonText}" TextColor="White"></Label>
+                                    </Frame>
+                                </StackLayout>
+                                <StackLayout Margin="0,0,5,5">
+                                    <Frame Style="{StaticResource TagFrame}">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding FromDateSearchCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                        <Label Text="A partir de ..." TextColor="White"></Label>
+                                    </Frame>
+                                </StackLayout>
+                            </FlexLayout>
+                            <StackLayout BindableLayout.ItemsSource="{Binding EventList}"
+                                Padding="0,0,0,80">
+
+                                <BindableLayout.EmptyViewTemplate>
+                                    <DataTemplate>
+                                        <Label Text="Aucun évènement en vue !"
+                                                HorizontalOptions="Center"
+                                                TextColor="{StaticResource LightBackgroundColor}"
+                                                FontSize="16"
+                                                FontFamily="{StaticResource Isidora}"
+                                                FontAttributes="Bold"
+                                                Margin="0,10,0,0"/>
+                                    </DataTemplate>
+                                </BindableLayout.EmptyViewTemplate>
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:Name="NewsCardTemplate">
+                                        <StackLayout>
+                                            <Label Text="{Binding FirstOfDateString}"
+                                                HorizontalOptions="Center"
+                                                TextColor="{StaticResource LightBackgroundColor}"
+                                                FontSize="20"
+                                                FontFamily="{StaticResource Isidora}"
+                                                FontAttributes="Bold"
+                                                   Margin="0,20,0,10"
+                                                   IsVisible="{Binding IsFirstOfDate}"/>
+                                            <Frame Style="{StaticResource ciFrameStandardRounded}" Padding="0" IsClippedToBounds="True">
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                    Command="{Binding LoadEventViewCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}"  
+                                                    CommandParameter="{Binding}"/>
+                                                </Frame.GestureRecognizers>
+                                                <Grid ColumnDefinitions="5,*,5" RowDefinitions="5,120,auto,auto,5,auto,auto,5" Margin="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                    <RelativeLayout Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                                        <forms:CachedImage Source="{Binding ImageThumbnailCorrect}"
+                                                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                                                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                                                            Aspect="AspectFill"></forms:CachedImage>
+                                                    </RelativeLayout>
+                                                    <Label Grid.Column="1" Grid.Row="2" Text="{Binding Location}" Style="{StaticResource ciLittleForetitle}"  HorizontalOptions="StartAndExpand" LineHeight="0.8" FontSize="12" Margin="0" Padding="0" TextType="Html" IsVisible="{Binding Location, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"></Label>
+                                                    <Label Grid.Column="1" Grid.Row="3" Text="{Binding Title}" Style="{StaticResource ciLittleTitle}"  HorizontalOptions="StartAndExpand" MaxLines="5" FontSize="16" Margin="0" Padding="0" TextType="Html"></Label>
+                                                    <BoxView Grid.Column="1" Grid.Row="4" Style="{StaticResource ciSeparator}"  HorizontalOptions="StartAndExpand"/>
+                                                    <Label Grid.Column="1" Grid.Row="5"  Text="{Binding TagsString}"  HorizontalOptions="StartAndExpand" IsVisible="{Binding TagsString, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"></Label>
+                                                    <Label Grid.Column="1" Grid.Row="6" Text="{Binding Summary}"  HorizontalOptions="StartAndExpand" IsVisible="{Binding Summary, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"></Label>
+                                                </Grid>
+                                            </Frame>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+
+                        
+                        <!-- outil de recherche -->
+                        <StackLayout
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                             RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=0}">       
+                            <!-- boutons de filtres -->
+                            <common:SearchBarView AutomationId="AdressInput"
+                                              Placeholder="Chercher un évènement"
+                                              Padding="25,0,0,0"
+                                              Text="{Binding QuerySearch}"
+                                              VerticalOptions="Start"
+                                              Margin="10,0,10,0" SearchCommand="{Binding SearchSelectCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}"/>
+                            <!--Suggestions-->
+                            <Frame Margin="20,-5,20,0"
+                               BackgroundColor="{StaticResource LightBackgroundColor}"
+                               Padding="0"
+                               IsVisible="{Binding SuggestionListShow}">
+                                <StackLayout BindableLayout.ItemsSource="{Binding SuggestionList}" Spacing="0" >
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Padding="10" Margin="0">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding SearchSelectCommand,Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+                                                </StackLayout.GestureRecognizers>
+                                                <Label Text="{Binding}" TextType="Html"></Label>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </RelativeLayout>
+                </ScrollView>
+            </StackLayout>
+            <Frame x:Name="scrollableVisibility" IsVisible="true" BackgroundColor="{StaticResource kleinBlue}" WidthRequest="25" HeightRequest="25" CornerRadius="25" 
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Constant= 0}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-50}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+                </Frame.GestureRecognizers>
+                <Label Text="▲" FontAttributes="Bold" TextColor="White" FontSize="Medium"></Label>
+            </Frame>
+            <StackLayout 
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                IsVisible="{Binding IsEventDetailDisplay, Source={RelativeSource AncestorType={x:Type viewModel:EventDiaryListViewModel}}}">
+                <views:EventDetailsView BindingContext="{Binding EventDetailDiaryViewModel}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            </StackLayout>
+            
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

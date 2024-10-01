@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Library.Views.ProfilCardsView"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            xmlns:viewModel="clr-namespace:OnDijon.Modules.Library.ViewModels"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:views="clr-namespace:OnDijon.Modules.Library.Views"
+            xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             VerticalOptions="FillAndExpand">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <StackLayout Spacing="20" Margin="0,0,0,20">
+                <Label Text="Mes Cartes de bibliothèque" FontSize="Medium" FontAttributes="Bold" Margin="20,0"></Label>
+                
+                <ScrollView Orientation="Horizontal" >
+                    <StackLayout BindableLayout.ItemsSource="{Binding ReaderAccountList}" Orientation="Horizontal" Padding="1">
+                        <BindableLayout.EmptyView>
+                            <StackLayout
+                                HorizontalOptions="CenterAndExpand"
+                                 VerticalOptions="CenterAndExpand">
+                                <Label Text="Aucune carte de bibliothèque n'est associée au compte"
+                                   FontSize="16"
+                                   Margin="20,0,20,30" WidthRequest="250"></Label>
+                            </StackLayout>
+                        </BindableLayout.EmptyView>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="8,1" WidthRequest="250">
+                                    <common:RoundedFrame 
+                                Padding="0"
+                                BackgroundColor="{Binding Color}"
+                                CornerRadius="15">
+                                        <StackLayout  Padding="20,15,20,20">
+                                            <Label Text="{Binding FullName}"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        HorizontalOptions="Start"></Label>
+                                            <Label Text="{Binding BarCode}"></Label>
+
+                                            <Label Text="Supprimer la carte"
+                                       Margin="0,10,0,0"
+                                       TextColor="{StaticResource DeleteRedColor}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextDecorations="Underline"
+                                           HorizontalOptions="End">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding DissociateReaderAccountCommand,Source={RelativeSource AncestorType={x:Type viewModel:ProfilCardsViewModel}}}"  CommandParameter="{Binding}"/>
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </StackLayout>
+                                    </common:RoundedFrame>
+                                    <Frame BackgroundColor="Transparent" HeightRequest="20"></Frame>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+
+                <Button Style="{StaticResource ButtonConfirm}"
+                    Margin="20,-10,20,0"
+                    Text="Ajouter une carte de bibliothèque" 
+                    Command="{Binding AddCardCommand}" />
+            </StackLayout>
+        </common:LoadingView >
+    </ContentView.Content>
+</ContentView>

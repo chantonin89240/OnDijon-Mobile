@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.UsefulContact.Views.ContactDetailView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:tools="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             VerticalOptions="FillAndExpand"
+             HorizontalOptions="FillAndExpand">
+
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <converters:StringIsNullOrEmptyConverter x:Key="stringIsNullOrEmptyConverter"></converters:StringIsNullOrEmptyConverter>
+            <tools:ImageOrNotHeightConverter x:Key="imageOrNotHeightConverter"></tools:ImageOrNotHeightConverter>
+            <Style x:Key="ciGrid" TargetType="Grid">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            </Style>
+
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    
+    <RelativeLayout>
+        <Image Style="{StaticResource imageBackground}"/>
+        <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+            <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <ScrollView AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                    <StackLayout Padding="0">
+                        <AbsoluteLayout HeightRequest="{Binding Contact.ContactInfos.PictureUrl, Converter={StaticResource imageOrNotHeightConverter}}">
+                            <ffimageloading:CachedImage Source="{Binding Contact.ContactInfos.PictureUrl}"
+                                                    AbsoluteLayout.LayoutFlags="All"
+                                                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1.2"
+                                                    Aspect="AspectFill"/>
+                            <common:NavigationBarView HasBackButton="False"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    AbsoluteLayout.LayoutBounds="1,0"
+                                                    BackgroundColor="Transparent"
+                                                    IsRightButtonVisibile="True"
+                                                    RightButtonCommand="{Binding CloseViewCommand}"/>
+                        </AbsoluteLayout>
+                        <common:RoundedFrame IsVisible="{Binding Contact.ContactInfos.PictureUrl , Converter={StaticResource stringIsNotNullOrEmptyConverter}}" Style="{StaticResource ciFrameStandardRounded}" Margin="0" CornerRadius="0,0,15,15">
+                            <Label Text="{Binding Contact.Name}" Style="{StaticResource ciFrameTitle}" TextType="Html" Margin="10,0"></Label>
+                        </common:RoundedFrame>
+                        <Frame IsVisible="{Binding Contact.ContactInfos.PictureUrl, Converter={StaticResource stringIsNullOrEmptyConverter}}" Style="{StaticResource ciFrameStandardRounded}" Margin="10" CornerRadius="15">
+                            <Label Text="{Binding Contact.Name}" Style="{StaticResource ciFrameTitle}" TextType="Html" Margin="10,0"></Label>
+                        </Frame>
+                        <StackLayout HorizontalOptions="FillAndExpand" Padding="0,0,0,40">
+                            <StackLayout x:Name="OpenStatutStackLayout" Margin="10"  IsVisible="{Binding Contact.HasOpenInfo}">
+                                <Frame Style="{Binding Contact.IsOpenStyle}">
+                                    <Label Text="{Binding Contact.IsOpenString}" Style="{StaticResource ciLabelBadge}"></Label>
+                                </Frame>
+                            </StackLayout>
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                <StackLayout x:Name="ContactInfoLayout"
+                                                             VerticalOptions="FillAndExpand"
+                                                             HorizontalOptions="FillAndExpand"
+                                                             Padding="10">
+                                    <StackLayout IsVisible="{Binding Contact.ContactInfos.Description, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="Description" Style="{StaticResource ciLabel}"/>
+                                        <Label Text="{Binding Contact.ContactInfos.Description}" Style="{StaticResource ciContent}"/>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding Contact.ContactInfos.PhoneNumber, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="Téléphone" Style="{StaticResource ciLabel}"/>
+                                        <Label Text="{Binding Contact.ContactInfos.PhoneNumber}" Style="{StaticResource ciContent}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding PhoneCommand}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding Contact.ContactInfos.Mail, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="E-mail" Style="{StaticResource ciLabel}"/>
+                                        <Label Text="{Binding Contact.ContactInfos.Mail}" Style="{StaticResource ciContent}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding MailCommand}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding Contact.Address, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="Adresse" Style="{StaticResource ciLabel}"/>
+                                        <Label Text="{Binding Contact.Address}" Style="{StaticResource ciContent}" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding AddressCommand}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding HasOpenInfo}">
+                                        <Label Text="Horaires" Style="{StaticResource ciLabel}"/>
+
+                                        <CollectionView ItemsSource="{Binding OpeningTimeDetail}" 
+                                                                SelectionMode="None"
+                                                                HorizontalOptions="CenterAndExpand"
+                                                              VerticalOptions="StartAndExpand"
+                                                              HeightRequest="141">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid RowDefinitions="auto" ColumnDefinitions="*,2*" HorizontalOptions="FillAndExpand">
+                                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding DayName}" ></Label>
+                                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding DayDetail}" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End"></Label>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </AbsoluteLayout>
+        </StackLayout>
+    </RelativeLayout>
+</StackLayout>

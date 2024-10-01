@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="OnDijon.Common.Views.DownloadButton"
+    CornerRadius="20" Padding="10" HasShadow="False"
+    BackgroundColor="White">
+    <Frame.GestureRecognizers>
+        <TapGestureRecognizer CommandParameter="{Binding}"/>
+    </Frame.GestureRecognizers>
+    <Label Text="Télécharger" HorizontalOptions="Center" FontFamily="{StaticResource Isidora}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource kleinBlue}"/>
+</Frame>

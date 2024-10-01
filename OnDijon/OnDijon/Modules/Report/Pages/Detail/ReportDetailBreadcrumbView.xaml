@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="OnDijon.Modules.Report.Pages.Detail.ReportDetailBreadcrumbView">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="80" />
+        <ColumnDefinition Width="20" />
+    </Grid.ColumnDefinitions>
+
+    <Label x:Name="DateLabel" 
+           Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"
+           Margin="0,2,0,0"
+           FontSize="12" />
+    <StackLayout Orientation="Vertical"
+                 Grid.Column="1"
+                 Spacing="5">
+        <Frame HeightRequest="18"
+               WidthRequest="18"
+               CornerRadius="9"
+               Padding="0"
+               HasShadow="False"
+               HorizontalOptions="Center"
+               BackgroundColor="{StaticResource GraySeparatorColor}" />
+        <Frame x:Name="HorizontalSeparator" 
+               WidthRequest="2"
+               Padding="0"
+               HasShadow="False"
+               HorizontalOptions="Center"
+               VerticalOptions="FillAndExpand"
+               BackgroundColor="{StaticResource GraySeparatorColor}" />
+    </StackLayout>
+
+</Grid>

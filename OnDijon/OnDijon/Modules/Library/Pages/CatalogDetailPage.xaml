@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Library.ViewModels"
+             x:Class="OnDijon.Modules.Library.Pages.CatalogDetailPage"
+             x:TypeArguments="viewModel:CatalogDetailViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--<Style TargetType="Entry">
+                <Style.Triggers>
+                    <MultiTrigger TargetType="BoxView">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding IsAvailable}" Value="True"/>
+                            <BindingCondition Binding="{Binding IsReservable}" Value="False"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="BackgroundColor" Value="Green" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>-->
+            
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Spacing="0" Style="{StaticResource StackLayoutGradientBackground}" VerticalOptions="FillAndExpand">
+                <common:NavigationBarView Title="Détail" HasBackButton="True"/>
+                <RelativeLayout>
+                    <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                        <common:RoundedFrame CornerRadius="30"
+                                         IsClippedToBounds="True"
+                                         Margin="10,0,10,0"
+                                         Padding="10"
+                                         HasShadow="False" >
+                        <!--Margin to fix ScrollView truncates items-->
+                        <ScrollView VerticalOptions="FillAndExpand" 
+                                        Margin="0,0,0,120">
+                            <StackLayout Orientation="Vertical"
+                                     Margin="10">
+                                <!--<common:BadgeView BackgroundColor="{StaticResource BadgeColorGreen}" 
+                                                              Text="{Binding Alert.Scope}" 
+                                                              HorizontalOptions="Start"/>-->
+                                <Label Text="{Binding Record.Title}"
+                                               TextColor="{StaticResource kleinBlue}"
+                                               FontSize="20"
+                                               FontFamily="{StaticResource Isidora}"
+                                               FontAttributes="Bold"/>
+                                <Label Text="{Binding Record.Type}"
+                                       TextColor="{StaticResource lightBlue}"
+                                       FontSize="13"/>
+                                <Image Source="{Binding Record.Image}" Aspect="AspectFit"/>
+                                <Label TextColor="{StaticResource lightBlue}"
+                                                       FontSize="13"
+                                                       Margin="0,10">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Record.Creator}"/>
+                                            <Span Text=" | "/>
+                                            <Span Text="{Binding Record.PublicationDate}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="{Binding Record.Description}"
+                                                       TextColor="Black" TextType="Html"/>
+                                <ActivityIndicator Color="{StaticResource kleinBlue}" 
+                                                   IsRunning="{Binding IsLoading}"/>
+
+                                <StackLayout BindableLayout.ItemsSource="{Binding Holdings}" 
+                                             BackgroundColor="{StaticResource LightBackgroundColor}"
+                                             Spacing="10"
+                                             Orientation="Vertical" 
+                                             VerticalOptions="StartAndExpand"
+                                              x:Name="StackHolding"
+                                             IsVisible="{Binding HasHoldings}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid RowSpacing="0" ColumnSpacing="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="60"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="5"/>
+                                                    <ColumnDefinition Width="3*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Frame Grid.Row="0"
+                                                       Grid.Column="0" 
+                                                       CornerRadius="3" 
+                                                       IsClippedToBounds="True" 
+                                                       HasShadow="False">
+                                                    <Frame.Triggers>
+                                                        <MultiTrigger TargetType="Frame">
+                                                            <MultiTrigger.Conditions>
+                                                                <BindingCondition Binding="{Binding IsAvailable}" Value="True"/>
+                                                                <BindingCondition Binding="{Binding IsReservable}" Value="False"/>
+                                                            </MultiTrigger.Conditions>
+                                                            <Setter Property="BackgroundColor" Value="Green" />
+                                                        </MultiTrigger>
+                                                        <MultiTrigger TargetType="Frame">
+                                                            <MultiTrigger.Conditions>
+                                                                <BindingCondition Binding="{Binding IsAvailable}" Value="False"/>
+                                                                <BindingCondition Binding="{Binding IsReservable}" Value="True"/>
+                                                            </MultiTrigger.Conditions>
+                                                            <Setter Property="BackgroundColor" Value="Orange" />
+                                                        </MultiTrigger>
+                                                        <MultiTrigger TargetType="Frame">
+                                                            <MultiTrigger.Conditions>
+                                                                <BindingCondition Binding="{Binding IsAvailable}" Value="False"/>
+                                                                <BindingCondition Binding="{Binding IsReservable}" Value="False"/>
+                                                            </MultiTrigger.Conditions>
+                                                            <Setter Property="BackgroundColor" Value="Red" />
+                                                        </MultiTrigger>
+                                                    </Frame.Triggers>
+                                                </Frame>
+
+                                                <StackLayout Grid.Row="0"
+                                                             Grid.Column="1"
+                                                             Spacing="0" 
+                                                             VerticalOptions="Center" 
+                                                             Padding="5,0">
+                                                    <Label>
+                                                        <Label.Triggers>
+                                                            <MultiTrigger TargetType="Label">
+                                                                <MultiTrigger.Conditions>
+                                                                    <BindingCondition Binding="{Binding IsAvailable}" Value="True"/>
+                                                                    <BindingCondition Binding="{Binding IsReservable}" Value="False"/>
+                                                                </MultiTrigger.Conditions>
+                                                                <Setter Property="Text" Value="Disponible" />
+                                                            </MultiTrigger>
+                                                            <MultiTrigger TargetType="Label">
+                                                                <MultiTrigger.Conditions>
+                                                                    <BindingCondition Binding="{Binding IsAvailable}" Value="False"/>
+                                                                    <BindingCondition Binding="{Binding IsReservable}" Value="True"/>
+                                                                </MultiTrigger.Conditions>
+                                                                <Setter Property="Text" Value="{Binding WhenBack, StringFormat='Date de retour : {0}'}" />
+                                                            </MultiTrigger>
+                                                        </Label.Triggers>
+                                                    </Label>
+                                                    <Label>
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding Statut}"/>
+                                                                <Span Text=" | "/>
+                                                                <Span Text="{Binding Site}"/>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </StackLayout>
+                                                <Button x:Name="ButtonIsReservable"
+                                                        Grid.Row="0"
+                                                        Grid.Column="2"
+                                                        Command="{Binding OpenReservationCommand, Source={RelativeSource AncestorType={x:Type viewModel:CatalogDetailViewModel}}}"
+                                                        CommandParameter="{Binding .}"
+                                                        Text="Réserver" 
+                                                        Margin="5,10"
+                                                        Style="{StaticResource LightButtonConfirm}">
+                                                    <!-- <Button.Triggers> -->
+                                                    <!--     <MultiTrigger TargetType="Button"> -->
+                                                    <!--         <MultiTrigger.Conditions> -->
+                                                    <!--             <BindingCondition Binding="{Binding IsAvailable}" Value="True"/> -->
+                                                    <!--             <BindingCondition Binding="{Binding IsReservable}" Value="False"/> -->
+                                                    <!--         </MultiTrigger.Conditions> -->
+                                                    <!--         <Setter Property="IsEnabled" Value="False" /> -->
+                                                    <!--     </MultiTrigger> -->
+                                                    <!-- </Button.Triggers> -->
+                                                </Button>
+                                                <!--<Button.Triggers>
+                                                        <MultiTrigger TargetType="Button">
+                                                            <MultiTrigger.Conditions>
+                                                                <BindingCondition Binding="{Binding IsReservable}" Value="True" />
+                                                                <BindingCondition Binding="{Binding HasAccountReader, Source={RelativeSource AncestorType={x:Type viewModel:CatalogDetailViewModel}}}" Value="True" />
+                                                            </MultiTrigger.Conditions>
+                                                            <Setter Property="IsEnabled" Value="True"/>
+                                                        </MultiTrigger>
+                                                        <MultiTrigger TargetType="Button">
+                                                            <MultiTrigger.Conditions>
+                                                                <BindingCondition Binding="{Binding IsReservable}" Value="False" />
+                                                            </MultiTrigger.Conditions>
+                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                        </MultiTrigger>
+                                                    </Button.Triggers>-->
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout >
+                                
+                            </StackLayout>
+                            
+                        </ScrollView>
+                    </common:RoundedFrame>
+                    </StackLayout>
+                </RelativeLayout>
+            </StackLayout>
+    </ContentPage.Content>
+</common:BasePage>

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Common.Views.SwitchView"
+             Orientation="Horizontal"
+             VerticalOptions="Center"
+             Spacing="6"
+             HeightRequest="30"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions">
+    <StackLayout.Resources>
+        <Style x:Key="RoundedFrame"
+               TargetType="Frame">
+            <Setter Property="WidthRequest"
+                    Value="26" />
+            <Setter Property="HeightRequest"
+                    Value="26" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="HasShadow"
+                    Value="False" />
+            <Setter Property="CornerRadius"
+                    Value="13" />
+            <Setter Property="BackgroundColor"
+                    Value="White" />
+
+        </Style>
+
+        <Style x:Key="SelectedLabel"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{StaticResource SwitchOnColor}" />
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="12" />
+        </Style>
+        <Style x:Key="UnSelectedLabel"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{StaticResource TextColor}" />
+            <Setter Property="FontAttributes"
+                    Value="None" />
+            <Setter Property="FontSize"
+                    Value="12" />
+        </Style>
+        <Style x:Key="HideLabel"
+               TargetType="Label">
+            <Setter Property="IsVisible"
+                    Value="false" />
+        </Style>
+    </StackLayout.Resources>
+
+
+    <Label x:Name="TitleLabel"
+           Text="{Binding Text}"
+           VerticalOptions="Center" 
+                HeightRequest="30"/>
+    <Frame x:Name="FrameContainer" 
+           CornerRadius="15"
+           WidthRequest="55"
+           Padding="2,0"
+           HasShadow="False"
+           HeightRequest="30">
+
+        <Frame.Content>
+            <StackLayout Orientation="Horizontal"
+                         VerticalOptions="CenterAndExpand"
+                         Spacing="0">
+
+                <Frame x:Name="LeftButton"
+                       Style="{StaticResource RoundedFrame}" >
+                    <ff:SvgCachedImage x:Name="padlock" 
+                                        Source="{extensions:ImageResource OnDijon.Assets.padlock.svg}"
+                                        IsVisible="{Binding IsLocked}"
+                                        Scale="0.6"/>
+                </Frame>
+                  
+            </StackLayout>
+        </Frame.Content>
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Tapped="Toggle" />
+        </Frame.GestureRecognizers>
+    </Frame>
+</StackLayout>

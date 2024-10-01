@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Library.Views.LibraryCardView"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <converters:IsNullConverter x:Key="isNullConverter"></converters:IsNullConverter>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content >
+        <Frame Margin="20" Padding="20" CornerRadius="15" BackgroundColor="White" >
+            <StackLayout IsVisible="{Binding IsAccountActive}">
+                <Label Text="{Binding FullName}" />
+                <Label x:Name="BarcodeLabel" Text="{Binding BarCode}" HorizontalTextAlignment="Center" FontSize="20"/>
+                <Label IsVisible="{Binding BarCode, Converter={StaticResource isNullConverter}}" 
+                       Text="Carte indisponible"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       Margin="20"/>
+                <zxing:ZXingBarcodeImageView x:Name="Barcode" 
+                                             HeightRequest="100" 
+                                             WidthRequest="300" 
+                                            IsVisible="{Binding BarCode, Converter={StaticResource stringIsNotNullOrEmptyConverter}}"
+                                             BarcodeValue="{Binding BarCode}" 
+                                             BarcodeFormat="CODE_128">
+
+                    <zxing:ZXingBarcodeImageView.BarcodeOptions>
+                        <zxcm:EncodingOptions Width="300" Height="100" />
+                    </zxing:ZXingBarcodeImageView.BarcodeOptions>
+                </zxing:ZXingBarcodeImageView>
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.Account.Pages.ProfileView"
+             NavigationPage.HasBackButton="False"
+             AutomationId="ProfileView"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:viewsLibrary="clr-namespace:OnDijon.Modules.Library.Views">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="ProfileLabel"
+                   TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource TextColor}" />
+            </Style>
+
+            <Style x:Key="ProfilePropertyName"
+                   TargetType="Label"
+                   BasedOn="{StaticResource ProfileLabel}">
+                <Setter Property="TextColor" 
+                        Value="Gray"/>
+            </Style>
+
+            <Style x:Key="ProfilePropertyValue"
+                   TargetType="Label"
+                   BasedOn="{StaticResource ProfileLabel}">
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Spacing="0" Style="{StaticResource StackLayoutGradientBackground}">
+            <common:NavigationBarView Title="Mon profil" 
+                                      HasBackButton="True"/>
+
+            <ScrollView VerticalOptions="FillAndExpand"
+                        Padding="0,24,0,0">
+                <common:RoundedFrame BackgroundColor="{StaticResource LightBackgroundColor}" Padding="0">
+                    <StackLayout Orientation="Vertical"
+                                 VerticalOptions="FillAndExpand">
+                        <Grid Padding="10"
+                              RowSpacing="10"
+                              ColumnSpacing="10"
+                              Margin="20, 20, 20 ,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- name -->
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="Nom : "
+                                   Style="{StaticResource ProfilePropertyName}" />
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding Profile.Name}"
+                                   d:Text="Dupont"
+                                   Style="{StaticResource ProfilePropertyValue}" />
+
+                            <!-- firstname -->
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="Prénom : "
+                                   Style="{StaticResource ProfilePropertyName}" />
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding Profile.FirstName}"
+                                   d:Text="Jean"
+                                   Style="{StaticResource ProfilePropertyValue}" />
+
+                            <!-- mail -->
+                            <Label Grid.Row="2"
+                                   Grid.Column="0"
+                                   Text="Email : "
+                                   Style="{StaticResource ProfilePropertyName}" />
+
+                            <Label Grid.Row="2"
+                                   Grid.Column="1"
+                                   Text="{Binding Profile.Mail}"
+                                   d:Text="jean.dupont@gmail.com"
+                                   Style="{StaticResource ProfilePropertyValue}" />
+
+                            <!-- birthday -->
+                            <Label Grid.Row="3"
+                                   Grid.Column="0"
+                                   Text="Date de naissance : "
+                                   Style="{StaticResource ProfilePropertyName}" />
+
+                            <Label Grid.Row="3"
+                                   Grid.Column="1"
+                                   Text="{Binding Profile.Birthday, StringFormat='{0:dd/MM/yyyy}'}"
+                                   d:Text="01-01-1987"
+                                   Style="{StaticResource ProfilePropertyValue}" />
+
+                            <!-- phone number -->
+                            <Label Grid.Row="4"
+                                   Grid.Column="0"
+                                   Text="Téléphone : "
+                                   Style="{StaticResource ProfilePropertyName}" />
+
+                            <Label Grid.Row="4"
+                                   Grid.Column="1"
+                                   Text="{Binding Profile.PhoneNumber}"
+                                   d:Text="06 12 34 56 78"
+                                   Style="{StaticResource ProfilePropertyValue}" />
+                        </Grid>
+
+                        <Button Text="Modifier mon compte"
+                                AutomationId="LoginButton"
+                                Command="{Binding OnUpdateProfileCommand}"
+                                Style="{StaticResource ButtonConfirm}"
+                                WidthRequest="250"
+                                Padding="0,12"
+                                Margin="0,0,0,10" 
+                                HorizontalOptions="Center"
+                                VerticalOptions="EndAndExpand"/>
+                        
+                        <Button Text="Supprimer mon compte"
+                                AutomationId="LoginButton"
+                                Command="{Binding DeleteCommand}"
+                                Style="{StaticResource ButtonConfirm}"
+                                WidthRequest="214"
+                                Padding="0,12"
+                                Margin="0,0,0,40" 
+                                HorizontalOptions="Center"
+                                VerticalOptions="EndAndExpand"/>
+
+                        <!-- Library card -->
+                        <viewsLibrary:ProfilCardsView x:Name="LibraryProfilCardsView"  BindingContext="{Binding ProfileCardsViewModel }" />
+                        
+                    </StackLayout>
+                </common:RoundedFrame>
+
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BaseView>

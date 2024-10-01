@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.UsefulContact.Pages.WorkInfosPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            ios:Page.UseSafeArea="true"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <Style x:Key="ciGrid" TargetType="Grid">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            </Style>
+            <Style x:Key="ciFrameLabel" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+            <Style x:Key="ciLabelBadge" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="ciLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="ciFrameContent" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+            <Style x:Key="ciContent" TargetType="Label">
+                <Setter Property="Margin" Value="30,0,0,0"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Spacing="0" Style="{StaticResource StackLayoutGradientBackground}">
+            <AbsoluteLayout VerticalOptions="FillAndExpand">
+                <common:NavigationBarView HasBackButton="False"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        AbsoluteLayout.LayoutBounds="1,0"
+                                        BackgroundColor="Transparent"
+                                        IsRightButtonVisibile="True"
+                                        RightButtonCommand="{Binding CloseCommand}" />
+
+                <Label Text="Infos Travaux" FontSize="Title" FontAttributes="Bold" TextColor="White" 
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        AbsoluteLayout.LayoutBounds="0.5,0.1"/>
+                <StackLayout x:Name="ReportTypesLayout"
+                                VerticalOptions="FillAndExpand"
+                                AbsoluteLayout.LayoutFlags="All"
+                                AbsoluteLayout.LayoutBounds="0, 1, 1, 0.85">
+                    <common:RoundedFrame 
+                                VerticalOptions="FillAndExpand"
+                                BackgroundColor="{StaticResource BadgeColorLightGray}"
+                                Padding="0">
+                        <ScrollView VerticalOptions="StartAndExpand"
+                                    Padding="24,15,24,10"
+                                    VerticalScrollBarVisibility="Never">
+                            <StackLayout
+                                        HorizontalOptions="FillAndExpand">
+                                <common:RoundedFrame CornerRadius="30" Padding="10">
+                                    <StackLayout x:Name="ContactInfoLayout"
+                                                     VerticalOptions="FillAndExpand"
+                                                     HorizontalOptions="FillAndExpand"
+                                                     Padding="10">
+                                        <StackLayout IsVisible="{Binding Contact.WorkInfos.Description, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                            <Label Text="{Binding Contact.WorkInfos.Description}" Style="{StaticResource ciContent}">
+                                            </Label>
+                                        </StackLayout>
+                                        <StackLayout IsVisible="{Binding Contact.WorkInfos.Executant, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                            <Label Text="Entreprises" Style="{StaticResource ciLabel}"/>
+                                            <Label Text="{Binding Contact.WorkInfos.Executant}" Style="{StaticResource ciContent}"/>
+                                        </StackLayout>
+                                        <StackLayout IsVisible="{Binding Contact.WorkInfos.Applicant, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                            <Label Text="Maître d'oeuvre" Style="{StaticResource ciLabel}"/>
+                                            <Label Text="{Binding Contact.WorkInfos.Applicant}" Style="{StaticResource ciContent}"/>
+                                        </StackLayout>
+                                        <StackLayout IsVisible="{Binding Contact.WorkInfos.StartDate, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                            <Label Text="Date de début" Style="{StaticResource ciLabel}"/>
+                                            <Label Text="{Binding Contact.WorkInfos.StartDate}" Style="{StaticResource ciContent}"/>
+                                        </StackLayout>
+                                        <StackLayout IsVisible="{Binding Contact.WorkInfos.EndDate, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                            <Label Text="Date de fin" Style="{StaticResource ciLabel}"/>
+                                            <Label Text="{Binding Contact.WorkInfos.EndDate}" Style="{StaticResource ciContent}"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </common:RoundedFrame>
+                            </StackLayout>
+                        </ScrollView>
+                    </common:RoundedFrame>
+                </StackLayout>
+            </AbsoluteLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BaseView>

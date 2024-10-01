@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Alert.View.AlertListView"
+             xmlns:alert="clr-namespace:OnDijon.Modules.Alert.View"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:dashboardviewModel="clr-namespace:OnDijon.Common.ViewModels"   
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts">
+    <StackLayout.Resources>
+        <converters:CountToBooleanConverter x:Key="countToBoolean" />
+        <converters:IsNullConverter x:Key="isNullConverter"></converters:IsNullConverter>
+    </StackLayout.Resources>
+        <alert:AlertView/>
+        <common:RoundedFrame IsVisible="{Binding AlertList, Converter={StaticResource isNullConverter}}"
+                             CornerRadius="10"
+                             IsClippedToBounds="True"
+                             Margin="10,0,10,10"
+                             Padding="10"
+                             HasShadow="False"
+                             BackgroundColor="{StaticResource LightBackgroundColor}">
+            <common:RoundedFrame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoToScopeList}"/>
+            </common:RoundedFrame.GestureRecognizers>
+            <StackLayout Spacing="0">
+                <Label Text="Renseignez vos préferences !"
+                       TextColor="{StaticResource kleinBlue}"
+                       FontSize="16"
+                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.CogOutline}, Color={StaticResource kleinBlue}, Size=28}" />
+            </StackLayout>
+        </common:RoundedFrame>
+    <Frame Style="{StaticResource DashboardViewMoreFrame}"
+               IsVisible="{Binding SeeAllAlertsVisible}">
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding SeeAllAlerts}"/>
+        </Frame.GestureRecognizers>
+        <Label Text="Toutes mes infos ➞" TextColor="White"/>
+    </Frame>
+</StackLayout>

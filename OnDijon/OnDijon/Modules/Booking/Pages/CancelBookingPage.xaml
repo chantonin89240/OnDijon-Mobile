@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Booking.ViewModels"
+             x:Class="OnDijon.Modules.Booking.Pages.CancelBookingPage"
+             x:TypeArguments="viewModel:CancelBookingViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="DefaultLabel"
+               TargetType="Label">
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="Small" />
+            <Setter Property="TextColor"
+                    Value="{StaticResource MediumGrayTextColor}" />
+            <Setter Property="Margin"
+                    Value="0,15,0,0" />
+        </Style>
+        <Style x:Key="LabelError"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="Red" />
+            <Setter Property="Margin"
+                    Value="10,0,10,0" />
+            <Setter Property="IsVisible"
+                    Value="False" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Spacing="0" Style="{StaticResource StackLayoutGradientBackground}">
+            <!--<common:TopBarView x:Name="TopBarView" />-->
+            <common:NavigationBarView Title="Annuler mon rendez-vous" HasBackButton="True"/>
+            <AbsoluteLayout IsVisible="{Binding ReminderVisible}"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand">
+                <ScrollView VerticalOptions="FillAndExpand"
+                            Padding="0"
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                    <common:RoundedFrame VerticalOptions="FillAndExpand"
+                                     HorizontalOptions="FillAndExpand"
+                                     CornerRadius="30,30,0,0">
+                        <AbsoluteLayout IsVisible="{Binding ReminderVisible}"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand">
+                            <StackLayout AbsoluteLayout.LayoutFlags="All"
+                                         AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                         Spacing="0">
+                                <!--<Label FontSize="Title" FontAttributes="Bold" TextColor="{StaticResource kleinBlue}"
+                                       Text="{Binding Demand.Title}"/>-->
+                                <Label Style="{StaticResource DefaultLabel}"
+                                       Text="Identité" />
+                                <Label Text="{Binding BookingInformations.FullCivility}"
+                                       Margin="15,5,0,0"/>
+                                <Label Style="{StaticResource DefaultLabel}"
+                                       Text="Lieu de rendez-vous" />
+                                <Label Text="{Binding BookingInformations.Institution}"
+                                       Margin="15,5,0,0"/>
+                                <Label Style="{StaticResource DefaultLabel}"
+                                       Text="Jour de rendez-vous" />
+                                <Label Text="{Binding BookingInformations.Day}"
+                                       Margin="15,5,0,0"/>
+                                <Label Style="{StaticResource DefaultLabel}"
+                                       Text="Nombre de personne" />
+                                <Label Text="{Binding BookingInformations.NbOfPerson}"
+                                       Margin="15,5,0,0"/>
+                                <StackLayout Orientation="Horizontal" 
+                                             Margin="0,15,0,0"
+                                             Spacing="0">
+                                    <CheckBox IsChecked="{Binding Cancel}"/>
+                                    <Label Text="Je souhaite annuler mon rendez-vous"
+                                           Style="{StaticResource DefaultLabel}"
+                                           Margin="0"
+                                           VerticalOptions="Center"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Frame_TappedToCheck" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <Label IsVisible="{Binding CancelErrorIsVisible}"
+                                       Style="{StaticResource LabelError}"
+                                       Text="Vous devez cocher cette case !" />
+                            </StackLayout>
+                            <Button Command="{Binding ConfirmCommand}"
+                                    Text="Valider"
+                                    Style="{StaticResource ButtonConfirm}"
+                                    AbsoluteLayout.LayoutFlags="XProportional, YProportional,WidthProportional"
+                                    AbsoluteLayout.LayoutBounds="0.5, 1, 0.8, 50"/>
+                        </AbsoluteLayout>
+                    </common:RoundedFrame>
+                </ScrollView>
+            </AbsoluteLayout>
+            <AbsoluteLayout IsVisible="{Binding ConfirmationVisible}"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand">
+                <ScrollView VerticalOptions="FillAndExpand"
+                            Padding="0"
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                    <common:RoundedFrame VerticalOptions="FillAndExpand"
+                                     HorizontalOptions="FillAndExpand"
+                                     CornerRadius="30,30,0,0">
+                        <AbsoluteLayout VerticalOptions="FillAndExpand"
+                                         HorizontalOptions="FillAndExpand">
+                            <common:RoundedFrame VerticalOptions="Start"
+                                                 HorizontalOptions="FillAndExpand"
+                                                 BackgroundColor="White"
+                                                 Padding="24,20,24,24"
+                                                 Margin="0,50"
+                                                 CornerRadius="30,30,30,30"
+                                                 AbsoluteLayout.LayoutFlags="All"
+                                                 AbsoluteLayout.LayoutBounds="0,0,1,1">
+                                <Grid ColumnSpacing="15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="33" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Frame Padding="0"
+                                           WidthRequest="33"
+                                           HeightRequest="33"
+                                           CornerRadius="17"
+                                           VerticalOptions="Start"
+                                           HorizontalOptions="Start"
+                                           BackgroundColor="{StaticResource GreenBreadcrumb}">
+                                        <Image Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Check}, Color=White, Size=28}"/>
+                                    </Frame>
+                                    <Label Grid.Column="1"
+                                           Text="Rendez-vous annulé avec succès"
+                                           FontSize="16"
+                                           FontFamily="{StaticResource Isidora}"
+                                           FontAttributes="Bold"
+                                           TextColor="{StaticResource GreenBreadcrumb}" />
+                                </Grid>
+                            </common:RoundedFrame>
+                            <Button Text="Retour à l'accueil"
+                                    Style="{StaticResource ButtonConfirm}"
+                                    Command="{Binding GoDashboardCommand}"
+                                    AbsoluteLayout.LayoutFlags="XProportional, YProportional,WidthProportional"
+                                    AbsoluteLayout.LayoutBounds="0.5, 1, 0.8, 50"/>
+                        </AbsoluteLayout>
+                    </common:RoundedFrame>
+                </ScrollView>
+            </AbsoluteLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BasePage>

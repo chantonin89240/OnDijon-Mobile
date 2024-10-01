@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             ios:Page.UseSafeArea="true"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.OnBoarding.Pages.OnBoardingPage"
+             xmlns:Tools="clr-namespace:OnDijon.Modules.OnBoarding.Tools"
+             AutomationId="DashboardPage"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:loginviews="clr-namespace:OnDijon.Modules.Account.Views"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.OnBoarding.ViewModels"
+             x:TypeArguments="viewModel:OnBoardingViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+            </Style>
+            <Style TargetType="Button"
+                   BasedOn="{StaticResource ButtonRegular}">
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+                <Setter Property="WidthRequest"
+                        Value="214" />
+                <Setter Property="Padding"
+                        Value="0,12" />
+            </Style>
+
+            <DataTemplate x:Key="Onboarding1Template">
+                <StackLayout>
+                    <Frame Style="{StaticResource ciFrameStandardRounded}" Margin="10,30,10,10">
+                        <StackLayout Spacing="0"
+                    AutomationId="LoginPage1"
+                                     Padding="24,20">
+                            <Image Source="{extensions:ImageResource OnDijon.Assets.onboarding1.png}"
+                                   HorizontalOptions="Center"
+                                   HeightRequest="200" />
+                            <Label Text="Bienvenue sur OnDijon"
+                               AutomationId="Text1"
+                                   FontAttributes="Bold"
+                                   FontSize="25"
+                                   Margin="0, 29, 0, 10" TextColor="{StaticResource darkKleinBlue}"/>
+                            <Label Text="L'application citoyenne de tous les habitants de la métropole dijonnaise"
+                               AutomationId="Text2"
+                                   LineHeight="1.2" />
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+            <DataTemplate x:Key="Onboarding2Template">
+                <StackLayout>
+                    <Frame Style="{StaticResource ciFrameStandardRounded}" Margin="10,30,10,10">
+                    <StackLayout Spacing="0"
+                             AutomationId="LoginPage2"
+                                 Padding="24,20">
+                        <Image Source="{extensions:ImageResource OnDijon.Assets.onboarding2.png}"
+                               HorizontalOptions="Center"
+                           HeightRequest="200"
+                           AutomationId="picture1"/>
+                        <Label Text="J'habite dans la métropole"
+                                AutomationId="Text1"
+                               FontAttributes="Bold"
+                               FontSize="25"
+                               Margin="0, 29, 0, 10" TextColor="{StaticResource darkKleinBlue}"/>
+                        <Label Text="Consultez les menus de la cantine, suivez vos prêts à la bibliothèque, signalez la panne d'un lampadaire et bien plus encore ..."
+                           AutomationId="Text2"
+                               LineHeight="1.2" />
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+            <DataTemplate x:Key="NoteTemplate">
+                <StackLayout>
+                    <Frame  Style="{StaticResource ciFrameStandardRounded}" Margin="10,30,10,10">
+                        <ScrollView>
+                            <StackLayout Padding="24,20">
+                                <forms:CachedImage HeightRequest="250" Source="{Binding Note.Image}" Aspect="AspectFit"></forms:CachedImage>
+                                <Label Text="{Binding Note.Title}"  FontAttributes="Bold" FontSize="25" 
+                                       Margin="0, 20, 0, 10" TextColor="{StaticResource darkKleinBlue}"></Label>
+                                <Label Text="{Binding Note.Description}"
+                                   LineHeight="1.2"></Label>
+                            </StackLayout>
+                        </ScrollView>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+            <DataTemplate x:Key="LoginTemplate">
+                <StackLayout></StackLayout>
+            </DataTemplate>
+            <DataTemplate x:Key="GoOnDashboardTemplate">
+                <StackLayout></StackLayout>
+            </DataTemplate>
+
+            <Tools:TemplateSelector x:Key="SlideSelector"
+                                    Onboarding1="{StaticResource Onboarding1Template}"
+                                    Onboarding2="{StaticResource Onboarding2Template}"
+                                    Note="{StaticResource NoteTemplate}"
+                                    Login="{StaticResource LoginTemplate}"
+                                    GoOnDashboard="{StaticResource GoOnDashboardTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <RelativeLayout>
+        <Image Style="{StaticResource imageBackground}"/>
+        <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+            <Image Source="{extensions:ImageResource OnDijon.Assets.Logo-white.png}"
+               WidthRequest="60"
+               HorizontalOptions="Start"
+               Margin="24,0" />
+
+            <common:LoadingView IsLoading="{Binding IsLoading}">
+                <CarouselView x:Name="carousel"
+                          ItemTemplate="{StaticResource SlideSelector}"
+                          ItemsSource="{Binding Slides}"
+                          IndicatorView="indicatorView"
+                          Loop="False"
+                          Margin="0,10"
+                              PositionChangedCommand="{Binding OnBoardingVerifCommand, Source={RelativeSource AncestorType={x:Type viewModel:OnBoardingViewModel}}}"
+                              PositionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}"/>
+            </common:LoadingView>
+
+            <IndicatorView x:Name="indicatorView"
+                       IndicatorColor="Black"
+                       SelectedIndicatorColor="White"
+                       IndicatorSize="16" 
+                          Margin="0,10"/>
+        </StackLayout>
+    </RelativeLayout>
+</common:BasePage>

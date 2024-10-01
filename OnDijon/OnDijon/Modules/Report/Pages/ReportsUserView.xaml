@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:esri="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             x:Class="OnDijon.Modules.Report.Pages.ReportsUserView"
+             xmlns:reportDto="clr-namespace:OnDijon.Modules.Report.Entities.Dto"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Report.ViewModels"
+             x:DataType="viewModel:ReportsUserViewModel"
+             x:TypeArguments="viewModel:ReportsUserViewModel"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             AutomationId="ReportUserView">
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <common:NavigationBarView Title="Signalements" BackgroundColor="Transparent"/>
+                <StackLayout Orientation="Horizontal" Padding="24,0,12,0">
+
+                    <Label x:Name="ReportCountLabel"
+                       FontSize="14"
+                        Text="{Binding ReportCount}"
+                       TextColor="White"
+                       FontFamily="{StaticResource Isidora}"
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="CenterAndExpand" />
+
+                    <common:SwitchIconView LeftIcon="{Static icons:MaterialDesignIcons.MapCheckOutline}"
+                                       RightIcon="{Static icons:MaterialDesignIcons.FormatListBulleted}"
+                                       IsRightSelected="{Binding DoDisplayList}"
+                                       VerticalOptions="CenterAndExpand"/>
+                </StackLayout>
+
+                <AbsoluteLayout VerticalOptions="FillAndExpand">
+
+                    <common:RoundedFrame VerticalOptions="FillAndExpand"
+                                     Margin="0,12,0,0"
+                                     AbsoluteLayout.LayoutFlags="All"
+                                     AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                     Padding="0">
+                        <StackLayout>
+                            <ListView x:Name="ReportsList"
+                                  BackgroundColor="Transparent"
+                                  HasUnevenRows="True"
+                                  IsVisible="{Binding CanDisplayList}"
+                                  SelectionMode="None"
+                                  SeparatorVisibility="None"
+                                  IsPullToRefreshEnabled="True"
+                                  RefreshCommand="{Binding GetReportsCommand}"
+                                  IsRefreshing="{Binding IsLoading}"
+                                  RefreshControlColor="{StaticResource kleinBlue}"
+                                  ItemsSource="{Binding Reports}"
+                                  Margin="0,20,0,0"
+                                  VerticalOptions="FillAndExpand">
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="reportDto:ReportDto">
+                                        <ViewCell>
+                                            <StackLayout Spacing="0"
+                                                     Padding="20,16">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding GoToReportCommand, Source={RelativeSource AncestorType={x:Type viewModel:ReportsUserViewModel}}}" CommandParameter="{Binding .}"/>
+                                                </StackLayout.GestureRecognizers>
+                                                <StackLayout Orientation="Horizontal"
+                                                         Spacing="8">
+                                                    <Label Text="{Binding TypeName}"
+                                                       FontSize="18"
+                                                       FontAttributes="Bold"
+                                                       HorizontalOptions="StartAndExpand" />
+
+                                                    <common:BadgeView Text="{Binding Status}"
+                                                                  BackgroundColor="{Binding StatusColor}" />
+                                                </StackLayout>
+
+                                                <Label Text="{Binding Id, StringFormat='n°{0}'}"
+                                                   FontSize="14"
+                                                   TextColor="{StaticResource PlaceholderColor}" />
+
+                                                <Label Text="{Binding Address}"
+                                                   FontSize="16"
+                                                   Margin="0,5,0,18" />
+
+                                                <StackLayout HeightRequest="1"
+                                                         BackgroundColor="{StaticResource GraySeparatorColor}" />
+
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                            <AbsoluteLayout x:Name="ReportsMap"
+                                        IsVisible="{Binding CanDisplayMap}"
+                                        VerticalOptions="FillAndExpand">
+
+                                <esri:MapView x:Name="MapView"
+                                          Map="{Binding Map}"
+                                          IsAttributionTextVisible="False"
+                                          AbsoluteLayout.LayoutFlags="All"
+                                          AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                                          BackgroundColor="Gray" />
+
+                                <common:MapCompassView MapView="{Reference MapView}"
+                                                   Margin="10,30"
+                                                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                   AbsoluteLayout.LayoutBounds="1, 1" />
+
+                                <common:MapScaleBarView MapView="{Reference MapView}"
+                                                    Margin="10"
+                                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                    AbsoluteLayout.LayoutBounds="1, 1" />
+
+                                <ActivityIndicator AbsoluteLayout.LayoutFlags="PositionProportional"
+                                               AbsoluteLayout.LayoutBounds="0.5, 0.5"
+                                               IsRunning="{Binding IsLoading}" />
+                            </AbsoluteLayout>
+                        </StackLayout>
+                    </common:RoundedFrame>
+                    <Label FontSize="18" FontAttributes="Bold" IsVisible="{Binding DoDisplayReportsEmpty}"
+                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                   AbsoluteLayout.LayoutBounds="0.5,0.5" >Aucun signalement à afficher</Label>
+
+                    <Button Text="Déclarer un signalement"
+                        Style="{StaticResource ButtonConfirm}"
+                        Command="{Binding GoToReportTypeCommand}"
+                        Margin="0,0,0,24"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        AbsoluteLayout.LayoutBounds="0.5, 1" />
+
+                </AbsoluteLayout>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Services.Pages.ServiceButtonView"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             Orientation="Vertical">
+
+    <StackLayout.Resources>
+        <ResourceDictionary>
+            <Style x:Key="textButton"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{StaticResource kleinBlue}" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Start" />
+                <Setter Property="HorizontalOptions"
+                        Value="StartAndExpand"/>
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand"/>
+                <Setter Property="Margin"
+                        Value="10" />
+            </Style>
+
+            <Style x:Key="serviceButton"
+                   TargetType="Frame">
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="WidthRequest"
+                        Value="150" />
+                <Setter Property="HeightRequest"
+                        Value="60" />
+                <Setter Property="CornerRadius"
+                        Value="10" />
+                <Setter Property="Padding"
+                        Value="0" />
+                <Setter Property="Margin"
+                        Value="4" />
+                <Setter Property="HasShadow"
+                        Value="True" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="White" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </StackLayout.Resources>
+    
+    <AbsoluteLayout HorizontalOptions="Center">
+        <Frame Style="{StaticResource serviceButton}">
+            <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Label x:Name="Label" Style="{StaticResource textButton}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand"/>
+                <ff:SvgCachedImage x:Name="Image"  
+                                   Margin="5"
+                                   AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.9,0.8"
+                                   HeightRequest="30"
+                                   IsVisible="false"/>
+            </AbsoluteLayout>
+        </Frame>
+        <Frame x:Name="NotificationContainer" 
+               Style="{StaticResource NotificationContainer}"
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="1,0">
+            <Label x:Name="NotificationCountLabel"
+                   Style="{StaticResource NotificationText}" />
+        </Frame>
+        <!-- Favourite badge -->
+        <Frame x:Name="FavouriteContainer"
+               WidthRequest="30"
+               HeightRequest="30"
+               Padding="0"
+               IsVisible="false"
+               BackgroundColor="White"
+               CornerRadius="5"
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="1,-0.1">
+            <StackLayout>
+                <Image x:Name="FavouriteImage" 
+                       Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.StarOutline}, Color=Black, Size=24}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                
+            </StackLayout>
+
+        </Frame>
+    </AbsoluteLayout>
+       
+</StackLayout>

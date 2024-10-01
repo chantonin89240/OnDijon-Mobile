@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="OnDijon.DM.Diary.Views.ElementEventListDashboardView"
+       Style="{StaticResource ciFrameStandardRounded}" Padding="0" Margin="2" CornerRadius="8"
+       xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+       IsClippedToBounds="True">
+    <Grid RowDefinitions="120,auto,2,auto">
+        <forms:CachedImage Grid.Row="0" x:Name="ImageEvent"  Aspect="AspectFill"></forms:CachedImage>
+        <Label Grid.Row="1" x:Name="TitleEvent"  Style="{StaticResource ciLittleTitle}" Margin="8,4,8,4" TextType="Html" FontSize="14"/>
+        <BoxView Grid.Row="2" Style="{StaticResource ciSeparator}" Margin="8,0,8,0" WidthRequest="50"/>
+        <Label Grid.Row="3" x:Name="DiaryEvent"  Style="{StaticResource ciLittleForetitle}" Margin="8,4,8,8" TextType="Html"/>
+        <Frame Grid.Row="0" WidthRequest="34" HeightRequest="50"
+               HorizontalOptions="Start" VerticalOptions="Start" Padding="0" Margin="15"
+               BackgroundColor="White" CornerRadius="5">
+            <Grid RowDefinitions="*,*" >
+                <Label x:Name="DateDay" Grid.Row="0" Text="01" TextColor="{StaticResource kleinBlue}" FontAttributes="Bold" Margin="0" FontSize="22" HorizontalOptions="Center" VerticalOptions="EndAndExpand"></Label>
+                <Label x:Name="DateMonth" Grid.Row="1" Text="JAN" TextColor="{StaticResource kleinBlue}" FontAttributes="Bold" Margin="0"  FontSize="15"  HorizontalOptions="Center" VerticalOptions="StartAndExpand"></Label>
+            </Grid>
+        </Frame>
+    </Grid>
+</Frame>

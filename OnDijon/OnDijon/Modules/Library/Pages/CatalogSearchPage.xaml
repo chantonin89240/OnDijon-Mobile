@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 ios:Page.UseSafeArea="true"
+                 NavigationPage.HasBackButton="False"
+                 NavigationPage.HasNavigationBar="False"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:viewModel="clr-namespace:OnDijon.Modules.Library.ViewModels"
+                 x:Class="OnDijon.Modules.Library.Pages.CatalogSearchPage"
+                 x:TypeArguments="viewModel:CatalogSearchViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" Orientation="Vertical">
+            <common:NavigationBarView Title="Rechercher" HasBackButton="True" BackButtonCommand="{Binding CleanUpAndQuit}"/>
+            <RelativeLayout>
+                <Image Style="{StaticResource imageBackground}"/>
+                <AbsoluteLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}"
+                                BackgroundColor="Transparent">
+                    <common:SearchBarView AutomationId="AdressInput"
+                                          Placeholder="Chercher un document"
+                                          Padding="25,0,20,0"
+                                          Text="{Binding QuerySearch}"
+                                          VerticalOptions="Start"
+                                          AbsoluteLayout.LayoutFlags="XProportional,YProportional,WidthProportional"
+                                          AbsoluteLayout.LayoutBounds="0, 0, 1, 50"
+                                          SearchCommand="{Binding SearchCommand}"/>
+                    <ActivityIndicator AbsoluteLayout.LayoutFlags="XProportional,YProportional"
+                                       AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                                       Color="{StaticResource LightBackgroundColor}" 
+                                       IsRunning="{Binding IsLoading}" />
+                    <!--Search result-->
+                    <!-- Margin = TopNavigationBarView + Entry -->
+                    <ScrollView AbsoluteLayout.LayoutFlags="XProportional,HeightProportional, WidthProportional"
+                                AbsoluteLayout.LayoutBounds="0, 50, 1, 1"
+                                BackgroundColor="Transparent"
+                                Padding="0"
+                                IsVisible="True" 
+                                Margin="10,20,10,64">
+                        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+                            <StackLayout BindableLayout.ItemsSource="{Binding Resources}" 
+                                         Spacing="20"
+                                         Orientation="Vertical" 
+                                         VerticalOptions="StartAndExpand">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <common:RoundedFrame CornerRadius="10"
+                                                             IsClippedToBounds="True" 
+                                                             Padding="10"
+                                                             HasShadow="False">
+                                            <common:RoundedFrame.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding SelectResourceCommand, Source={RelativeSource AncestorType={x:Type viewModel:CatalogSearchViewModel}}}"
+                                                                      CommandParameter="{Binding}" />
+                                            </common:RoundedFrame.GestureRecognizers>
+                                            <StackLayout Spacing="0">
+                                                <common:BadgeView BackgroundColor="{StaticResource BadgeColorLightGray}" 
+                                                                  Text="{Binding Availability}"
+                                                                  HorizontalOptions="Start"/>
+                                                <Label Text="{Binding Title}"
+                                                       TextColor="{StaticResource kleinBlue}"
+                                                       FontSize="16"
+                                                       TextType="Html"
+                                                       FontFamily="{StaticResource Isidora}"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="{Binding Type}"
+                                                       TextColor="{StaticResource lightBlue}"
+                                                       FontSize="13"/>
+                                                <Image Source="{Binding Image}" Aspect="AspectFit"/>
+                                                <Label Text="{Binding Creator}"
+                                                   TextColor="{StaticResource lightBlue}"
+                                                   FontSize="13"/>
+                                                    <!--<Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="{Binding Creator}"/>
+                                                            <Span Text=" | "/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>-->
+                                                <Label Text="{Binding Description}"
+                                                       TextType="Html"/>
+                                            </StackLayout>
+                                        </common:RoundedFrame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+
+                            </StackLayout >
+                            <AbsoluteLayout Margin="0,0,0,140">
+                                <ActivityIndicator AbsoluteLayout.LayoutFlags="XProportional,YProportional"
+                                                   AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                                                   Color="{StaticResource LightBackgroundColor}" 
+                                                   IsRunning="{Binding IsLoading}"
+                                                   IsVisible="{Binding ExistingMore}"/>
+                                <Button AbsoluteLayout.LayoutFlags="All"
+                                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                        Text="Charger plus de résultats .." 
+                                        HeightRequest="50" 
+                                        Margin="20,0,20,0"
+                                        Style="{StaticResource ButtonConfirm}"
+                                        Command="{Binding LoadMoreResourcesCommand}"
+                                        IsVisible="{Binding ExistingMore}"/>
+                            </AbsoluteLayout>
+                        </StackLayout>
+                    </ScrollView>
+                    <!--Suggestions-->
+                    <Frame AbsoluteLayout.LayoutFlags="WidthProportional"
+                           AbsoluteLayout.LayoutBounds="0, 50, 1, 200"
+                           Margin="20,0"
+                           BackgroundColor="{StaticResource LightBackgroundColor}"
+                           Padding="0"
+
+                           IsVisible="{Binding SuggestionsVisible}">
+                        <ScrollView>
+                            <StackLayout BindableLayout.ItemsSource="{Binding Suggestions}"
+                                     Spacing="0"
+                                     Orientation="Vertical" 
+                                     VerticalOptions="StartAndExpand">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Spacing="0">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding SuggestionSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModel:CatalogSearchViewModel}}}"
+                                                                  CommandParameter="{Binding}" />
+                                            </StackLayout.GestureRecognizers>
+                                            <Label Text="{Binding}"
+                                               Padding="10">
+                                            </Label>
+                                            <BoxView BackgroundColor="{StaticResource GraySeparatorColor}"
+                                                 HeightRequest="1"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout >
+                        </ScrollView>
+                    </Frame>
+                </AbsoluteLayout>
+            </RelativeLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BasePage>

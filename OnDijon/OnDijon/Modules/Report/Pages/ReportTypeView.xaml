@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:local="clr-namespace:OnDijon.Common.Utils"
+             xmlns:servicePages="clr-namespace:OnDijon.Modules.Services.Pages"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Report.ViewModels"
+             x:TypeArguments="viewModel:ReportTypeViewModel"
+             ios:Page.UseSafeArea="true"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.Report.Pages.ReportTypeView"
+             x:Name="ReportTypePage"
+             AutomationId="ReportTypePage"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <RelativeLayout>
+                <Image Style="{StaticResource imageBackground}"/>
+                <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+
+                    <common:NavigationBarView Title="Déclarer un signalement" BackButtonCommand ="{Binding NavigateBack}" HeightRequest="90" BackgroundColor="Transparent"/>
+
+                    <ScrollView x:Name="ReportTypesLayout"
+                            VerticalOptions="FillAndExpand"
+                            Padding="0,20,0,0">
+
+                        <common:RoundedFrame Padding="20">
+
+                            <StackLayout Orientation="Vertical">
+                                <common:BreadcrumbView StepCount="4"
+                                                   StepTitleList="{x:Static local:RecipeUIConstants.StepTitleReport}"
+                                                   CurrentStep="1" />
+                                <CollectionView ItemsSource="{Binding ReportTypes}">
+                                    <CollectionView.ItemsLayout>
+                                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="20" VerticalItemSpacing="20"/>
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <servicePages:ServiceButtonView Title="{Binding Name}" ImageName="{Binding ImageUrl}" NotificationCount="0" >
+                                                <servicePages:ServiceButtonView.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding GoToNextPageCommand, Source={RelativeSource AncestorType={x:Type viewModel:ReportTypeViewModel}}}" CommandParameter="{Binding .}"/>
+                                                </servicePages:ServiceButtonView.GestureRecognizers>
+                                            </servicePages:ServiceButtonView>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                        </common:RoundedFrame>
+
+                    </ScrollView>
+                </StackLayout>
+            </RelativeLayout>
+        </common:LoadingView>
+    </ContentPage.Content>
+</common:BasePage>

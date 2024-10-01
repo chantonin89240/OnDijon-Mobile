@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Common.Views.CustomCarouselView"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:controls="clr-namespace:OnDijon.Common.Utils"
+             FlowDirection="LeftToRight">
+
+    <StackLayout.Resources>
+        <ResourceDictionary>
+
+            <!-- CardAlert -->
+            <DataTemplate x:Key="CardAlert">
+                <common:CardAlertView Card="{Binding}"
+                                      Padding="8,0"
+                                      ActionClicked="CardAlertView_ActionClicked" />
+            </DataTemplate>
+
+            <!-- CardStandart -->
+            <DataTemplate x:Key="CardStandart">
+                <common:CardStandartView Card="{Binding}"
+                                         Padding="8,0"
+                                         ActionClicked="CardAlertView_ActionClicked" />
+            </DataTemplate>
+
+            <!-- CardVertical -->
+            <DataTemplate x:Key="CardVertical">
+                <common:CardVerticalView Card="{Binding}"
+                                         Padding="8,0"
+                                         ActionClicked="CardAlertView_ActionClicked" />
+            </DataTemplate>
+            
+            <!-- CardDouble -->
+            <DataTemplate x:Key="CardDouble">
+                <common:CardDoubleView Card="{Binding}"
+                                       Padding="8,0"
+                                       ActionClicked="CardAlertView_ActionClicked" />
+            </DataTemplate>
+
+            <!-- CardError -->
+            <DataTemplate x:Key="CardError">
+                <common:CardErrorView Card="{Binding}"
+                                      Padding="8,0"
+                                      ActionClicked="CardAlertView_ActionClicked" />
+            </DataTemplate>
+
+            <controls:CarouselCardDataTemplateSelector x:Key="CardSelector"
+                                                       CardAlert="{StaticResource CardAlert}"
+                                                       CardStandart="{StaticResource CardStandart}"
+                                                       CardVertical="{StaticResource CardVertical}"
+                                                       CardDouble="{StaticResource CardDouble}"
+                                                       CardError="{StaticResource CardError}" />
+        </ResourceDictionary>
+    </StackLayout.Resources>
+
+    <CarouselView x:Name="CarouselView"
+                  HeightRequest="230"
+                  ItemsSource="{Binding Cards}"
+                  ItemTemplate="{StaticResource CardSelector}"
+                  PeekAreaInsets="24"
+                  Loop="False" 
+                  CurrentItemChanged="CarouselView_CurrentItemChanged"
+                  PositionChanged="CarouselView_PositionChanged"/>
+
+    <StackLayout Orientation="Horizontal"
+                 HorizontalOptions="End"
+                 Margin="0,10,30,0">
+
+        <ff:SvgCachedImage x:Name="LeftArrow"
+                           Source="{extensions:ImageResource OnDijon.Assets.arrow-left.svg}"
+                           WidthRequest="18" Opacity="0">
+            <ff:SvgCachedImage.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Previous_Tapped" />
+            </ff:SvgCachedImage.GestureRecognizers>
+        </ff:SvgCachedImage>
+
+        <Label x:Name="PageCounter"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               FontFamily="{StaticResource Isidora}"
+               Text="{Binding PageLabel}"
+               FontSize="12"
+               TextColor="White" />
+
+        <ff:SvgCachedImage x:Name="RightArrow"
+                           Source="{extensions:ImageResource OnDijon.Assets.arrow-right.svg}"
+                           WidthRequest="18" Opacity="0">
+            <ff:SvgCachedImage.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Next_Tapped" />
+            </ff:SvgCachedImage.GestureRecognizers>
+        </ff:SvgCachedImage>
+    </StackLayout>
+</StackLayout>

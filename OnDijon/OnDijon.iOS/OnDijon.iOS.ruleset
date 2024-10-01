@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - OnDijon Sonar way" ToolsVersion="16.0">
+  <Include Path="..\..\.sonarlint\88ea8895-789f-48cc-a259-6805c2fdd313csharp.ruleset" Action="Default" />
+</RuleSet>

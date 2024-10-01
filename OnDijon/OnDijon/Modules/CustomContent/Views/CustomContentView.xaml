@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.CustomContent.Views.CustomContentView"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             NavigationPage.HasBackButton="False"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:tools="clr-namespace:OnDijon.Common.Utils.Converters" 
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.CustomContent.ViewModel"
+             x:TypeArguments="viewModel:CustomContentViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+            <tools:ImageOrNotHeightConverter x:Key="imageOrNotHeightConverter"></tools:ImageOrNotHeightConverter>
+            <Style x:Key="ciGrid" TargetType="Grid">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <ScrollView AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                        <StackLayout Padding="0" Margin="0,0,0,50">
+                            <StackLayout Spacing="0">
+                                <common:NavigationBarView Title="Détail" HasBackButton="True" 
+                                                        BackgroundColor="Transparent" />
+                                <StackLayout Spacing="0" IsVisible="{Binding CustomContentModel.HaveImageOrVideo, Converter={StaticResource Key=negateBooleanConverter}}" Margin="0,30,0,0"></StackLayout>
+                                <StackLayout Spacing="0" IsVisible="{Binding CustomContentModel.HaveImageOrVideo}" >
+                                    <ActivityIndicator AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                                           AbsoluteLayout.LayoutFlags="XProportional,YProportional"
+                                           Color="{StaticResource LightBackgroundColor}"
+                                           IsRunning="{Binding IsLoading}"
+                                           IsVisible="{Binding IsLoading}"/>
+                                    <StackLayout VerticalOptions="FillAndExpand" 
+                                         HorizontalOptions="FillAndExpand"
+                                         Spacing="0"
+                                         IsVisible="{Binding IsLoading, Converter={StaticResource negateBooleanConverter}}">
+                                        <forms:CachedImage Source="{Binding CustomContentModel.Image}" 
+                                                   IsVisible="{Binding CustomContentModel.Image, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"
+                                                   Aspect="AspectFill" HorizontalOptions="FillAndExpand" HeightRequest="240" />
+                                        <WebView IsVisible="{Binding CustomContentModel.Video, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"
+                                             Source="{Binding CustomContentModel.Video}" 
+                                             VerticalOptions="FillAndExpand" 
+                                             HorizontalOptions="FillAndExpand" 
+                                             HeightRequest="240" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                            <Frame Style="{StaticResource ciFrameStandardRounded}"
+                                  IsVisible="{Binding IsLoading, Converter={StaticResource negateBooleanConverter}}" Margin="10,-30,10,10">
+                                <StackLayout HorizontalOptions="FillAndExpand" Spacing="20">
+                                    <Label Text="{Binding CustomContentModel.Title}" FontSize="Title" FontAttributes="Bold" TextColor="{StaticResource kleinBlue}"/>
+                                    <Label Text="{Binding CustomContentModel.Description}"></Label>
+                                    <Button
+                                IsVisible="{Binding CustomContentModel.ExternalLinkTitle, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"
+                                Text="{Binding CustomContentModel.ExternalLinkTitle}"
+                                Command="{Binding ExternalLinkCommand}"
+                                Style="{StaticResource ButtonConfirm}"
+                                CommandParameter="{Binding CustomContentModel.ExternalLink}">
+                                    </Button>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </ScrollView>
+                </AbsoluteLayout>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

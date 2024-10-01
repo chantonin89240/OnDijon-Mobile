@@ -1,0 +1,1294 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                        xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                        xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+                        xmlns:common="clr-namespace:OnDijon.Common.Views"
+                        xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+                        xmlns:validator="clr-namespace:OnDijon.Common.Utils.Validators.Views"
+                        xmlns:system="clr-namespace:System;assembly=netstandard"
+                        xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+                        xmlns:prism="http://prismlibrary.com"
+                        xmlns:valueConverters="clr-namespace:OnDijon.Common.ValueConverters;assembly=OnDijon"
+                        mc:Ignorable="d"
+                        x:Class="OnDijon.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- global colors -->
+            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="PrimaryDark">#1976D2</Color>
+            <Color x:Key="Accent">#96d1ff</Color>
+            <Color x:Key="LightBackgroundColor">#F9F9F9</Color>
+            <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
+            <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
+            <Color x:Key="LightTextColor">#A0A3A6</Color>
+            <Color x:Key="ErrorColor">#ED4242</Color>
+            <Color x:Key="NotificationBackground">#ED4242</Color>
+            <Color x:Key="FavouriteColor">#ffd700</Color>
+            <Color x:Key="WarningColor">#ffab00</Color>
+            <Color x:Key="DeleteRedColor">#CE192A</Color>
+            <Color x:Key="TextColor">#3F3F3F</Color>
+            <Color x:Key="PlaceholderColor">#AAADB0</Color>
+            <Color x:Key="GraySeparatorColor">#EDEDED</Color>
+            <Color x:Key="BorderColor">#DCDCDC</Color>
+            <Color x:Key="DividerColor">#EBEBEB</Color>
+            <Color x:Key="MistyRoseColor">#FFE5E5</Color>
+            <!-- bleu dark -->
+            <Color x:Key="darkBlue">#102B5B</Color>
+            <!-- bleu celeste -->
+            <Color x:Key="lightBlue">#3C92CC</Color>
+            <!-- bleu klein -->
+            <Color x:Key="kleinBlue">#1A3972</Color>
+            <Color x:Key="darkKleinBlue">#08204D</Color>
+            <SolidColorBrush x:Key="kleinBlueSolidColorBrush"
+                             Color="{StaticResource kleinBlue}" />
+            <Color x:Key="cyanBlue">#96E4FC</Color>
+            <Color x:Key="BackgroundBlue">#102a5b</Color>
+
+            <!-- Switch color -->
+            <Color x:Key="SwitchOnColor">#5CD4AC</Color>
+            <Color x:Key="SwitchOffColor">#EDEDED</Color>
+            
+            <!-- Breadcrumb -->
+            <Color x:Key="GrayBreadcrumb">#EDEDED</Color>
+            <Color x:Key="GreenBreadcrumb">#5CD4AC</Color>
+
+            <!-- badge colors -->
+            <Color x:Key="BadgeColorLightGray">#E5E5E5</Color>
+            <Color x:Key="BadgeColorGreen">#BAFFE8</Color>
+            <Color x:Key="BadgeColorYellow">#FFDFC2</Color>
+            <Color x:Key="BadgeColorRed">#FFD4D4</Color>
+
+            <!-- popup colors -->
+            <Color x:Key="PopupColorSuccess">#219653</Color>
+            <Color x:Key="PopupColorError">#1A3972</Color>
+
+            <!-- OBSOLETE -->
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor"
+                        Value="White" />
+                <Setter Property="BarTextColor"
+                        Value="{StaticResource darkBlue}" />
+            </Style>
+
+            <!-- fonts -->
+            <x:String x:Key="Isidora">Isidora</x:String>
+            <OnPlatform x:TypeArguments="x:String"
+                        x:Key="MaterialDesignIcons">
+                <On Platform="Android"
+                    Value="font/materialdesignicons-webfont.ttf#Material Design Icons" />
+                <On Platform="iOS"
+                    Value="Material Design Icons" />
+            </OnPlatform>
+            <!-- TODO use MaterialDesignIcons instead of FontAwesome -->
+            <OnPlatform x:TypeArguments="x:String"
+                        x:Key="FontAwesome5ProLight">
+                <On Platform="Android"
+                    Value="font/Font Awesome 5 Pro-Light-300.otf#FontAwesome5Pro-Light" />
+                <On Platform="iOS"
+                    Value="FontAwesome5Pro-Light" />
+            </OnPlatform>
+
+            <!-- page background -->
+            <Style TargetType="StackLayout"
+                   x:Key="StackLayoutGradientBackground"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="{StaticResource kleinBlue}" Offset="0.1"/>
+                            <GradientStop Color="{StaticResource darkKleinBlue}" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="common:RoundedFrame"
+                   x:Key="RoundedFrameGradientBackground"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="{StaticResource kleinBlue}" Offset="0.1"/>
+                            <GradientStop Color="{StaticResource darkKleinBlue}" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <StyleSheet>
+                <![CDATA[
+                ^contentpage>stacklayout {
+                    background-color: #F0F5FF;
+                    -xf-spacing: 0;
+                }
+                ^contentpage>scrollview {
+                    background-color: #F0F5FF;
+                }
+                ^contentpage>loadingview {
+                    background-color: #F0F5FF;
+                }
+                ]]>
+            </StyleSheet>
+
+            <Style TargetType="Frame">
+                <Setter Property="BackgroundColor"
+                        Value="White" />
+            </Style>
+
+            <Style TargetType="common:RoundedFrame">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource LightBackgroundColor}" />
+                <Setter Property="CornerRadius"
+                        Value="30,30,0,0" />
+                <Setter Property="Padding"
+                        Value="20" />
+            </Style>
+            
+            <Style TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{StaticResource TextColor}" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+            </Style>
+
+            <!-- Notification badge-->
+            <Style x:Key="NotificationContainer"
+                   TargetType="Frame">
+                <Setter Property="WidthRequest"
+                        Value="24"/>
+                <Setter Property="HeightRequest"
+                        Value="24"/>
+                <Setter Property="Padding"
+                        Value="0"/>
+                <Setter Property="CornerRadius"
+                        Value="12"/>
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource NotificationBackground}"/>
+            </Style>
+            <Style x:Key="NotificationText"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="White"/>
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}"/>
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center"/>
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center"/>
+                <Setter Property="FontSize"
+                        Value="12"/>
+            </Style>
+
+            <FormattedString x:Key="warningMessage">
+                <Span Text="Cette fonctionnalité n'est pas faite pour les urgences"
+                      TextColor="{StaticResource PopupColorError}"
+                      FontAttributes="Bold"
+                      FontFamily="{StaticResource Isidora}"
+                      FontSize="16" />
+
+                <Span Text="{Static system:Environment.NewLine}" />
+                <Span Text="{Static system:Environment.NewLine}" />
+
+                <Span Text="Si vous êtes témoin d'une situation qui nécessite une intervention immédiate des services de Police ou des Pompiers, composez respectivement le 17 ou le 18 depuis votre téléphone."
+                      TextColor="Black"
+                      FontFamily="{StaticResource Isidora}"
+                      FontSize="16" />
+            </FormattedString>
+            
+            <!-- navigation bar styles -->
+            <x:Int32 x:Key="NavBarHeight">64</x:Int32>
+            <Style TargetType="common:NavigationBarView">
+                <Setter Property="HeightRequest"
+                        Value="{StaticResource NavBarHeight}" />
+                <Setter Property="MinimumHeightRequest"
+                        Value="{StaticResource NavBarHeight}" />
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource kleinBlue}" />
+            </Style>
+            <Style x:Key="NavBarButton"
+                   TargetType="ImageButton">
+                <Setter Property="BackgroundColor"
+                        Value="Transparent" />
+                <Setter Property="Margin"
+                        Value="20" />
+            </Style>
+            <Style x:Key="NavBarBack"
+                   TargetType="ImageButton"
+                   BasedOn="{StaticResource NavBarButton}">
+                <Setter Property="Source"
+                        Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.ChevronLeft}, Color=White, Size=44}" />
+                <Setter Property="Margin"
+                        Value="10" />
+            </Style>
+            <Style x:Key="NavBarLogo"
+                   TargetType="Image">
+                <Setter Property="Source"
+                        Value="{extensions:ImageResource OnDijon.
+                    .Logo-white.png}" />
+                <Setter Property="Margin"
+                        Value="5" />
+            </Style>
+            <Style x:Key="NavBarTitle"
+                   TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="20" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="TextColor"
+                        Value="White" />
+                <Setter Property="HorizontalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+            </Style>
+
+            <!-- Top bar styles -->
+            <x:Int32 x:Key="TopBarHeight">64</x:Int32>
+            <Style TargetType="common:TopBarView">
+                <Setter Property="HeightRequest"
+                        Value="{StaticResource TopBarHeight}" />
+                <Setter Property="MinimumHeightRequest"
+                        Value="{StaticResource TopBarHeight}" />
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource kleinBlue}" />
+            </Style>
+            
+            <!-- buttons styles -->
+            <x:Double x:Key="ButtonDisabledOpacity">0.6</x:Double>
+            <x:Double x:Key="ButtonEnabledOpacity">1</x:Double>
+            <Color x:Key="ButtonDisabledBackgroundColor">#C4C4C4</Color>
+            <Color x:Key="ButtonDisabledTextColor">#464646</Color>
+            <Style x:Key="ButtonRegular"
+                   TargetType="Button">
+                <Setter Property="Padding"
+                        Value="15" />
+                <Setter Property="CornerRadius"
+                        Value="20" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="White" />
+                                    <Setter Property="TextColor"
+                                            Value="{StaticResource kleinBlue}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource ButtonDisabledBackgroundColor}" />
+                                    <Setter Property="TextColor"
+                                            Value="{StaticResource ButtonDisabledTextColor}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="ButtonSelect"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonRegular}">
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="White" />
+                                    <Setter Property="BorderColor" Value="{StaticResource kleinBlue}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Focused">
+                                <VisualState.Setters>
+                                    <Setter Property="FontSize" Value="36" />
+                                    <Setter Property="BackgroundColor" Value="White" />
+                                    <Setter Property="BorderColor" Value="{StaticResource kleinBlue}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="White" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}" />
+                                    <Setter Property="BorderColor" Value="White" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger  TargetType="Button" Property="IsEnabled" Value="False">
+                        <Setter Property="BorderWidth" Value="1" />
+                        <Setter Property="TextColor" Value="White" />
+                        <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}" />
+                        <Setter Property="BorderColor" Value="White" />
+                    </Trigger>
+                    <Trigger  TargetType="Button" Property="IsEnabled" Value="True">
+                        <Setter Property="TextColor" Value="{StaticResource kleinBlue}" />
+                        <Setter Property="BorderWidth" Value="1" />
+                        <Setter Property="BackgroundColor" Value="White" />
+                        <Setter Property="BorderColor" Value="{StaticResource kleinBlue}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="ButtonConfirm"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonRegular}">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource kleinBlue}" />
+                                    <Setter Property="TextColor"
+                                            Value="White" />
+                                    <Setter Property="BorderColor"
+                                            Value="White" />
+                                    <Setter Property="BorderWidth"
+                                            Value="1" />
+                                    <Setter Property="Opacity"
+                                            Value="{StaticResource ButtonEnabledOpacity}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource kleinBlue}" />
+                                    <Setter Property="TextColor"
+                                            Value="White" />
+                                    <Setter Property="BorderColor"
+                                            Value="White" />
+                                    <Setter Property="BorderWidth"
+                                            Value="1" />
+                                    <Setter Property="Opacity"
+                                            Value="{StaticResource ButtonDisabledOpacity}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="ButtonSelectTab"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonRegular}">
+                <Setter Property="FontSize" Value="Default"></Setter>
+                <Setter Property="Margin" Value="0"></Setter>
+                <Setter Property="Padding" Value="0"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="Transparent" />
+                                    <Setter Property="TextColor"
+                                            Value="White" />
+                                    <Setter Property="Opacity"
+                                            Value="{StaticResource ButtonDisabledOpacity}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="Transparent"/>
+                                    <Setter Property="TextColor"
+                                            Value="White" />
+                                    <Setter Property="Opacity"
+                                            Value="{StaticResource ButtonEnabledOpacity}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="LightButtonConfirm"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonConfirm}">
+                <Setter Property="FontSize"
+                        Value="13" />
+                <Setter Property="Padding"
+                        Value="0" />
+                <Setter Property="FontSize"
+                        Value="13" />
+                <Setter Property="Padding"
+                        Value="0" />
+            </Style>
+            <Style x:Key="ButtonOutlined"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonRegular}">
+                <Setter Property="BorderColor"
+                        Value="{StaticResource cyanBlue}" />
+                <Setter Property="BorderWidth"
+                        Value="1" />
+                <Setter Property="android:Button.UseDefaultShadow"
+                        Value="False" />
+                <Setter Property="ios:VisualElement.IsShadowEnabled"
+                        Value="False" />
+            </Style>
+
+            <x:Int32 x:Key="RoundedButtonSize">40</x:Int32>
+            <x:Int32 x:Key="RoundedButtonCornerRadius">20</x:Int32>
+            <Style x:Key="RoundedButton"
+                   TargetType="ImageButton">
+                <Setter Property="Padding"
+                        Value="8" />
+                <Setter Property="HeightRequest"
+                        Value="{StaticResource RoundedButtonSize}" />
+                <Setter Property="WidthRequest"
+                        Value="{StaticResource RoundedButtonSize}" />
+                <Setter Property="CornerRadius"
+                        Value="{StaticResource RoundedButtonCornerRadius}" />
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource cyanBlue}" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+            </Style>
+            
+            <!-- radio buttons styles -->
+            <OnPlatform x:TypeArguments="x:Double"
+                        x:Key="RadioButtonTextSize">
+                <On Platform="Android"
+                    Value="10" />
+                <On Platform="iOS"
+                    Value="16" />
+            </OnPlatform>
+            <Style TargetType="input:RadioButton">
+                <Setter Property="Color"
+                        Value="{StaticResource kleinBlue}" />
+                <Setter Property="TextColor"
+                        Value="{StaticResource TextColor}" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="TextFontSize"
+                        Value="{StaticResource RadioButtonTextSize}" />
+            </Style>
+
+            <!-- card styles -->
+            <Style x:Key="Card"
+                   TargetType="Frame">
+                <Setter Property="BackgroundColor"
+                        Value="White" />
+                <Setter Property="CornerRadius"
+                        Value="15" />
+                <Setter Property="Padding"
+                        Value="20" />
+            </Style>
+            <Style x:Key="CardText"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="18" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalOptions"
+                        Value="StartAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+            </Style>
+            <Style x:Key="CardArrow"
+                   TargetType="Image">
+                <Setter Property="Source"
+                        Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.ChevronRight}, Color=Black, Size=44}" />
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="Margin"
+                        Value="-14,-2" />
+            </Style>
+            <Style x:Key="CardsList"
+                   TargetType="StackLayout">
+                <Setter Property="Padding"
+                        Value="12,20" />
+                <Setter Property="Spacing"
+                        Value="10" />
+            </Style>
+            <Style x:Key="CarouselCard"
+                   TargetType="common:RoundedFrame">
+                <Setter Property="BackgroundColor"
+                        Value="White" />
+                <Setter Property="CornerRadius"
+                        Value="15" />
+                <Setter Property="Padding"
+                        Value="0" />
+            </Style>
+            <Style x:Key="FrameCarouselCard"
+                   TargetType="Frame">
+                <Setter Property="BackgroundColor"
+                        Value="White" />
+                <Setter Property="CornerRadius"
+                        Value="15" />
+                <Setter Property="Padding"
+                        Value="0" />
+            </Style>
+            <Style x:Key="ImageFrameCarouselCard"
+                   TargetType="Frame">
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource darkKleinBlue}" />
+                <Setter Property="Padding"
+                        Value="0" />
+                <Setter Property="CornerRadius"
+                        Value="0" />
+            </Style>
+
+            <!-- badge styles -->
+            <Style x:Key="Badge"
+                   TargetType="Frame">
+                <Setter Property="HeightRequest"
+                        Value="30" />
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource BadgeColorRed}" />
+                <Setter Property="CornerRadius"
+                        Value="15" />
+                <Setter Property="Padding"
+                        Value="12,-1" />
+                <Setter Property="HasShadow"
+                        Value="False" />
+            </Style>
+            <Style x:Key="CircularBadge"
+                   TargetType="Frame"
+                   BasedOn="{StaticResource Badge}">
+                <Setter Property="WidthRequest"
+                        Value="30" />
+                <Setter Property="Padding"
+                        Value="0" />
+            </Style>
+            <Style x:Key="BadgeText"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{StaticResource kleinBlue}" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="10" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="TextTransform"
+                        Value="Uppercase" />
+                <Setter Property="MaxLines"
+                        Value="1" />
+                <Setter Property="LineBreakMode"
+                        Value="TailTruncation" />
+            </Style>
+            
+            <!-- Badge open/close contact -->
+            <Style x:Key="ciFrameLabelGreen"
+                   TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource BadgeColorGreen}"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+            <Style x:Key="ciFrameLabelRed"
+                   TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource BadgeColorRed}"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+
+            <!-- switch styles -->
+            <Style x:Key="SwitchButton"
+                   TargetType="common:BadgeView"
+                   BasedOn="{StaticResource Badge}">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="Transparent" />
+                                    <Setter Property="TextColor"
+                                            Value="{StaticResource kleinBlue}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource kleinBlue}" />
+                                    <Setter Property="TextColor"
+                                            Value="White" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+
+            <Style x:Key="SwitchIconButtonBase"
+                    TargetType="common:SwitchIconView">
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="Padding"
+                        Value="5" />
+                <Setter Property="WidthRequest"
+                        Value="30" />
+                <Setter Property="HeightRequest"
+                        Value="30" />
+            </Style>
+
+            <Style x:Key="SwitchIconButton"
+                   TargetType="common:SwitchIconView"
+                   BasedOn="{StaticResource SwitchIconButtonBase}">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource kleinBlue}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+
+            <!-- search bar styles -->
+            <x:Int32 x:Key="SearchBarHeight">48</x:Int32>
+            <Style TargetType="common:SearchBarView">
+                <Setter Property="HeightRequest"
+                        Value="{StaticResource SearchBarHeight}" />
+                <Setter Property="BackgroundColor"
+                        Value="White" />
+            </Style>
+            <Style x:Key="SearchBarEntry"
+                   TargetType="Entry">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="BackgroundColor"
+                        Value="Transparent" />
+                <Setter Property="PlaceholderColor"
+                        Value="{StaticResource PlaceholderColor}" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="ClearButtonVisibility"
+                        Value="WhileEditing" />
+                <Setter Property="ReturnType"
+                        Value="Search" />
+                <Setter Property="Margin"
+                        Value="10,0,0,0" />
+                <Setter Property="HorizontalOptions"
+                        Value="FillAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+            </Style>
+            <Style x:Key="SearchBarButton"
+                   TargetType="ImageButton">
+                <Setter Property="BackgroundColor"
+                        Value="Transparent" />
+                <Setter Property="Source"
+                        Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Magnify}, Color={StaticResource kleinBlue}, Size=24}" />
+                <Setter Property="WidthRequest"
+                        Value="{StaticResource SearchBarHeight}" />
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="Padding"
+                        Value="12" />
+            </Style>
+
+            <!-- form base styles -->
+            <x:Int32 x:Key="FormBaseHeight">48</x:Int32>
+            <x:Int32 x:Key="FormBaseIconSize">24</x:Int32>
+            <Color x:Key="FormBaseIconColor">Black</Color>
+            <Style x:Key="FormBaseStyle" 
+                   TargetType="Frame"
+                   ApplyToDerivedTypes="True">
+                <Setter Property="HeightRequest"
+                        Value="{StaticResource FormBaseHeight}" />
+                <Setter Property="BackgroundColor"
+                        Value="White" />
+                <Setter Property="Padding"
+                        Value="20, 0" />
+                <Setter Property="HasShadow"
+                        Value="False" />
+                <Setter Property="CornerRadius"
+                        Value="5" />
+                <!--<Setter Property="Spacing"
+                        Value="0" />-->
+            </Style>
+            <Style x:Key="FormBaseIcon"
+                   TargetType="Image">
+                <Setter Property="WidthRequest"
+                        Value="20" />
+                <Setter Property="HorizontalOptions"
+                        Value="Start" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+            </Style>
+
+            <!-- form entry styles -->
+            <Style x:Key="FormEntry"
+                   TargetType="Entry">
+                <Setter Property="TextColor"
+                        Value="{StaticResource TextColor}" />
+                <Setter Property="PlaceholderColor"
+                        Value="{StaticResource PlaceholderColor}" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="HorizontalOptions"
+                        Value="FillAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+            </Style>
+
+            <!-- form date picker styles -->
+            <Style x:Key="FormDatePicker"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{StaticResource TextColor}" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="HorizontalOptions"
+                        Value="FillAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+            </Style>
+            
+            <!-- form picker styles -->
+            <Style x:Key="FormPicker"
+                   TargetType="Picker">
+                <Setter Property="TitleColor"
+                        Value="Black" />
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="BackgroundColor"
+                        Value="Transparent" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="HorizontalOptions"
+                        Value="FillAndExpand" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+            </Style>
+            <Style x:Key="FormPickerPlaceholder"
+                   TargetType="Picker"
+                   BasedOn="{StaticResource FormPicker}">
+                <Setter Property="TextColor"
+                        Value="{StaticResource PlaceholderColor}" />
+            </Style>
+            <Style x:Key="FormPickerIcon"
+                   TargetType="Image"
+                   BasedOn="{StaticResource FormBaseIcon}">
+                <Setter Property="Source"
+                        Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.ChevronDown}, Color={StaticResource kleinBlue}, Size=24}" />
+            </Style>
+
+            <!-- popup styles -->
+            <Style x:Key="PopupIcon"
+                   TargetType="Image">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="PopupStates">
+                            <VisualState x:Name="PopupSuccess">
+                                <VisualState.Setters>
+                                    <Setter Property="Source"
+                                            Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.CheckCircleOutline}, Color={StaticResource PopupColorSuccess}, Size=30}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="PopupError">
+                                <VisualState.Setters>
+                                    <Setter Property="Source"
+                                            Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.CloseCircleOutline}, Color={StaticResource PopupColorError}, Size=30}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="PopupTitle"
+                   TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="VerticalOptions"
+                        Value="CenterAndExpand" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="PopupStates">
+                            <VisualState x:Name="PopupSuccess">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="{StaticResource PopupColorSuccess}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="PopupError">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="{StaticResource PopupColorError}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="PopupInfo">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="Black" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="PopupSubtitle"
+                   TargetType="Label"
+                   BasedOn="{StaticResource PopupTitle}">
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="FontAttributes"
+                        Value="Bold, Italic" />
+            </Style>
+            <Style x:Key="PopupMessage"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+            </Style>
+
+            <!-- loading style -->
+            <Style TargetType="ActivityIndicator">
+                <Setter Property="WidthRequest"
+                        Value="40" />
+                <Setter Property="HeightRequest"
+                        Value="40" />
+                <Setter Property="Color"
+                        Value="{StaticResource kleinBlue}" />
+            </Style>
+
+            <ControlTemplate x:Key="CustomErrorViewTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="1"
+                                 VerticalOptions="Center"
+                                 IsVisible="True"
+                                 BindableLayout.ItemsSource="{TemplateBinding ErrorState.Messages}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="&#xf321;"
+                                           FontFamily="{StaticResource FontAwesome5ProLight}"
+                                           FontSize="Small"
+                                           TextColor="Red"
+                                           Margin="0,3,0,0" />
+                                    <Label Text="{Binding}"
+                                           FontSize="Small"
+                                           TextColor="Red"
+                                           Padding="15,0" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </Grid>
+            </ControlTemplate>
+            <Style TargetType="validator:ErrorView">
+                <Setter Property="ControlTemplate"
+                        Value="{StaticResource CustomErrorViewTemplate}" />
+            </Style>
+            
+            <!-- Style Texte -->
+            <Style x:Key="ciTitle" TargetType="Label">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Medium"/>
+            </Style>
+            <Style x:Key="ciMainTitle" TargetType="Label">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontFamily" Value="{StaticResource Isidora}"/>
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+            <Style x:Key="ciFrameTitle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontFamily" Value="{StaticResource Isidora}"/>
+                <Setter Property="FontSize" Value="25"/>
+            </Style>
+            <Style x:Key="ciLittleTitle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Medium"/>
+            </Style>
+            <Style x:Key="ciLittleForetitle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource MediumGrayTextColor}"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="FontSize" Value="Small"/>
+            </Style>
+            <Style x:Key="ciLabelBadge" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="ciLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="ciContent" TargetType="Label">
+                <Setter Property="Margin" Value="30,0,0,0"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+            </Style>
+            <Style x:Key="ciCenterWhiteLabel" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+            <Style x:Key="ciCardTitle" TargetType="Label" BasedOn="{StaticResource ciLabel}">
+                <Setter Property="FontSize" Value="Title"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+            <Style x:Key="ciBigLabel" TargetType="Label" BasedOn="{StaticResource ciLabel}">
+                <Setter Property="FontSize" Value="Subtitle"/>
+            </Style>
+            <Style x:Key="ciBigContent" TargetType="Label" BasedOn="{StaticResource ciContent}">
+                <Setter Property="FontSize" Value="Body"/>
+            </Style>
+            <Style x:Key="ciBigContentNoMargin" TargetType="Label" BasedOn="{StaticResource ciBigContent}">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+            </Style>
+            <!-- BoxView -->
+            <Style x:Key="ciSeparator" TargetType="BoxView">
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="HeightRequest" Value="2"/>
+                <Setter Property="WidthRequest" Value="150"/>
+                <Setter Property="Color" Value="{StaticResource kleinBlue}"/>
+            </Style>
+            <Style x:Key="ciCenterSeparator" TargetType="BoxView">
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="HeightRequest" Value="2"/>
+                <Setter Property="Margin" Value="10,0"/>
+                <Setter Property="Color" Value="{StaticResource kleinBlue}"/>
+            </Style>
+            <Style x:Key="ciWhiteCenterSeparator" TargetType="BoxView">
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="HeightRequest" Value="2"/>
+                <Setter Property="Margin" Value="20,40,20,10"/>
+                <Setter Property="Color" Value="White"/>
+            </Style>
+
+            <!-- Frames Style -->
+            <Style x:Key="ciFrameStandardRounded" TargetType="Frame">
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource LightBackgroundColor}"/>
+                <Setter Property="Padding" Value="15"/>
+                <Setter Property="Margin" Value="10,0,10,10"/>
+                <Setter Property="CornerRadius" Value="15"/>
+            </Style>
+            <Style x:Key="DashboardViewMoreFrame" TargetType="Frame">
+                <Setter Property="Padding" Value="10,10" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="BackgroundColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+                <Setter Property="Margin" Value="0,0,10,0"/>
+            </Style>
+            <Style x:Key="TagFrame" TargetType="Frame">
+                <Setter Property="Padding" Value="10,5,10,5" />
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}" />
+                <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+                <Setter Property="Margin" Value="0"/>
+            </Style>
+            <Style x:Key="LinkFrame" TargetType="Frame">
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}" />
+                <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+            </Style>
+            
+            <!-- DashBoard -->
+            <Style x:Key="NoFavouriteServicesLabel"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center" />
+            </Style>
+            <Style x:Key="serviceButtonFrame" TargetType="Frame">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="150" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="HasShadow"  Value="True" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="White" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="serviceButton" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="150" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="{StaticResource Isidora}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                                Value="White" />
+                                    <Setter Property="Scale"
+                                                Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="LightGray" />
+                                    <Setter Property="Scale"
+                                            Value="0.9" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            
+
+            <!-- outil fond OnDijon -->
+            <Style x:Key="imageBackground" TargetType="Image">
+                <Setter Property="Source" Value="{extensions:ImageResource OnDijon.Assets.backgrounds.BackgroundOn.jpg}"/>
+                <Setter Property="Aspect" Value="AspectFill"/>
+                <Setter Property="RelativeLayout.WidthConstraint" Value="{ConstraintExpression Type=RelativeToParent, Property=Width}"/>
+                <Setter Property="RelativeLayout.HeightConstraint" Value="{ConstraintExpression Type=RelativeToParent, Property=Height}"/>
+            </Style>
+            <Style x:Key="stackLayoutForBackground" TargetType="StackLayout">
+                <Setter Property="RelativeLayout.WidthConstraint" Value="{ConstraintExpression Type=RelativeToParent, Property=Width}"/>
+                <Setter Property="RelativeLayout.HeightConstraint" Value="{ConstraintExpression Type=RelativeToParent, Property=Height}"/>
+            </Style>
+            <Style x:Key="scrollViewForBackground" TargetType="ScrollView">
+                <Setter Property="RelativeLayout.WidthConstraint" Value="{ConstraintExpression Type=RelativeToParent, Property=Width}"/>
+                <Setter Property="RelativeLayout.HeightConstraint" Value="{ConstraintExpression Type=RelativeToParent, Property=Height}"/>
+            </Style>
+            
+            <!-- Form -->
+            <Style x:Key="DetailLabelForm"
+               TargetType="Label">
+                <Setter Property="FontAttributes"
+                    Value="Italic" />
+                <Setter Property="FontSize"
+                    Value="Small" />
+            </Style>
+            <Style x:Key="DefaultLabelForm"
+               TargetType="Label">
+                <Setter Property="FontAttributes"
+                    Value="Bold" />
+                <Setter Property="FontSize"
+                    Value="Small" />
+                <Setter Property="TextColor"
+                    Value="{StaticResource MediumGrayTextColor}" />
+            </Style>
+            <Style x:Key="LayoutTitleForm"
+               TargetType="Label">
+                <Setter Property="FontSize"
+                    Value="24" />
+                <Setter Property="FontAttributes"
+                    Value="Bold" />
+                <Setter Property="TextColor"
+                    Value="{StaticResource kleinBlue}" />
+                <Setter Property="Margin"
+                    Value="10,0,10,0" />
+            </Style>
+            <Style x:Key="LabelErrorForm"
+               TargetType="Label">
+                <Setter Property="TextColor"
+                    Value="{StaticResource ErrorColor}" />
+                <Setter Property="Margin"
+                    Value="10,0,10,0" />
+                <Setter Property="IsVisible"
+                    Value="False" />
+            </Style>
+            <Style x:Key="DetailLabelGray"
+                   TargetType="Label">
+                <Setter Property="FontAttributes"
+                    Value="Italic" />
+                <Setter Property="FontSize"
+                    Value="11" />
+                <Setter Property="HorizontalTextAlignment"
+                    Value="Center" />
+                <Setter Property="TextColor"
+                    Value="Gray" />
+            </Style>
+            <!-- Carte -->
+            <Style x:Key="ImageHome"
+                   TargetType="Image">
+                <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Home}, Color={StaticResource kleinBlue}, Size=30}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="ImageWork"
+                   TargetType="Image">
+                <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Briefcase}, Color={StaticResource kleinBlue}, Size=30}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="ImageHuman"
+                   TargetType="Image">
+                <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Human}, Color={StaticResource kleinBlue}, Size=30}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="ImagePosition"
+                   TargetType="Image">
+                <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.CircleSlice8}, Color={StaticResource kleinBlue}, Size=30}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <!-- rating -->
+            <Style x:Key="StarIcon"
+                   TargetType="Image">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="True">
+                                <VisualState.Setters>
+                                    <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Star}, Color={StaticResource kleinBlue}, Size=30}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="False">
+                                <VisualState.Setters>
+                                    <Setter Property="Source" Value="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.StarOutline}, Color={StaticResource kleinBlue}, Size=30}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="NPS"
+                   TargetType="Frame">
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Padding" Value="2" />
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="True">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="{StaticResource kleinBlue}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="False">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="LightGray" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="NPSLabel"
+                   TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="True">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="White" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="False">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="{StaticResource MediumGrayTextColor}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <valueConverters:NotEmptyStringToBoolConverter x:Key="NotEmptyStringToBoolConverter" />
+            <valueConverters:NotEmptyCollectionToBoolValueConverter x:Key="NotEmptyCollectionToBoolValueConverter" />
+            <valueConverters:AllTrueMultiConverter x:Key="AllTrueMultiConverter" />
+            
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+</prism:PrismApplication>

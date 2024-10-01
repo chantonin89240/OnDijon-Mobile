@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms" 
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            x:Class="OnDijon.Modules.UsefulContact.Pages.ServiceDetailPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            ios:Page.UseSafeArea="true"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions" 
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <Style x:Key="ciGrid" TargetType="Grid">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            </Style>
+            <Style x:Key="ciFrameLabel" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+            <Style x:Key="ciLabelBadge" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="ciLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource kleinBlue}"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="ciFrameContent" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+            <Style x:Key="ciContent" TargetType="Label">
+                <Setter Property="Margin" Value="30,0,0,0"/>
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <ScrollView  Style="{StaticResource scrollViewForBackground}">
+                <StackLayout>
+                    <common:NavigationBarView Title="{Binding Service.Titre}"
+                                      HasBackButton="True"
+                                      BackButtonCommand ="{Binding CloseCommand}" BackgroundColor="Transparent"/>
+                    <StackLayout Spacing="10" Padding="10">
+                        <common:RoundedFrame CornerRadius="30" Padding="10">
+                            <StackLayout>
+                                <StackLayout x:Name="ContactImageLayout">
+                                    <Image Source="{Binding Service.Logo}" HeightRequest="150"/>
+                                </StackLayout>
+                                <StackLayout x:Name="ContactInfoLayout"
+                                         Margin="10,10">
+
+                                    <StackLayout IsVisible="{Binding Service.Description, Converter={StaticResource stringIsNotNullOrEmptyConverter}}" Margin="0,0,0,10">
+                                        <Label Text="{Binding Service.Description}"></Label>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding Service.PhoneNumber, Converter={StaticResource stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="Téléphone" Style="{StaticResource ciLabel}"/>
+                                        <Label Text="{Binding Service.PhoneNumber}" Style="{StaticResource ciContent}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding PhoneCommand}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                                    <Image Source="{extensions:ImageResource OnDijon.Assets.App-store.png}"
+                                           Margin="10"
+                                           IsVisible="{Binding HasAppStore}">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding AppStoreCommand}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image Source="{extensions:ImageResource OnDijon.Assets.Google-play.png}"
+                                           Margin="10"
+                                           IsVisible="{Binding HasGooglePlay}">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding GooglePlayCommand}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Frame Style="{StaticResource LinkFrame}" IsVisible="{Binding Service.UrlSite, Converter={StaticResource stringIsNotNullOrEmptyConverter}}" 
+                                           Margin="10" CornerRadius="5">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding UrlSiteCommand}"/>
+                                        </Frame.GestureRecognizers>
+                                        <Label Text="Voir le site ➞" TextColor="White"/>
+                                    </Frame>
+                                </StackLayout>
+                            </StackLayout>
+                        </common:RoundedFrame>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BaseView>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="OnDijon.Common.Views.EditorView"
+       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+       BackgroundColor="White"
+       Padding="12"
+       CornerRadius="5"
+       BorderColor="{StaticResource BorderColor}"
+       HasShadow="False">
+    <Editor x:Name="Editor" 
+            Text="{Binding Text}"
+            Placeholder="{Binding Placeholder}"
+            MaxLength="{Binding MaxLength}"
+            HorizontalOptions="FillAndExpand"
+            TextColor="Black"
+            PlaceholderColor="{StaticResource PlaceholderColor}"
+            BackgroundColor="Transparent"
+            FontSize="16"
+            FontFamily="{StaticResource Isidora}"
+            HeightRequest="124"
+            AutomationId="DescriptionText"
+            Keyboard="Text" />
+</Frame>

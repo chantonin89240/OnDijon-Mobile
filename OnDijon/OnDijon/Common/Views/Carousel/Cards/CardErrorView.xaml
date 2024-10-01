@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:CardViewBase xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:common="clr-namespace:OnDijon.Common.Views"
+                     x:Class="OnDijon.Common.Views.CardErrorView">
+
+    <common:RoundedFrame Style="{StaticResource CarouselCard}"
+                         Padding="20">
+        <StackLayout Orientation="Vertical"
+                     VerticalOptions="FillAndExpand">
+
+            <Label Text="{Binding Title}"
+                   FontSize="20"
+                   VerticalOptions="CenterAndExpand"
+                   TextColor="{StaticResource kleinBlue}"
+                   FontAttributes="Bold" />
+
+            <!-- Button -->
+            <Button Text="{Binding Actions[0].Title}"
+                    VerticalOptions="EndAndExpand"
+                    Style="{StaticResource ButtonConfirm}"
+                    Clicked="Button_Clicked"
+                    CommandParameter="{Binding Actions[0]}" />
+
+        </StackLayout>
+    </common:RoundedFrame>
+</common:CardViewBase>

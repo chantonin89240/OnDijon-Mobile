@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="OnDijon.Modules.Diary.Pages.EventDetailsPage"
+                xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                ios:Page.UseSafeArea="true"
+                xmlns:common="clr-namespace:OnDijon.Common.Views"
+                xmlns:eventDetailDiaryViewModel="clr-namespace:OnDijon.Modules.Diary.ViewModels"
+                x:TypeArguments="eventDetailDiaryViewModel:EventDetailDiaryViewModel" 
+                xmlns:local="clr-namespace:OnDijon.Modules.Diary.Pages"
+                xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                xmlns:tools="clr-namespace:OnDijon.Common.Utils.Converters" 
+                NavigationPage.HasBackButton="False"
+                NavigationPage.HasNavigationBar="False"
+                 xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+    <common:BasePage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <tools:ImageOrNotHeightConverter x:Key="imageOrNotHeightConverter"></tools:ImageOrNotHeightConverter>
+        </ResourceDictionary>
+    </common:BasePage.Resources>
+    <common:BasePage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+
+                <AbsoluteLayout IsVisible="{Binding ContactInformationVisible}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <ScrollView AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                        <StackLayout Padding="0">
+                            <AbsoluteLayout HeightRequest="{Binding EventDetail.Image, Converter={StaticResource imageOrNotHeightConverter}}">
+                                <ffimageloading:CachedImage Source="{Binding EventDetail.Image}"
+                                            AbsoluteLayout.LayoutFlags="All"
+                                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1.2"
+                                            Aspect="AspectFill"/>
+                                <common:NavigationBarView HasBackButton="False"
+                                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                                            AbsoluteLayout.LayoutBounds="1,0"
+                                            BackgroundColor="Transparent"
+                                            IsRightButtonVisibile="True"
+                                            RightButtonCommand="{Binding CloseCommand}"/>
+                            </AbsoluteLayout>
+                            <common:RoundedFrame Style="{StaticResource ciFrameStandardRounded}" Margin="0,10" CornerRadius="0,0,15,15">
+                                <StackLayout>
+                                    <Label Text="{Binding EventDetail.Title}" Style="{StaticResource ciFrameTitle}" TextType="Html" Margin="10,0"></Label>
+                                    <FlexLayout BindableLayout.ItemsSource="{Binding EventDetail.Tags}" Direction="Row" Wrap="Wrap" Margin="10,0">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout Margin="0,0,0,5">
+                                                    <Frame Style="{StaticResource TagFrame}" HorizontalOptions="Start" Margin="0,0,5,0">
+                                                        <Frame.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding LaunchSearchFromOtherPageCommand, Source={RelativeSource AncestorType={x:Type eventDetailDiaryViewModel:EventDetailDiaryViewModel}}}"
+                                                                          CommandParameter="{Binding}"/>
+                                                        </Frame.GestureRecognizers>
+                                                        <Label TextColor="White" FontSize="Default">
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span Text="#"></Span>
+                                                                    <Span Text="{Binding}"></Span>
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+                                                        </Label>
+                                                    </Frame>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </FlexLayout>
+
+                                </StackLayout>
+                            </common:RoundedFrame>
+                            <Frame Style="{StaticResource ciFrameStandardRounded}">
+                                <StackLayout>
+                                    <Grid IsVisible="{Binding EventDetail.DateString, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}" ColumnDefinitions="40,*">
+                                        <Label Text="Date :" Style="{StaticResource ciLabel}" HorizontalOptions="Start" Grid.Column="0"  TextType="Html"></Label>
+                                        <Label Text="{Binding EventDetail.DateString}" HorizontalOptions="Start"  Grid.Column="1"  TextType="Html"></Label>
+                                    </Grid>
+                                    <Grid IsVisible="{Binding EventDetail.PricingInfo, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}" ColumnDefinitions="40,*">
+                                        <Label Text="Tarif :" Style="{StaticResource ciLabel}" HorizontalOptions="Start" Grid.Column="0"  TextType="Html"></Label>
+                                        <Label Text="{Binding EventDetail.PricingInfo}" HorizontalOptions="Start"  Grid.Column="1"  TextType="Html"></Label>
+                                    </Grid>
+                                    <StackLayout IsVisible="{Binding EventDetail.Summary, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="{Binding EventDetail.Summary}" HorizontalOptions="Start"></Label>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding EventDetail.District, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}" Orientation="Horizontal">
+                                        <Label Text="Commune/quartier :" Style="{StaticResource ciLabel}" HorizontalOptions="Start"></Label>
+                                        <Label Text="{Binding EventDetail.District}" HorizontalOptions="Start"></Label>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding EventDetail.Description, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="Description :" Style="{StaticResource ciLabel}" HorizontalOptions="Start"></Label>
+                                        <Label Text="{Binding EventDetail.Description}" HorizontalOptions="Start" TextType="Html"></Label>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding EventDetail.Address, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="Adresse :" Style="{StaticResource ciLabel}" HorizontalOptions="Start"></Label>
+                                        <Label Text="{Binding EventDetail.Location}" HorizontalOptions="Start"  TextType="Html"></Label>
+                                        <Label Text="{Binding EventDetail.Address}" HorizontalOptions="Start"></Label>
+                                        <StackLayout  Orientation="Horizontal">
+                                            <Label Text="{Binding EventDetail.PostalCode}" HorizontalOptions="Start"></Label>
+                                            <Label Text="{Binding EventDetail.City}" HorizontalOptions="Start"></Label>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="{Binding EventDetail.DiaryName, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}">
+                                        <Label Text="{Binding EventDetail.DiaryName}" HorizontalOptions="Start"></Label>
+                                    </StackLayout>
+                                    <Frame Style="{StaticResource LinkFrame}" IsVisible="{Binding EventDetail.InfoLink, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}" HorizontalOptions="End">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding LinkCommand}"/>
+                                        </Frame.GestureRecognizers>
+                                        <Label Text="Voir le site ➞" TextColor="White"/>
+                                    </Frame>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </ScrollView>
+                </AbsoluteLayout>
+            </StackLayout>
+        </RelativeLayout>
+    </common:BasePage.Content>
+</common:BasePage>

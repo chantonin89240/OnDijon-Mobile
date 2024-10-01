@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:BaseView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OnDijon.Modules.UsefulContact.Pages.ServiceListPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+                xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.UsefulContact.ViewsModels">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <Style x:Key="rtGrid" TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="10" />
+                <Setter Property="RowSpacing" Value="10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <ScrollView  VerticalOptions="FillAndExpand">
+                    <StackLayout>
+                    <common:NavigationBarView Title="Les services utiles" BackgroundColor="Transparent"/>
+                    <StackLayout x:Name="ServicesList"
+                                  BindableLayout.ItemsSource="{Binding ServiceList}">
+
+                        <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Style="{StaticResource ciFrameStandardRounded}" Padding="10" >
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectServiceCommand,Source={RelativeSource AncestorType={x:Type viewModel:ServiceListViewModel}}}" CommandParameter="{Binding}"></TapGestureRecognizer>
+                                        </Frame.GestureRecognizers>
+                                        <StackLayout>
+                                            <Label Text="{Binding Titre}"
+                                                           FontSize="18"
+                                                           FontAttributes="Bold"
+                                                           HorizontalOptions="StartAndExpand"/>
+
+                                            <Label Text="{Binding ShortDescription}"
+                                                   FontSize="16"
+                                                   Margin="0,5,0,18"
+                                                       IsVisible="{Binding ShortDescription, Converter={StaticResource Key=stringIsNotNullOrEmptyConverter}}"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BaseView>

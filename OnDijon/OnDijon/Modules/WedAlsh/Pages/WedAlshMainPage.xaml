@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.WedAlsh.Pages.WedAlshMainPage"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.WedAlsh.ViewModels"
+             xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:tools="clr-namespace:OnDijon.Common.Utils.Converters"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions" 
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             x:TypeArguments="viewModel:WedAlshViewModel"
+             xmlns:views="clr-namespace:OnDijon.Modules.WedAlsh.Views"
+             >
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="negateBooleanConverter"></converters:NegateBooleanConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid ColumnDefinitions="50,*,*,50" RowDefinitions="*,50,20,70">
+            <Image Style="{StaticResource imageBackground}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="4" />
+            <ScrollView Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="4" Padding="0,0,0,70">
+                <Grid RowDefinitions="76,150,30, auto">
+                    <common:NavigationBarView Grid.Row="0" Title="Mercredis" BackgroundColor="Transparent"/>
+                    <CarouselView Grid.Row="1" x:Name="CardsCarousel" 
+                                  PositionChangedCommand="{Binding CarouselChangeCommand}"
+                                  PositionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}"
+                                  ItemsSource="{Binding Childs}" 
+                                  PeekAreaInsets="24" 
+                                  Loop="False" 
+                                  Margin="0,5,0,5" 
+                                  IsSwipeEnabled="{Binding IsModify, Converter={StaticResource negateBooleanConverter}}">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="5,0">
+                                    <common:RoundedFrame HeightRequest="150"
+                                             CornerRadius="15" 
+                                             VerticalOptions="FillAndExpand"
+                                             Padding="0">
+                                        <Grid ColumnDefinitions="*,70" RowDefinitions="120,30">
+                                            <common:RoundedFrame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{Binding Color}" CornerRadius="15,15,0,0">
+                                            </common:RoundedFrame>
+                                            <ff:SvgCachedImage Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                                                    x:Name="Image"
+                                                    Source="{Binding ImageSource}"
+                                                    Scale="1"/>
+                                            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1"
+                                                   Margin="20"
+                                                   Text="{Binding Title}"
+                                                   FontSize="20"
+                                                   FontAttributes="Bold"
+                                                   TextColor="{StaticResource kleinBlue}"/>
+                                            <Frame  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2"
+                                                   HorizontalOptions="FillAndExpand" VerticalOptions="End" Margin="20,0,20,25" Padding="-1" CornerRadius="15"
+                                                IsVisible="{Binding MultipleSelectionRegistrationIsVisible,Source={RelativeSource AncestorType={x:Type viewModel:WedAlshViewModel}}}">
+                                                <common:FormPickerView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="2"
+                                                                   Title="Choix du centre"
+                                                                   ItemsSource="{Binding RegistrationsOfChildSelected,Source={RelativeSource AncestorType={x:Type viewModel:WedAlshViewModel}}}"
+                                                                   SelectedItem="{Binding RegistrationSelected,Source={RelativeSource AncestorType={x:Type viewModel:WedAlshViewModel}}}"
+                                                                   ItemDisplayBinding="{Binding Name}"
+                                                                   IsEnabled="{Binding IsModify, Converter={StaticResource negateBooleanConverter}}"/>
+                                            </Frame>
+                                            <Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2"
+                                                   HorizontalOptions="FillAndExpand" VerticalOptions="End" Margin="20,0,20,25" Padding="12" CornerRadius="15"
+                                                   IsVisible="{Binding MultipleSelectionRegistrationIsVisible, Source={RelativeSource AncestorType={x:Type viewModel:WedAlshViewModel}}, Converter={StaticResource negateBooleanConverter}}">
+                                                <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="2"
+                                                       Text="{Binding RegistrationSelected.Name,Source={RelativeSource AncestorType={x:Type viewModel:WedAlshViewModel}}}"/>
+                                            </Frame>
+                                        </Grid>
+                                    </common:RoundedFrame>
+                                </Grid>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <Grid Grid.Row="2" ColumnDefinitions="30,*,18,30,18" RowDefinitions="30" Margin="20,0">
+                        <ImageButton Grid.Column="0" 
+                                        Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.HelpCircleOutline}, Color=White,Size=30}"
+                                        BackgroundColor="Transparent" 
+                                        Command="{Binding OpenHelp}"/>
+                        <ff:SvgCachedImage Grid.Column="2"
+                                            x:Name="LeftArrow" 
+                                            Source="{extensions:ImageResource OnDijon.Assets.arrow-left.svg}"
+                                            IsVisible="{Binding IsLeftArrowVisible}">
+                        </ff:SvgCachedImage>
+
+                        <Label  Grid.Column="3"
+                                        x:Name="PageCounter" 
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"
+                                        FontFamily="{StaticResource Isidora}"
+                                        Text="{Binding PageCounter}"
+                                        FontSize="12"
+                                        TextColor="White" />
+                        <ff:SvgCachedImage  Grid.Column="4"
+                                            x:Name="RightArrow" 
+                                            Source="{extensions:ImageResource OnDijon.Assets.arrow-right.svg}"
+                                            IsVisible="{Binding IsRightArrowVisible}">
+                        </ff:SvgCachedImage>
+                    </Grid>
+                    <common:LoadingView Grid.Row="3" IsLoading="{Binding IsLoading}">
+                        <common:RoundedFrame Padding="5"
+                                             Margin="10,0,10,10"
+                                            HorizontalOptions="FillAndExpand"
+                                            CornerRadius="30"
+                                            BackgroundColor="{StaticResource LightBackgroundColor}" >
+                            <StackLayout BindableLayout.ItemsSource="{Binding RegistrationSelected.Months}" Margin="10" Spacing="20">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame HasShadow="False" 
+                                            BackgroundColor="Transparent" 
+                                            BorderColor="{StaticResource kleinBlue}" 
+                                            Padding="0" 
+                                            CornerRadius="25" 
+                                            IsClippedToBounds="True">
+                                            <Grid RowDefinitions="45,auto" ColumnDefinitions="*">
+                                                <Label Style="{StaticResource ciLittleTitle}" 
+                                                Text="{Binding Name}"  
+                                                Padding="0,10" 
+                                                HorizontalOptions="FillAndExpand" 
+                                                HorizontalTextAlignment="Center" 
+                                                BackgroundColor="{StaticResource kleinBlue}" 
+                                                TextColor="White"
+                                                Grid.Column="0" Grid.Row="0"/>
+                                                <StackLayout BindableLayout.ItemsSource="{Binding Days}" Margin="5,0"
+                                                Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand">
+
+                                                    <BindableLayout.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid RowDefinitions="20,30" 
+                                                            ColumnDefinitions="2*,70,3*,70" 
+                                                            Margin="0,5,0,10">
+                                                                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
+                                                                       HorizontalOptions="Center"
+                                                                       Style="{StaticResource ciLittleTitle}"
+                                                                       FontSize="15"
+                                                                       Text="{Binding Name}"></Label>
+                                                                <Label  Grid.Row="1" Grid.Column="0" 
+                                                                        VerticalTextAlignment="Center"
+                                                                        HorizontalTextAlignment="End" 
+                                                                        FontSize="Small"
+                                                                       Text="{Binding NoonSchedule.Source.ScheduleType}">
+                                                                </Label>
+                                                                <common:SwitchView Grid.Row="1" Grid.Column="1" 
+                                                                        IsSelected="{Binding NoonSchedule.IsCheck}" 
+                                                                        IsLocked="{Binding NoonSchedule.IsOpen, Converter={StaticResource negateBooleanConverter}}" 
+                                                                        ShowLabel="False"
+                                                                        HorizontalOptions="Start" 
+                                                                        VerticalOptions="Center"
+                                                                        IsLockedLabel="{Binding NoonSchedule.ClosingReason}"/>
+                                                                <Label  Grid.Row="1" Grid.Column="2" 
+                                                                        VerticalTextAlignment="Center"
+                                                                        HorizontalTextAlignment="End" 
+                                                                        FontSize="Small"
+                                                                       Text="{Binding AfternoonSchedule.Source.ScheduleType}">
+                                                                </Label>
+                                                                <common:SwitchView Grid.Row="1" Grid.Column="3" 
+                                                                        IsSelected="{Binding AfternoonSchedule.IsCheck}" 
+                                                                        IsLocked="{Binding AfternoonSchedule.IsOpen, Converter={StaticResource negateBooleanConverter}}" 
+                                                                        ShowLabel="False"
+                                                                        HorizontalOptions="Start" 
+                                                                        VerticalOptions="Center"
+                                                                        IsLockedLabel="{Binding AfternoonSchedule.ClosingReason}"/>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </BindableLayout.ItemTemplate>
+                                                </StackLayout>
+                                            </Grid>
+                                        </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </common:RoundedFrame>
+                    </common:LoadingView>
+                </Grid>
+            </ScrollView>
+            <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                Style="{StaticResource ButtonConfirm}"
+                Text="Annuler"
+                Margin="10"
+                Command="{Binding Annulate, Source={RelativeSource AncestorType={x:Type viewModel:WedAlshViewModel}}}"
+                IsEnabled="{Binding IsModify}"></Button>
+            <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"
+                Style="{StaticResource ButtonConfirm}"
+                Text="Valider"
+                Margin="10"
+                Command="{Binding Validate, Source={RelativeSource AncestorType={x:Type viewModel:WedAlshViewModel}}}"
+                IsEnabled="{Binding IsModify}"></Button>
+        </Grid>
+    </ContentPage.Content>
+</common:BasePage>

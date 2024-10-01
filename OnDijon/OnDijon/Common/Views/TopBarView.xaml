@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+             x:Class="OnDijon.Common.Views.TopBarView">
+    <ContentView.Content>
+        <AbsoluteLayout 
+            BackgroundColor="{StaticResource kleinBlue}"
+            Padding="0,0,0,0">
+
+            <ImageButton x:Name="OpenMenuButton" 
+                         Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.DotsVertical}, Color=White, Size=28}"
+                         Command="{Binding OpenMenuCommand}"
+                         Padding="10,10,10,10"
+                         BackgroundColor="Transparent"
+                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                         AbsoluteLayout.LayoutBounds="0,0.5"
+                         Aspect="AspectFit"/>
+
+            <ImageButton x:Name="CloseButton"
+                         Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Close}, Color=White, Size=24}"
+                         Command="{Binding CloseMenuCommand}"
+                         Padding="10,10,10,10"
+                         BackgroundColor="Transparent"
+                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                         AbsoluteLayout.LayoutBounds="0,0.5"
+                         Aspect="AspectFit" />
+
+            <ImageButton Source="{extensions:ImageResource OnDijon.Assets.Logo-white.png}"
+                         HeightRequest="55"
+                         Command="{Binding GoToDashboardCommand}"
+                         BackgroundColor="Transparent"
+                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                         AbsoluteLayout.LayoutBounds="0.5,0.5"/>
+
+
+            <AbsoluteLayout x:Name="NotificationContainer"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="1,0.5">
+                <ImageButton Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Bell}, Color=White, Size=28}"
+                             Aspect="AspectFit"
+                             Padding="10,10,10,10"
+                             Command="{Binding OpenNotificationCommand}"
+                             BackgroundColor="Transparent"
+                             Margin="0,6,3,0"/>
+
+                <Frame
+                     AbsoluteLayout.LayoutFlags="PositionProportional"
+                     AbsoluteLayout.LayoutBounds="1,0"
+                     BackgroundColor="{StaticResource NotificationBackground}"
+                     IsVisible="{Binding NotificationVisibility}"
+                     CornerRadius="7.5"
+                     HeightRequest="15"
+                     WidthRequest="15"
+                     Margin="0,10,10,0"
+                     Padding="0">
+                    <Label Text="{Binding NotificationCount}"
+                            Style="{StaticResource NotificationText}"
+                            FontSize="11"/>
+                </Frame>
+            </AbsoluteLayout>
+        </AbsoluteLayout>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="OnDijon.Common.Views.DatePickerPopupView"
+                 CloseWhenBackgroundIsClicked="True">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily"
+                        Value="{StaticResource Isidora}" />
+                <Setter Property="FontSize"
+                        Value="16" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="TextColor"
+                        Value="Black" />
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Frame VerticalOptions="Center"
+           HorizontalOptions="FillAndExpand"
+           Margin="12,0"
+           BackgroundColor="White"
+           CornerRadius="20"
+           Padding="24">
+
+        <StackLayout Spacing="20">
+            <Grid RowSpacing="0"
+                  ColumnSpacing="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- day -->
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Jour" />
+
+                <common:FormPickerView x:Name="DayPicker"
+                                       Grid.Row="1"
+                                       Grid.Column="0"
+                                       Padding="0"
+                                       SelectedIndexChanged="DayChanged" />
+
+                <!-- month -->
+                <Label Grid.Row="0"
+                       Grid.Column="1"
+                       Text="Mois" />
+
+                <common:FormPickerView x:Name="MonthPicker"
+                                       Grid.Row="1"
+                                       Grid.Column="1"
+                                       Padding="0"
+                                       SelectedIndexChanged="MonthChanged" />
+
+                <!-- year -->
+                <Label Grid.Row="0"
+                       Grid.Column="2"
+                       Text="Année" />
+
+                <common:FormPickerView x:Name="YearPicker"
+                                       Grid.Row="1"
+                                       Grid.Column="2"
+                                       Padding="0"
+                                       SelectedIndexChanged="YearChanged" />
+            </Grid>
+
+            <Button Text="OK"
+                    Clicked="OnConfirm"
+                    Padding="0"
+                    Style="{StaticResource ButtonConfirm}" />
+
+            <Button Text="Retour"
+                    Clicked="OnClose"
+                    Padding="0"
+                    Style="{StaticResource ButtonOutlined}" />
+
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

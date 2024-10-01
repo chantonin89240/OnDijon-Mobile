@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+            xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+            xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+            mc:Ignorable="d"
+            x:Class="OnDijon.Common.Views.StarsNotationView"
+            VerticalOptions="Center"
+            ColumnDefinitions="*,2*,2*,2*,2*,2*,2*,2*,2*,2*,2*,2*,*"
+            RowDefinitions="24,*">
+    <Grid.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+        </ResourceDictionary>
+    </Grid.Resources>
+    <Frame x:Name="Star0" Grid.Column="1" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="0" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star1" Grid.Column="2" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="1" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star2" Grid.Column="3" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="2" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star3" Grid.Column="4" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="3" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star4" Grid.Column="5" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="4" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star5" Grid.Column="6" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="5" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star6" Grid.Column="7" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="6" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star7" Grid.Column="8" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="7" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star8" Grid.Column="9" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="8" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star9" Grid.Column="10" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="9" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Frame x:Name="Star10" Grid.Column="11" Grid.Row="0" Style="{StaticResource NPS}">
+        <Label Text="10" Style="{StaticResource NPSLabel}"/>
+    </Frame>
+    <Label Text="Pas du tout" 
+           TextColor="{StaticResource MediumGrayTextColor}" 
+           Grid.Row="1" 
+           Grid.Column="1" 
+           Grid.ColumnSpan="5" 
+           HorizontalOptions="Start" 
+           FontSize="10"/>
+    <Label Text="Tout à fait" 
+           TextColor="{StaticResource MediumGrayTextColor}" 
+           Grid.Row="1" 
+           Grid.Column="7" 
+           Grid.ColumnSpan="5" 
+           HorizontalOptions="End" 
+           FontSize="10"/>
+</Grid>

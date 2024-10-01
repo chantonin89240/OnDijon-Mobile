@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="OnDijon.Common.Views.AddressPickerView"
+                 CloseWhenBackgroundIsClicked="True">
+
+        <ContentPage.Resources>
+            <ResourceDictionary>
+
+                <Style TargetType="Frame">
+                    <Setter Property="RelativeLayout.WidthConstraint" Value="{ConstraintExpression Type=RelativeToParent, Property=Width}"/>
+                </Style>
+            </ResourceDictionary>
+        </ContentPage.Resources>
+    <RelativeLayout HorizontalOptions="FillAndExpand" Margin="0,20">
+        <Frame 
+           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+           Margin="12,20"
+           BackgroundColor="White"
+           CornerRadius="20"
+           Padding="20,0" HeightRequest="280">
+            <RelativeLayout HorizontalOptions="FillAndExpand" Margin="0,20">
+                <StackLayout  RelativeLayout.YConstraint="0"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}">
+                    <Label Text="Ville :" Style="{StaticResource ciLabel}"></Label>
+                    <Frame  Margin="0,0" BackgroundColor="{StaticResource LightBackgroundColor}" Padding="0">
+                        <StackLayout Orientation="Horizontal" Spacing="40" >
+                            <Entry x:Name="SearchCityEntry"  TextChanged="SearchCityEntry_TextChanged" Style="{StaticResource SearchBarEntry}"/>
+                            <ImageButton Style="{StaticResource SearchBarButton}"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <StackLayout  RelativeLayout.YConstraint="90" x:Name="SearchEntryLayout" IsVisible="true"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}">
+                    <Label Text="Adresse :" Style="{StaticResource ciLabel}"></Label>
+                    <Frame Margin="0,0" BackgroundColor="{StaticResource LightBackgroundColor}" Padding="0">
+                        <StackLayout Orientation="Horizontal" Spacing="60" >
+                            <Entry x:Name="SearchEntry" TextChanged="SearchTextChanged" AutomationId="SearchInput" Style="{StaticResource SearchBarEntry}"/>
+                            <ImageButton x:Name="ImageButton" Style="{StaticResource SearchBarButton}"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+
+
+                <StackLayout 
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Constant=-40}">
+                    <StackLayout Orientation="Horizontal" Spacing="40" HorizontalOptions="Center">
+                        <Button Text="OK" Clicked="OnConfirm" Padding="0" Style="{StaticResource ButtonConfirm}" />
+                        <Button Text="Retour" Clicked="OnClose" Padding="0" Style="{StaticResource ButtonOutlined}" />
+                    </StackLayout>
+                </StackLayout>
+
+
+               
+            </RelativeLayout>
+        </Frame>
+        <Frame x:Name="SearchCity" Margin="32,0" BackgroundColor="{StaticResource LightBackgroundColor}" Padding="0" IsVisible="false"
+                    RelativeLayout.YConstraint="113"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}" HeightRequest="200">
+            <ListView HeightRequest="200" BackgroundColor="{StaticResource LightBackgroundColor}"  ItemSelected="SearchCityList_ItemSelected"  x:Name="SearchCityList" SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding ConcatName}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+
+        <Frame x:Name="SearchAddress" Margin="32,0" BackgroundColor="{StaticResource LightBackgroundColor}" Padding="0" IsVisible="false"
+                    RelativeLayout.YConstraint="203"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}" HeightRequest="200" >
+            <ListView HeightRequest="200"
+                                      BackgroundColor="{StaticResource LightBackgroundColor}"
+                                    ItemSelected="SearchList_ItemSelected"
+                            x:Name="SearchList"
+                                      SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding FullAddress}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+    </RelativeLayout>
+</pages:PopupPage>

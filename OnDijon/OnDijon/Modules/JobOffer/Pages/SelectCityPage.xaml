@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.JobOffer.Pages.SelectCityPage" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+            ios:Page.UseSafeArea="true"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+            NavigationPage.HasBackButton="False"
+            NavigationPage.HasNavigationBar="False"
+            xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+            xmlns:viewModel="clr-namespace:OnDijon.Modules.JobOffer.ViewModels"
+            xmlns:local="clr-namespace:OnDijon.Common.Utils"
+            xmlns:customView="clr-namespace:OnDijon.Modules.JobOffer.Views"
+            x:TypeArguments="viewModel:SelectCityViewModel">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringIsNotNullOrEmptyConverter x:Key="stringIsNotNullOrEmptyConverter"></converters:StringIsNotNullOrEmptyConverter>
+            <converters:IsNullConverter x:Key="IsNullConverter"></converters:IsNullConverter>
+            <converters:RadioButtonBoolToStringConverter x:Key="radioButtonConverter"></converters:RadioButtonBoolToStringConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <common:LoadingView IsLoading="{Binding IsLoading}">
+            <Grid ColumnDefinitions="*" RowDefinitions="76,*" >
+                <Image Style="{StaticResource imageBackground}" Grid.Column="0" Grid.Row="0"  Grid.RowSpan="2"/>
+                <common:NavigationBarView Title="Offres d'emploi" BackgroundColor="Transparent"  Grid.Column="0" Grid.Row="0" BackButtonCommand="{Binding CloseCommand}"/>
+                <ScrollView  Style="{StaticResource scrollViewForBackground}" Grid.Column="0" Grid.Row="1">
+                    <StackLayout Padding="8">
+                        <common:RoundedFrame CornerRadius="10" Padding="15">
+                            <StackLayout>
+                                <Label Text="Je choisis la ville où je souhaite candidater"/>
+                                <StackLayout Spacing="0" Margin="0" BindableLayout.ItemsSource="{Binding ListCitiesSpontaneousApplication}">
+
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout>
+                                                <Button Text="{Binding}" Style="{StaticResource ButtonSelect}"  Margin="10" Command="{Binding SelectCityCommand,Source={RelativeSource AncestorType={x:Type viewModel:SelectCityViewModel}}}" CommandParameter="{Binding}"/>
+                                            </StackLayout>
+                                        </DataTemplate>
+
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </StackLayout>
+
+                        </common:RoundedFrame>
+                    </StackLayout>
+
+                </ScrollView>
+            </Grid>
+        </common:LoadingView>
+    </ContentPage.Content>
+
+
+</common:BasePage>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<common:CardViewBase xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:common="clr-namespace:OnDijon.Common.Views"
+                     xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                     x:Class="OnDijon.Common.Views.CardStandartView"
+                     xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions">
+    <Frame Style="{StaticResource FrameCarouselCard}" IsClippedToBounds="True">
+        <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="120,25,45,40" RowSpacing="0">
+            <!-- Header -->
+            <Frame BackgroundColor="{Binding Color}" Padding="0"  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0">
+                <Grid ColumnDefinitions="*" RowDefinitions="*">
+                    <Image Source="{extensions:ImageResource OnDijon.Assets.news-standard-image.png}"></Image>
+                    <forms:CachedImage x:Name="Image" Aspect="AspectFill" Source="{Binding ImageUrl}"></forms:CachedImage>
+                </Grid>
+            </Frame>
+            <!--<Image Source="{extensions:ImageResource OnDijon.Assets.news-standard-image.png}" Aspect="AspectFill" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"></Image>
+            <forms:CachedImage x:Name="Image" Aspect="AspectFill" Source="{Binding ImageUrl}"  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"></forms:CachedImage>-->
+
+            <!-- Bottom -->
+            <common:BadgeView x:Name="NotificationCountBadge"
+                                    BackgroundColor="{StaticResource NotificationBackground}"
+                                    Text="{Binding NotificationCount}"
+                                    HorizontalOptions="Start"
+                                    IsVisible="False"
+                                    TextColor="White"
+                                    Margin="5,5,0,0"
+                                    Grid.Column="0" Grid.Row="1"/>
+            <Label Text="{Binding Title}"
+                            FontSize="18"
+                            MaxLines="1"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource kleinBlue}" 
+                                    Margin="0,5,0,0"
+                            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+            <Label Text="{Binding Description}"
+                    Margin="10,5,5,0"
+                    FontAttributes="Bold"
+                    MaxLines="3"
+                    LineBreakMode="TailTruncation"
+                    FontSize="Small" 
+                    TextColor="{StaticResource MediumGrayTextColor}"
+                    Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Grid.RowSpan="2"/>
+
+
+
+            <!-- Button -->
+            <Button Text="{Binding Actions[0].Title}"
+                    Style="{StaticResource ButtonConfirm}"
+                    Clicked="Button_Clicked"
+                    HeightRequest="30"
+                    Padding="15,0"
+                    Margin="0,0,5,5"
+                    FontAttributes="Bold"
+                    FontSize="Small" 
+                    CommandParameter="{Binding Actions[0]}" 
+                    Grid.Column="2" Grid.Row="3" />
+        </Grid>
+    </Frame>
+</common:CardViewBase>

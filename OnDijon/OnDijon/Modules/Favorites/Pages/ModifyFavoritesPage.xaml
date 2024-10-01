@@ -1,0 +1,47 @@
+﻿<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:common="clr-namespace:OnDijon.Common.Views"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 ios:Page.UseSafeArea="true"
+                 NavigationPage.HasBackButton="False"
+                 NavigationPage.HasNavigationBar="False"
+                 xmlns:converters="clr-namespace:OnDijon.Common.Utils.Converters"
+                 xmlns:viewModel="clr-namespace:OnDijon.Modules.Favorites.ViewModels"
+                 xmlns:Models="clr-namespace:OnDijon.Modules.Favorites.Entities.Models"
+                 x:DataType="viewModel:ModifyFavoritesViewModel"
+                 x:Class="OnDijon.Modules.Favorites.Pages.ModifyFavoritesPage"
+                 x:TypeArguments="viewModel:ModifyFavoritesViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IsNullConverter x:Key="isNullConverter"></converters:IsNullConverter>
+            <Style x:Key="dFrame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+
+            <Frame BackgroundColor="White" CornerRadius="15" Padding="20" Margin="20" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                <StackLayout>
+                    <Entry Text="{Binding Rue}" Placeholder="Rue" />
+                    <BoxView HeightRequest="10" />
+                    <Entry Text="{Binding CodePostal}" Placeholder="Code postal" />
+                    <BoxView HeightRequest="10" />
+                    <Entry Text="{Binding Ville}" Placeholder="Ville" />
+                </StackLayout>
+            </Frame>
+
+            <Button Text="Enregistrer" BackgroundColor="{StaticResource kleinBlue}" TextColor="White" FontSize="16" CornerRadius="10" Margin="0"
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.8}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-60}"
+                    Command="{Binding SaveCommand}" />
+
+        </RelativeLayout>
+    </ContentPage.Content>
+</common:BasePage>

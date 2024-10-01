@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Common.Views.NavigationBarView"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             Orientation="Horizontal"
+             HeightRequest="76" 
+             HorizontalOptions="FillAndExpand"
+             Padding="24,0,24,0">
+
+    <ImageButton x:Name="BackButton" 
+                 Style="{StaticResource NavBarBack}"
+                 Margin="-10,10,10,10"/>
+
+    <Label x:Name="TitleLabel" Style="{StaticResource ciMainTitle}" FontSize="25" VerticalTextAlignment="Center"/>
+
+
+    <ImageButton x:Name="ImageButton"
+                 HorizontalOptions="EndAndExpand"
+                 Style="{StaticResource RoundedButton}"
+                 Command="{Binding Command}"
+                 Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Close}, Color={StaticResource kleinBlue}, Size=24}">
+    </ImageButton>
+</StackLayout>

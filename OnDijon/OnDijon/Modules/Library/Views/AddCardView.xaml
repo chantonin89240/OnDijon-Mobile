@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Modules.Library.Views.AddCardView"
+            xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts">
+    <ContentView.Resources>
+        
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Frame CornerRadius="15"
+               Padding="15"
+               Margin="20,0">
+            <StackLayout
+                VerticalOptions="Center"  
+                HorizontalOptions="Center" >
+
+
+                <common:FormEntryView Text="{Binding Login}" Placeholder="Numéro de carte ou identifiant" Margin="0, 0, 0, 10"/>
+                <common:FormEntryView Text="{Binding Password}" Placeholder="Mot de passe"  Margin="0, 0, 0, 10" IsPassword="True"/>
+                <Button
+                        Text="Ajouter"
+                        Command="{Binding AssociateAccountCommand}"
+                                Style="{StaticResource ButtonConfirm}"
+                        WidthRequest="80"
+                        HeightRequest="50">
+                </Button>
+
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnDijon.Common.Views.DatePickerSideMoveView"
+             xmlns:ff="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions">
+    <FlexLayout JustifyContent="SpaceBetween" HeightRequest="50">
+        <Frame HasShadow="False"
+               WidthRequest="30"
+               BackgroundColor="Transparent" 
+               HorizontalOptions="FillAndExpand" 
+               Padding="10,0">
+            <ff:SvgCachedImage x:Name="DatePickerLeftButton"
+                               Source="{extensions:ImageResource OnDijon.Assets.SmallButtonLeft.svg}">
+            </ff:SvgCachedImage>
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Left_Tapped" />
+            </Frame.GestureRecognizers>
+        </Frame>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     FlexLayout.Grow="1" 
+                     Padding="20,0"
+                     Spacing="0"
+                     Margin="0">
+            <DatePicker x:Name="MainDatePicker"
+                        HorizontalOptions="Center"
+                        HeightRequest="50"
+                        Format="ddd dd MMM yyyy    " 
+                        PropertyChanged="MainDatePicker_PropertyChanged"
+                        TextColor="{StaticResource darkBlue}"
+                        FontAttributes="Bold"
+                        FontFamily="{StaticResource Isidora}"
+                        FontSize="18"
+                        BackgroundColor="Transparent">
+            </DatePicker>
+        </StackLayout>
+        <Frame HasShadow="False"
+               WidthRequest="30"
+               BackgroundColor="Transparent" 
+               HorizontalOptions="FillAndExpand" 
+               Padding="10,0">
+            <ff:SvgCachedImage x:Name="DatePickerRightButton"
+                               Source="{extensions:ImageResource OnDijon.Assets.SmallButtonRight.svg}">
+            </ff:SvgCachedImage>
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Right_Tapped" />
+            </Frame.GestureRecognizers>
+        </Frame>
+    </FlexLayout>
+</StackLayout>

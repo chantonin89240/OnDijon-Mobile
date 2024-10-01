@@ -1,0 +1,17 @@
+<Playlist Version="1.0">
+  <Add Test="OnDijon.UITest.CG.ChangePasswordDoneTests(Android).ChangePasswordDoneTest" />
+  <Add Test="OnDijon.UITest.CG.ChangePasswordNoRulesTests(Android).ChangePasswordNoRulesTest" />
+  <Add Test="OnDijon.UITest.CG.ChangePasswordPasswordsDifferentTests(Android).ChangePasswordPasswordsDifferentTest" />
+  <Add Test="OnDijon.UITest.CG.ChangePasswordWrongPasswordTests(Android).ChangePasswordWrongPasswordTest" />
+  <Add Test="OnDijon.UITest.CG.ChangeProfileInfoBackPhoneTests(Android).ChangeProfileInfoBackPhoneTest" />
+  <Add Test="OnDijon.UITest.CG.ChangeProfileInfoBackTests(Android).ChangeProfileInfoBackTest" />
+  <Add Test="OnDijon.UITest.CG.ChangeProfileInfoTests(Android).ChangeProfileInfoTest" />
+  <Add Test="OnDijon.UITest.CG.ChangeProfileInfoWrongFirstNameTests(Android).ChangeProfileInfoWrongFirstNameTest" />
+  <Add Test="OnDijon.UITest.CG.ChangeProfileInfoWrongMailTests(Android).ChangeProfileInfoWrongMailTest" />
+  <Add Test="OnDijon.UITest.CG.ChangeProfileInfoWrongNameTests(Android).ChangeProfileInfoWrongNameTest" />
+  <Add Test="OnDijon.UITest.CG.ChangeProfileInfoWrongPhoneTests(Android).ChangeProfileInfoWrongPhoneTest" />
+  <Add Test="OnDijon.UITest.CG.ProfileBackPhoneTests(Android).ProfileBackPhoneTest" />
+  <Add Test="OnDijon.UITest.CG.ProfileBackTests(Android).ProfileBackTest" />
+  <Add Test="OnDijon.UITest.CG.ProfileLogOutTests(Android).ProfileLogOutTest" />
+  <Add Test="OnDijon.UITest.CG.ProfileTests(Android).ProfileTest" />
+</Playlist>

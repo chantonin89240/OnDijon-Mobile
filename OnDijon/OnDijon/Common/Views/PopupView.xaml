@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 x:Class="OnDijon.Common.Views.PopupView"
+                 CloseWhenBackgroundIsClicked="True"
+                 HasKeyboardOffset="False">
+
+    <Frame VerticalOptions="Center"
+           HorizontalOptions="FillAndExpand"
+           Margin="38,0"
+           BackgroundColor="White" 
+           CornerRadius="20" 
+           Padding="25">
+
+        <StackLayout Spacing="25">
+            <StackLayout x:Name="PopupHeader" 
+                         Orientation="Horizontal" 
+                         Spacing="10"
+                         IsVisible="False">
+                
+                <Image x:Name="PopupIcon"
+                       Style="{StaticResource PopupIcon}"/>
+
+                <StackLayout Spacing="0">
+                    <Label x:Name="PopupTitle"
+                           AutomationId="PopupTitle"
+                           d:Text="Titre"
+                           Style="{StaticResource PopupTitle}"/>
+
+                    <Label x:Name="PopupSubtitle"
+                           AutomationId="PopupSubtitle"
+                           d:Text="Sous-titre"
+                           IsVisible="False"
+                           Style="{StaticResource PopupSubtitle}"/>
+                </StackLayout>
+            </StackLayout>
+
+            <Label x:Name="PopupMessage"
+                   AutomationId="PopupMessage"
+                   d:Text="Message"
+                   Style="{StaticResource PopupMessage}"/>
+
+            <Button x:Name="PopupAcceptButton"
+                    AutomationId="PopupAcceptButton"
+                    d:Text="OK"
+                    Clicked="OnClose"
+                    Padding="0"
+                    Style="{StaticResource ButtonConfirm}"/>
+
+            <Button x:Name="PopupCancelButton"
+                    AutomationId="PopupCancelButton"
+                    IsVisible="False"
+                    Text="Retour"
+                    Clicked="OnClose"
+                    Padding="0"
+                    Style="{StaticResource ButtonOutlined}"/>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

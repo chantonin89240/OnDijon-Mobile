@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="OnDijon.Common.Views.BreadcrumbValidatedStepView"
+       xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+       WidthRequest="25"
+       HeightRequest="25"
+       Padding="0"
+       VerticalOptions="Center"
+       HorizontalOptions="Center"
+       HasShadow="False"
+       CornerRadius="12.5"
+       BackgroundColor="{StaticResource GreenBreadcrumb}">
+    <Image VerticalOptions="CenterAndExpand"
+           HorizontalOptions="CenterAndExpand"
+           Source="{FontImage FontFamily={StaticResource MaterialDesignIcons}, Glyph={Static icons:MaterialDesignIcons.Check}, Color=White, Size=22}" />
+</Frame>
+    

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:icons="clr-namespace:OnDijon.Common.Utils.Fonts"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:local="clr-namespace:OnDijon.Common.Utils"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:extensions="clr-namespace:OnDijon.Common.Views.Extensions"
+             xmlns:views="clr-namespace:OnDijon.Modules.Account.Views"
+             x:Class="OnDijon.Modules.Account.Pages.LoginPage">
+    <ContentPage.Content>
+        <RelativeLayout>
+            <Image Style="{StaticResource imageBackground}"/>
+            <StackLayout  Style="{StaticResource stackLayoutForBackground}">
+                <Image Source="{extensions:ImageResource OnDijon.Assets.Logo-white.png}"
+               WidthRequest="60"
+               HorizontalOptions="Start"
+               Margin="24,0" />
+                <views:LoginView BindingContext="{Binding .}" />
+            </StackLayout>
+        </RelativeLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<common:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:OnDijon.Common.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:viewModel="clr-namespace:OnDijon.Modules.Library.ViewModels"
+             x:Class="OnDijon.Modules.Library.Pages.StreamingOnlinePage"
+             x:TypeArguments="viewModel:StreamingOnlineViewModel">
+    <ContentPage.Content>
+        <StackLayout>
+            <common:NavigationBarView Title="Écouter"
+                                      HasBackButton="True" 
+                                      BackButtonCommand="{Binding CloseWebView}"
+                                      BackButtonCommandParameter="{Binding Source={x:Reference BmWebView}}"
+                                      />
+            <WebView x:Name="BmWebView"  
+                     HeightRequest="1000"  
+                     WidthRequest="1000"  
+                     Source="{Binding Url}"
+                     VerticalOptions="FillAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</common:BasePage>
